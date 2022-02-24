@@ -1,0 +1,7 @@
+include README.md AUTHORS.md LICENSE
+
+graft django_river_ml
+
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude migrations
