@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from django_river_ml import settings
-from django.http import QueryDict
 
 from ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator

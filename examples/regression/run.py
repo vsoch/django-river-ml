@@ -19,17 +19,27 @@ def main():
     print("Created model %s" % model_name)
 
     # Train on some data
-    for x, y in datasets.TrumpApproval().take(30):
+    for x, y in datasets.TrumpApproval().take(100):
         r = requests.post(
             host + "/api/learn/",
             json={"model": model_name, "features": x, "ground_truth": y},
         )
         assert r.status_code == 201
 
-    # Get the model1
+    # Get the model
     # TODO we need an endpoint to download model (e.g., pickle version)
     # TODO we need to tweak this one for just json stuffs
-    r = requests.get(host + "/api/model/%s/" % model_name)
+    # r = requests.get(host + "/api/model/%s/" % model_name)
+
+    # Make predictions
+    for x, y in datasets.TrumpApproval().take(10):
+        r = requests.post(
+            host + "/api/predict/",
+            json={"model": model_name, "features": x},
+        )
+        assert r.status_code == 200
+        #result = r.json()
+        #print("prediction: %s vs. actual: %s" % (result["prediction"], y))
 
 
 if __name__ == "__main__":

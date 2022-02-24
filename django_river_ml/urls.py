@@ -21,6 +21,11 @@ urlpatterns = [
         name="learn",
     ),
     path(
+        "%s/predict/" % settings.URL_PREFIX,
+        views.PredictView.as_view(),
+        name="predict",
+    ),
+    path(
         "%s/metrics/" % settings.URL_PREFIX,
         views.MetricsView.as_view(),
         name="metrics",

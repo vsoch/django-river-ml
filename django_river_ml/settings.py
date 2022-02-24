@@ -52,7 +52,7 @@ DEFAULTS = {
     # jwt encoding secret: set server wide or generated on the fly
     "JWT_SERVER_SECRET": str(uuid.uuid4()),
     # View rate limit, defaults to 100/1day using django-ratelimit based on ipaddress
-    "VIEW_RATE_LIMIT": "100/1d",
+    "VIEW_RATE_LIMIT": "10000/1d",
     # Given that someone goes over, are they blocked for a period?
     "VIEW_RATE_LIMIT_BLOCK": True,
     # Defaults for models

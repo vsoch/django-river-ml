@@ -64,11 +64,17 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
+In another terminal, you can then run a sample script:
+
+```bash
+python examples/regression/run.py
+```
 
 ## TODO
 
 - ask if we should have a server generic client to plug in here instead?
 - do we want a spec? [issue](https://github.com/online-ml/river/issues/845)
+- download vs json download of a model [issue](https://github.com/online-ml/river/issues/856)
 - clean up docstrings
 - implement examples
 - write up envars list and how to define (settings or environment)
@@ -76,3 +82,4 @@ $ python manage.py runserver
 - add and test authenticated views
 - do we want a default interface for something?
 - tests
+- upload to pypi
