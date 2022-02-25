@@ -39,12 +39,15 @@ class PredictView(APIView):
         identifier = payload.get("identifier")
         features = payload.get("features")
 
+        if not model_name or not features:
+            return Response(status=400, message="model and features are required.")
+
         client = RiverClient()
-        data = client.predict(
+        success, data = client.predict(
             features=features, identifier=identifier, model_name=model_name
         )
-        if not data:
-            return Response(status=400)
+        if not success:
+            return Response(status=400, data=data)
         if data["created"]:
             return Response(status=201, data=data)
         return Response(status=200, data=data)

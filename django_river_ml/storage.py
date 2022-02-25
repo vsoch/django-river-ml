@@ -111,11 +111,6 @@ def get_db() -> StorageBackend:
         else:
             raise ValueError(f"Unknown storage backend: {backend}")
 
-        # Init the flavor and stats
-        set_flavor(settings.MODEL_FLAVOR)
-        init_stats()
-        init_metrics()
-
     return settings.db
 
 
@@ -148,24 +143,19 @@ def drop_db():
         r.flushdb()
 
 
-def set_flavor(flavor: str):
-    drop_db()
-
+def set_flavor(flavor: str, name: str):
     try:
         flavor = flavors.allowed_flavors()[flavor]
     except KeyError:
         raise exceptions.UnknownFlavor
 
     db = get_db()
-    db["flavor"] = flavor
-
-    init_metrics()
-    init_stats()
+    db[f"flavor/{name}"] = flavor
 
 
-def init_stats():
+def init_stats(name: str):
     db = get_db()
-    db["stats"] = {
+    db["stats/{name}"] = {
         "learn_mean": river.stats.Mean(),
         "learn_ewm": river.stats.EWMean(0.3),
         "predict_mean": river.stats.Mean(),
@@ -173,19 +163,17 @@ def init_stats():
     }
 
 
-def init_metrics():
-
+def init_metrics(name: str):
     db = get_db()
     try:
-        flavor = db["flavor"]
+        flavor = db["flavor/{name}"]
     except KeyError:
         raise exceptions.FlavorNotSet
 
-    db["metrics"] = flavor.default_metrics()
+    db[f"metrics/{name}"] = flavor.default_metrics()
 
 
-def add_model(model: river.base.Estimator, name: str = None) -> str:
-
+def add_model(model: river.base.Estimator, flavor: str, name: str = None) -> str:
     db = get_db()
 
     # Pick a name if none is given
@@ -195,13 +183,21 @@ def add_model(model: river.base.Estimator, name: str = None) -> str:
             if f"models/{name}" not in db:
                 break
 
+    # Make sure flavor is valid before continuing
+    # it will be associated with the model name
+    set_flavor(flavor=flavor, name=name)
     db[f"models/{name}"] = model
+
+    init_stats(name)
+    init_metrics(name)
     return name
 
 
 def delete_model(name: str):
     db = get_db()
-    del db["models/{name}"]
+    del db[f"models/{name}"]
+    del db[f"stats/{name}"]
+    del db[f"metrics/{name}"]
 
 
 def _random_slug() -> str:

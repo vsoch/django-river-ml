@@ -42,16 +42,22 @@ class LearnView(APIView):
         ground_truth = payload.get("ground_truth")
         identifier = payload.get("identifier")
 
+        if not model_name or not features:
+            return Response(
+                status=400, data={"message": "model and features are required."}
+            )
+
         # Create a client to interact with the database / announcers
         client = RiverClient()
 
         # This will either return a result object or raise an exception
-        if not client.learn(
+        success, data = client.learn(
             prediction=prediction,
             features=features,
             model_name=model_name,
             identifier=identifier,
             ground_truth=ground_truth,
-        ):
-            return Response(status=400, data={"message": "Invalid payload"})
-        return Response(status=201, data={"message": "success"})
+        )
+        if not success:
+            return Response(status=400, data=data)
+        return Response(status=201, data=data)

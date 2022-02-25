@@ -53,11 +53,21 @@ urlpatterns = [
     path(
         "%s/model/<str:name>/" % settings.URL_PREFIX,
         views.ModelView.as_view(),
-        name="model_name",
+        name="model",
     ),
     path(
-        "%s/model/<str:name>/" % settings.URL_PREFIX,
+        "%s/model/<str:flavor>/<str:name>/" % settings.URL_PREFIX,
         views.ModelView.as_view(),
         name="model",
+    ),
+    path(
+        "%s/models/" % settings.URL_PREFIX,
+        views.ModelsView.as_view(),
+        name="models",
+    ),
+    path(
+        "%s/model/download/<str:name>/" % settings.URL_PREFIX,
+        views.ModelDownloadView.as_view(),
+        name="model_download",
     ),
 ]

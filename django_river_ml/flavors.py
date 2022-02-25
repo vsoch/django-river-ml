@@ -8,6 +8,17 @@ from river import metrics
 # https://github.com/online-ml/chantilly/blob/master/chantilly/flavors.py#L1
 
 
+def check(model, flavor_name):
+    """
+    Check a model against all flavors available
+    """
+    for flavor in [RegressionFlavor, BinaryFlavor, MultiClassFlavor]:
+        flavor = flavor()
+        if flavor_name == flavor.name:
+            return flavor.check_model(model)
+    return False, "This model flavor %s is not recognized" % flavor_name
+
+
 def allowed_flavors():
     return {f().name: f() for f in [RegressionFlavor, BinaryFlavor, MultiClassFlavor]}
 

@@ -1,14 +1,39 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.http import QueryDict
+from django.http import QueryDict, HttpResponse
 
 from django_river_ml import settings as settings
 from django_river_ml.client import RiverClient
+from django_river_ml import model as models
 
 from ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
 import dill
+
+
+class ModelDownloadView(APIView):
+    permission_classes = []
+    allowed_methods = ("GET",)
+
+    @method_decorator(
+        ratelimit(
+            key="ip",
+            rate=settings.VIEW_RATE_LIMIT,
+            method="GET",
+            block=settings.VIEW_RATE_LIMIT_BLOCK,
+        )
+    )
+    def get(self, request, *args, **kwargs):
+        """
+        GET /api/model/download/<name>/
+        """
+        name = kwargs.get("name")
+        if not name:
+            return Response(status=400, data={"message": "A model name is required"})
+        client = RiverClient()
+        model = client.get_model(name)
+        return HttpResponse(dill.dumps(model), content_type="application/octet-stream")
 
 
 class ModelView(APIView):
@@ -25,25 +50,41 @@ class ModelView(APIView):
     )
     def get(self, request, *args, **kwargs):
         """
-        GET /api/model/<name>
+        GET /api/model/<name>/
         """
-        name = kwargs.get("name", settings.MODEL_DEFAULT_NAME)
+        name = kwargs.get("name")
+        if not name:
+            return Response(status=400, data={"message": "A model name is required"})
         client = RiverClient()
         model = client.get_model(name)
-        return Response(status=200, data=dill.dumps(model))
+        dumped = models.model_to_dict(model)
+        return Response(status=200, data=dumped)
 
     def post(self, request, *args, **kwargs):
         """
-        POST /api/model/<name>
+        POST /api/model/<flavor>/<name>
         """
+        name = None
+
+        # if we only have one arg, we have flavor
+        if len(kwargs) == 1:
+            flavor = kwargs.get("name")
+
+        # if we only have one arg, we have flavor
+        elif len(kwargs) == 2:
+            flavor = kwargs.get("flavor")
+            name = kwargs.get("name")
+
         model = dill.loads(request.body)
         client = RiverClient()
-        data = client.add_model(model)
-        return Response(status=201, data=data)
+        added, data = client.add_model(model, name=name, flavor=flavor)
+        if added:
+            return Response(status=201, data=data)
+        return Response(status=400, data=data)
 
     def delete(self, request, *args, **kwargs):
         """
-        DELETE /api/model/<name>
+        DELETE /api/model/<name>/
         """
         params = QueryDict(request.body)
         name = params.get("name")

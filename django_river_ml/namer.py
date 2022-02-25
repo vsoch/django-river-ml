@@ -188,8 +188,7 @@ class Namer:
 
         descriptor = self._select(self._descriptors)
         noun = self._select(self._nouns)
-        numbers = "".join((self._select(chars) for _ in range(length)))
-        return delim.join([descriptor, noun, numbers])
+        return delim.join([descriptor, noun])
 
     def _select(self, select_from):
         """select an element from a list using random.choice

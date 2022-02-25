@@ -20,7 +20,6 @@ authenticated_views = [
 
 # Defaults for models and storage
 
-flavors = ["regression", "binary", "multiclass"]
 backends = ["shelve", "redis"]
 
 
@@ -55,9 +54,6 @@ DEFAULTS = {
     "VIEW_RATE_LIMIT": "10000/1d",
     # Given that someone goes over, are they blocked for a period?
     "VIEW_RATE_LIMIT_BLOCK": True,
-    # Defaults for models
-    "MODEL_FLAVOR": "regression",
-    "MODEL_DEFAULT_NAME": "regression",
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": None,
     "JWT_SECRET_KEY": None,
@@ -100,13 +96,6 @@ if STORAGE_BACKEND not in backends:
     sys.exit(
         "%s is not a valid storage backend, but me one of %s"
         % (STORAGE_BACKEND, " ".join(backends))
-    )
-
-# These attributes are required for models
-if MODEL_FLAVOR not in flavors:
-    sys.exit(
-        "django_ml['MODELS']['flavor'] must be one of %s. %s is invalid"
-        % (" ".join(flavors), MODEL_FLAVOR)
     )
 
 # The database state will be held via settings

@@ -1,21 +1,28 @@
 from river import datasets
 from river import linear_model
 from river import preprocessing
+
+import json
 import dill
 import requests
 
 
+def print_response(r):
+    assert r.status_code in [200, 201]
+    response = r.json()
+    print("%s: %s" % (r.url, json.dumps(response, indent=4)))
+
+
 def main():
-    # Before using this endpoint, set MODEL_FLAVOR in settings.py to
-    # what you want. A production server is intended to serve one consistent
-    # model, unlike the demo. Note that all URls must end with a slash
     host = "http://localhost:8000"
 
     # Upload a model
     model = preprocessing.StandardScaler() | linear_model.LinearRegression()
-    r = requests.post(host + "/api/model/", data=dill.dumps(model))
+
+    # The first post when you upload the model defines the flavor (regression)
+    r = requests.post(host + "/api/model/regression/", data=dill.dumps(model))
+    print_response(r)
     model_name = r.json()["name"]
-    assert r.status_code == 201
     print("Created model %s" % model_name)
 
     # Train on some data
@@ -26,10 +33,22 @@ def main():
         )
         assert r.status_code == 201
 
-    # Get the model
-    # TODO we need an endpoint to download model (e.g., pickle version)
-    # TODO we need to tweak this one for just json stuffs
-    # r = requests.get(host + "/api/model/%s/" % model_name)
+    # Get the model (this is a json representation)
+    r = requests.get(host + "/api/model/%s/" % model_name)
+    assert r.status_code == 200
+    print(json.dumps(r.json(), indent=4))
+
+    # Get the model (this is a download of the pickled model with dill)
+    r = requests.get(host + "/api/model/download/%s/" % model_name)
+    assert r.status_code == 200
+
+    # Here is how to save and load
+    # with open("%s.pkl" % model_name, 'wb') as f:
+    #     for chunk in r:
+    #         f.write(chunk)
+
+    # with open("muffled-pancake-9439.pkl", "rb") as fd:
+    #    content=pickle.load(fd)
 
     # Make predictions
     for x, y in datasets.TrumpApproval().take(10):
@@ -38,8 +57,12 @@ def main():
             json={"model": model_name, "features": x},
         )
         assert r.status_code == 200
-        #result = r.json()
-        #print("prediction: %s vs. actual: %s" % (result["prediction"], y))
+        # result = r.json()
+        # print("prediction: %s vs. actual: %s" % (result["prediction"], y))
+
+    # See all models
+    r = requests.get(host + "/api/models/")
+    print_response(r)
 
 
 if __name__ == "__main__":

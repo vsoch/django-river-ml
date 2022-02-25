@@ -4,6 +4,7 @@ import django_river_ml.storage as storage
 import django_river_ml.exceptions as exceptions
 import django_river_ml.utils as utils
 import django_river_ml.announce as announce
+import django_river_ml.flavors as flavors
 
 import json
 import copy
@@ -19,11 +20,11 @@ class RiverClient:
     def __init__(self):
         self.db = storage.get_db()
 
-    def stats(self):
+    def stats(self, model_name):
         try:
-            stats = self.db["stats"]
+            stats = self.db["stats/{model_name}"]
         except KeyError:
-            raise exceptions.InvalidUsage(message="No flavor has been set.")
+            raise exceptions.InvalidUsage(message="We don't have stats for that model")
 
         return {
             "predict": {
@@ -72,32 +73,22 @@ class RiverClient:
             raise exceptions.FlavorNotSet
         return {metric.__class__.__name__: metric.get() for metric in metrics}
 
-    def add_model(self, model, name=None):
+    def add_model(self, model, flavor, name=None):
         """
         Add a model by name (e.g., via API post)
         """
         # Validate the model
-        try:
-            flavor = self.db["flavor"]
-        except KeyError:
-            raise exceptions.FlavorNotSet
-
-        ok, error = flavor.check_model(model)
+        ok, error = flavors.check(model, flavor)
         if not ok:
-            raise exceptions.InvalidUsage(message=error)
-        name = storage.add_model(model, name=name)
-        self.db[
-            "default_model_name"
-        ] = name  # the most recent model becomes the default
-        return {"name": name}
+            return False, {"message": error}
+        name = storage.add_model(model, name=name, flavor=flavor)
+        return True, {"name": name}
 
     def get_model(self, name):
         """
         Get a model by name
         """
-        name = self.db["default_model_name"] if name is None else name
-        model = self.db[f"models/{name}"]
-        return model
+        return self.db[f"models/{name}"]
 
     def delete_model(self, name):
         """
@@ -116,7 +107,7 @@ class RiverClient:
         model_names = sorted(
             [k.split("/", 1)[1] for k in self.db if k.startswith("models/")]
         )
-        return {"models": model_names, "default": self.db.get("default_model_name")}
+        return {"models": model_names}
 
     def _stream_announcer(self, announcer):
         """
@@ -130,10 +121,10 @@ class RiverClient:
 
     def learn(
         self,
+        model_name,
         ground_truth=None,
         prediction=None,
         features=None,
-        model_name=None,
         identifier=None,
     ):
         """
@@ -143,9 +134,7 @@ class RiverClient:
         try:
             memory = self.db["#%s" % identifier] if identifier else {}
         except KeyError:
-            raise exceptions.InvalidUsage(
-                message=f"No information stored for ID '{identifier}'."
-            )
+            return False, f"No information stored for ID '{identifier}'"
 
         model_name = memory.get("model", model_name)
         features = memory.get("features", features)
@@ -153,40 +142,29 @@ class RiverClient:
 
         # Raise an error if no features are provided
         if features is None:
-            raise exceptions.InvalidUsage(
-                message="No features are stored and none were provided."
-            )
-
-        # Load the model
-        if model_name is None:
-            try:
-                default_model_name = self.db["default_model_name"]
-            except KeyError:
-                raise exceptions.InvalidUsage(message="No default model has been set.")
-            model_name = default_model_name
+            return False, "No features are stored and none were provided."
 
         try:
             model = self.db[f"models/{model_name}"]
         except KeyError:
-            raise exceptions.InvalidUsage(message=f"No model named '{model_name}'.")
+            return False, f"No model named '{model_name}'."
 
         # Obtain a prediction if none was made earlier
         if prediction is None:
-            flavor = self.db["flavor"]
+            flavor = self.db[f"flavor/{model_name}"]
             pred_func = getattr(model, flavor.pred_func)
             try:
                 prediction = pred_func(x=copy.deepcopy(features))
             except Exception as e:
-                raise exceptions.InvalidUsage(message=repr(e))
+                return False, repr(e)
 
-        metrics = self.update_metrics(prediction, ground_truth)
+        metrics = self.update_metrics(prediction, ground_truth, model_name)
 
         # Update the model
-        # TODO what if we do not have ground truth?
         try:
             model.learn_one(x=copy.deepcopy(features), y=ground_truth)
         except Exception as e:
-            raise exceptions.InvalidUsage(message=repr(e))
+            return False, repr(e)
 
         self.db[f"models/{model_name}"] = model
         self.announce_event(
@@ -203,34 +181,28 @@ class RiverClient:
         # Delete the id from the db
         if identifier:
             self.delete_id(identifier)
-        return True
+        return True, "Successful learn."
 
-    def predict(self, features, model_name=None, identifier=None, model=None):
+    def predict(self, features, model_name, identifier=None, model=None):
         """
         Run a prediction
         """
         try:
-            default_model_name = self.db["default_model_name"]
-        except KeyError:
-            raise exceptions.InvalidUsage(message="No default model has been set.")
-
-        model_name = model_name or default_model_name
-        try:
             model = self.db[f"models/{model_name}"]
         except KeyError:
-            raise exceptions.InvalidUsage(message=f"No model named '{model_name}'.")
+            return False, f"No model named '{model_name}'."
 
         # We make a copy because the model might modify the features in-place while we want to be able
         # to store an identical copy
         features = copy.deepcopy(features)
 
         # Make the prediction
-        flavor = self.db["flavor"]
+        flavor = self.db[f"flavor/{model_name}"]
         pred_func = getattr(model, flavor.pred_func)
         try:
             pred = pred_func(x=features)
         except Exception as e:
-            raise exceptions.InvalidUsage(message=repr(e))
+            return False, repr(e)
 
         # The unsupervised parts of the model might be updated after a prediction, so we need to store it
         self.db[f"models/{model_name}"] = model
@@ -255,7 +227,7 @@ class RiverClient:
                 "prediction": pred,
             }
             created = True
-        return {"model": model_name, "prediction": pred, "created": created}
+        return True, {"model": model_name, "prediction": pred, "created": created}
 
     def announce_metrics(self, metrics):
         """
@@ -276,12 +248,12 @@ class RiverClient:
                 utils.format_sse(data=json.dumps(data), event=event)
             )
 
-    def update_metrics(self, prediction, ground_truth):
+    def update_metrics(self, prediction, ground_truth, model_name):
         """
         Given a prediction, update metrics to reflect it.
         """
         # Update the metrics
-        metrics = self.db["metrics"]
+        metrics = self.db[f"metrics/{model_name}"]
         for metric in metrics:
             # If the metrics requires labels but the prediction is a dict, then we need to retrieve the
             # predicted label with the highest probability
@@ -297,7 +269,7 @@ class RiverClient:
                 metric.update(y_true=ground_truth, y_pred=pred)
             else:
                 metric.update(y_true=ground_truth, y_pred=prediction)
-        self.db["metrics"] = metrics
+        self.db[f"metrics/{model_name}"] = metrics
         return metrics
 
     def delete_id(self, identifier):
@@ -305,7 +277,3 @@ class RiverClient:
             del self.db["#%s" % identifier]
         except KeyError:
             pass
-
-
-# TODO should we init on startup and use one client?
-# TRY THIS
