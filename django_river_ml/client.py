@@ -254,7 +254,13 @@ class RiverClient:
         """
         # Update the metrics
         metrics = self.db[f"metrics/{model_name}"]
+
+        # At this point prediction is a dict. It might be empty because no training data has been seen
+        if not prediction:
+            return metrics
+
         for metric in metrics:
+
             # If the metrics requires labels but the prediction is a dict, then we need to retrieve the
             # predicted label with the highest probability
             if (
@@ -262,11 +268,15 @@ class RiverClient:
                 and metric.requires_labels
                 and isinstance(prediction, dict)
             ):
-                # At this point prediction is a dict. It might be empty because no training data has been seen
-                if not prediction:
-                    continue
                 pred = max(prediction, key=prediction.get)
                 metric.update(y_true=ground_truth, y_pred=pred)
+
+            # In some cases the prediction dict either has or doesn't have the ground truth
+            # is this correct?
+            elif isinstance(prediction, dict):
+                y_pred = prediction.get(ground_truth)
+                if y_pred:
+                    metric.update(y_true=ground_truth, y_pred=y_pred)
             else:
                 metric.update(y_true=ground_truth, y_pred=prediction)
         self.db[f"metrics/{model_name}"] = metrics

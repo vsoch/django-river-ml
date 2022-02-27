@@ -17,6 +17,7 @@ to store models. The plugin here is different from chantilly in the following wa
  - we have added more kinds of model types (under development)
  - we require each new model to be added with a flavor, and data (metrics, stats, etc.) is stored relevant to that. The original chanilly puts everything under "metrics" or "stats" and then wipes the database if a new flavor is added.
  - a few additional API endpoints were added (also under development)
+ - to remove the logic from the particular API implementation, we have a [client class](django_river_ml/client.py) that returns a boolean (success) and data result for each function.
 
 **under development** not ready to use yet! But should be with a few more evenings and the weekend :)
 
@@ -80,16 +81,15 @@ In another terminal, you can then run a sample script:
 
 ```bash
 python examples/regression/run.py
-python examples/regression/run.py
 ```
 
 ## TODO
 
-- ask if we should have a server generic client to plug in here instead?
+- tests
+- should we have a server generic client to plug in here instead?
 - do we want a spec? [issue](https://github.com/online-ml/river/issues/845)
 - clean up docstrings -> docs and python docs -> envars list and how to define -> pretty docs
-- implement examples
+- implement more examples?
 - add and test authenticated views
 - do we want a default interface for something?
-- tests
 - upload to pypi
