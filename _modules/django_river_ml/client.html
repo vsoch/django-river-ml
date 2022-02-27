@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django_river_ml.client &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>django_river_ml.client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for django_river_ml.client</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">river.metrics.base</span> <span class="kn">import</span> <span class="n">ClassificationMetric</span>
+
+<span class="kn">import</span> <span class="nn">django_river_ml.storage</span> <span class="k">as</span> <span class="nn">storage</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.exceptions</span> <span class="k">as</span> <span class="nn">exceptions</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.announce</span> <span class="k">as</span> <span class="nn">announce</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.flavors</span> <span class="k">as</span> <span class="nn">flavors</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+
+<div class="viewcode-block" id="RiverClient"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient">[docs]</a><span class="k">class</span> <span class="nc">RiverClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A river client includes shared functions for interacting with storage.</span>
+<span class="sd">    This implementation was chosen so it can easily be plugged into another</span>
+<span class="sd">    kind of server without needing to deal with the server-specific requests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">get_db</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RiverClient.stats"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;stats/</span><span class="si">{model_name}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidUsage</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;We don&#39;t have stats for that model&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;predict&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n</span><span class="p">),</span>
+                <span class="s2">&quot;mean_duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                <span class="s2">&quot;mean_duration_human&quot;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_ns</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;ewm_duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                <span class="s2">&quot;ewm_duration_human&quot;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_ns</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="p">),</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;learn&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n</span><span class="p">),</span>
+                <span class="s2">&quot;mean_duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                <span class="s2">&quot;mean_duration_human&quot;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_ns</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;ewm_duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                <span class="s2">&quot;ewm_duration_human&quot;</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">humanize_ns</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())),</span>
+            <span class="p">},</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="RiverClient.stream_events"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_events">[docs]</a>    <span class="k">def</span> <span class="nf">stream_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stream events from the events announcer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RiverClient.stream_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">stream_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stream events from the metrics announcer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RiverClient.metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.metrics">[docs]</a>    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get metrics from the database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;metrics&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">FlavorNotSet</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">metric</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">metric</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="RiverClient.add_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.add_model">[docs]</a>    <span class="k">def</span> <span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a model by name (e.g., via API post)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Validate the model</span>
+        <span class="n">ok</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">flavors</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">error</span><span class="p">}</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">flavor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="RiverClient.get_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a model by name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="RiverClient.delete_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_model">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a model by name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RiverClient.models"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.models">[docs]</a>    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get models known to a database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;models/&quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;models&quot;</span><span class="p">:</span> <span class="n">model_names</span><span class="p">}</span></div>
+
+    <span class="k">def</span> <span class="nf">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">announcer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shared function to stream events from an announcer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">announcer</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># blocks until a new message arrives</span>
+            <span class="k">yield</span> <span class="n">item</span>
+
+    <span class="c1"># Learn and predict!</span>
+
+<div class="viewcode-block" id="RiverClient.learn"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.learn">[docs]</a>    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">,</span>
+        <span class="n">ground_truth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">prediction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A learning event takes a learning schema</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If an ID is given, then retrieve the stored info.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">memory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;#</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">identifier</span><span class="p">]</span> <span class="k">if</span> <span class="n">identifier</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No information stored for ID &#39;</span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">memory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">memory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="n">memory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+
+        <span class="c1"># Raise an error if no features are provided</span>
+        <span class="k">if</span> <span class="n">features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;No features are stored and none were provided.&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No model named &#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+
+        <span class="c1"># Obtain a prediction if none was made earlier</span>
+        <span class="k">if</span> <span class="n">prediction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">flavor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+            <span class="n">pred_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="o">.</span><span class="n">pred_func</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">pred_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+
+        <span class="c1"># Update the model</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">learn_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">announce_event</span><span class="p">(</span>
+            <span class="s2">&quot;learn&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span>
+                <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+                <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">prediction</span><span class="p">,</span>
+                <span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ground_truth</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">announce_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+
+        <span class="c1"># Delete the id from the db</span>
+        <span class="k">if</span> <span class="n">identifier</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Successful learn.&quot;</span></div>
+
+<div class="viewcode-block" id="RiverClient.predict"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a prediction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No model named &#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+
+        <span class="c1"># We make a copy because the model might modify the features in-place while we want to be able</span>
+        <span class="c1"># to store an identical copy</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+
+        <span class="c1"># Make the prediction</span>
+        <span class="n">flavor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">pred_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="o">.</span><span class="n">pred_func</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">pred_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># The unsupervised parts of the model might be updated after a prediction, so we need to store it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="c1"># Announce the prediction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">announce_event</span><span class="p">(</span>
+            <span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span>
+                <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+                <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">pred</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="c1"># If an ID is provided, then we store the features in order to be able to use them for learning</span>
+        <span class="c1"># further down the line. We remove granularity about creation (200 vs 201) here.</span>
+        <span class="n">created</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">identifier</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;#</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span>
+                <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+                <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">pred</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">created</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span> <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">pred</span><span class="p">,</span> <span class="s2">&quot;created&quot;</span><span class="p">:</span> <span class="n">created</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="RiverClient.announce_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.announce_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">announce_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Announce the current metric values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">listeners</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">metric</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">metric</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">announce</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">format_sse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">msg</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RiverClient.announce_event"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.announce_event">[docs]</a>    <span class="k">def</span> <span class="nf">announce_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Announce the event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">listeners</span><span class="p">:</span>
+            <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">announce</span><span class="p">(</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">format_sse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RiverClient.update_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.update_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a prediction, update metrics to reflect it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Update the metrics</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+
+        <span class="c1"># At this point prediction is a dict. It might be empty because no training data has been seen</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">prediction</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metrics</span>
+
+        <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+
+            <span class="c1"># If the metrics requires labels but the prediction is a dict, then we need to retrieve the</span>
+            <span class="c1"># predicted label with the highest probability</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">ClassificationMetric</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">metric</span><span class="o">.</span><span class="n">requires_labels</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">pred</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+                <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
+
+            <span class="c1"># In some cases the prediction dict either has or doesn&#39;t have the ground truth</span>
+            <span class="c1"># is this correct?</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">y_pred</span><span class="p">:</span>
+                    <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">prediction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span>
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+<div class="viewcode-block" id="RiverClient.delete_id"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;#</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">identifier</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Django River ML Python Module" href="../api_reference/django-river-ml.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-application">Sample Application</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Getting Started</a> &raquo;</li>
+      <li>User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/getting_started/user-guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="user-guide">
+<span id="getting-started-user-guide"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<p>Django River ML allows you to easily deploy <a class="reference external" href="https://riverml.xyz">river</a> online machine learning
+for a <a class="reference external" href="https://www.djangoproject.com/">Django</a> project. It is based off of <a class="reference external" href="https://github.com/online-ml/chantilly">chantilly</a>
+with hopes of having similar design. We include <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/examples">example clients</a> and a
+test application in <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/tests">tests</a>.
+We are excited about what you might build with this, and please
+<a class="reference external" href="https://github.com/US-RSE/usrse-python">give us a ping</a>. if you have a question, find a bug, or want to request a feature!
+This is an open source project and we are eager for your contribution. 🎉️</p>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline"></a></h2>
+<p>Once you have <code class="docutils literal notranslate"><span class="pre">django-river-ml</span></code> installed (<a class="reference internal" href="installation.html#getting-started-installation"><span class="std std-ref">Installation</span></a>) you
+can do basic setup.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline"></a></h3>
+<p>Add it to your <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code> along with <code class="docutils literal notranslate"><span class="pre">rest_framework</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;django_river_ml&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rest_framework&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Add django-river-ml’s URL patterns:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">urls</span> <span class="k">as</span> <span class="n">django_river_urls</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">django_river_urls</span><span class="p">)),</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline"></a></h3>
+<p>It is highly recommended that you minimally set these settings in your app settings.py
+and do not use the default of the plugin:</p>
+<table border="1" class="docutils" id="id1">
+<caption><span class="caption-text">Title</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code></th>
+<th class="head">$root</th>
+<th class="head">Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)</th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SHELVE_SECRET_KEY</span></code></td>
+<td>None</td>
+<td>Secret key for shelve (if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> set to “shelve” (will be generated if not found)</td>
+<td>fgayudsiushfdsfdf</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">JWT_SECRET_KEY</span></code></td>
+<td>None</td>
+<td>Secret key for json web tokens (if authentication enabled, and will be generated if not found)</td>
+<td>fgayudsiushfdsfdf</td>
+</tr>
+</tbody>
+</table>
+<p>The following additonal settings are available to set in your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code>:</p>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">Title</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">URL_PREFIX</span></code></td>
+<td>api</td>
+<td>The api prefix to use for the endpoint</td>
+<td>river</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code></td>
+<td>shelve</td>
+<td>The storage backend to use, either shelve or redis (requires redis setup)</td>
+<td>redis</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">REDIS_DB</span></code></td>
+<td>river-redis</td>
+<td>The redis database name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
+<td>another-name</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">REDIS_HOST</span></code></td>
+<td>localhost</td>
+<td>The redis host name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
+<td>redis-container</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">REDIS_PORT</span></code></td>
+<td>6379</td>
+<td>The redis port, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
+<td>1111</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">CACHE_DIR</span></code></td>
+<td>None (and then is set to <code class="docutils literal notranslate"><span class="pre">os.path.join(APP_DIR,</span> <span class="pre">&quot;cache&quot;)</span></code>)</td>
+<td>The cache directory for tokens, recommended to set a custom <code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code> and it will be a sub-directory <code class="docutils literal notranslate"><span class="pre">cache</span></code> there</td>
+<td>/opt/cache</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></td>
+<td>False</td>
+<td>For views that require authentication, disable them.</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DOMAIN_URL</span></code></td>
+<td><a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></td>
+<td>Domain used in templates, and api prefix</td>
+<td><a class="reference external" href="https://ml-server">https://ml-server</a></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SESSION_EXPIRES_SECONDS</span></code></td>
+<td>600</td>
+<td>The number of seconds a session (upload request) is valid (10 minutes)</td>
+<td>6000</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TOKEN_EXPIRES_SECONDS</span></code></td>
+<td>600</td>
+<td>The number of seconds a token is valid (10 minutes)</td>
+<td>6000</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT</span></code></td>
+<td>10000/1day</td>
+<td>View rate limit using django-ratelimit based on ipaddress</td>
+<td>100/1day</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_BLOCK</span></code></td>
+<td>True</td>
+<td>Given that someone goes over, are they blocked for a period?</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<p>For more advanced settings like customizing the endpoints with authentication, see
+the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
+</div>
+<div class="section" id="sample-application">
+<h3>Sample Application<a class="headerlink" href="#sample-application" title="Permalink to this headline"></a></h3>
+<p>An <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/tests">example app</a> is provided that
+you can use to test. Once you have your environment setup, you can do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py makemigrations
+<span class="gp">$ </span>python manage.py migrate
+<span class="gp">$ </span>python manage.py runserver
+</pre></div>
+</div>
+<p>In another terminal, you can then run a sample script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python examples/regression/run.py
+$ python examples/binary/run.py
+</pre></div>
+</div>
+<p>This library is under development and we will have more endpoints and functionality
+coming soon!</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api_reference/django-river-ml.html" class="btn btn-neutral float-right" title="Django River ML Python Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

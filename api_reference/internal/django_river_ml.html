@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django-river-ml package &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Internal API" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Internal API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">django-river-ml package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.announce">django_river_ml.announce module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.apps">django_river_ml.apps module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.auth">django_river_ml.auth module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.client">django_river_ml.client module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.exceptions">django_river_ml.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.flavors">django_river_ml.flavors module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.middleware">django_river_ml.middleware module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.model">django_river_ml.model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.namer">django_river_ml.namer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.settings">django_river_ml.settings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.signals">django_river_ml.signals module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.storage">django_river_ml.storage module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.urls">django_river_ml.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.utils">django_river_ml.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.version">django_river_ml.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views">django_river_ml.views module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.auth">django_river_ml.views.auth module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.base">django_river_ml.views.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.learn">django_river_ml.views.learn module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.metrics">django_river_ml.views.metrics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.model">django_river_ml.views.model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-django_river_ml.views.predict">django_river_ml.views.predict module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">Internal API</a> &raquo;</li>
+      <li>django-river-ml package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/api_reference/internal/django_river_ml.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="django-river-ml-package">
+<h1>django-river-ml package<a class="headerlink" href="#django-river-ml-package" title="Permalink to this headline"></a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-django_river_ml.announce">
+<span id="django-river-ml-announce-module"></span><h2>django_river_ml.announce module<a class="headerlink" href="#module-django_river_ml.announce" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.announce.MessageAnnouncer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.announce.</span></code><code class="sig-name descname"><span class="pre">MessageAnnouncer</span></code><a class="reference internal" href="../../_modules/django_river_ml/announce.html#MessageAnnouncer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.announce.MessageAnnouncer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.announce.MessageAnnouncer.announce">
+<code class="sig-name descname"><span class="pre">announce</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/announce.html#MessageAnnouncer.announce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.announce.MessageAnnouncer.announce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.announce.MessageAnnouncer.listen">
+<code class="sig-name descname"><span class="pre">listen</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/announce.html#MessageAnnouncer.listen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.announce.MessageAnnouncer.listen" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.apps">
+<span id="django-river-ml-apps-module"></span><h2>django_river_ml.apps module<a class="headerlink" href="#module-django_river_ml.apps" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.apps.DjangoRiverMLConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.apps.</span></code><code class="sig-name descname"><span class="pre">DjangoRiverMLConfig</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">app_name</span></span></em>, <em><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/apps.html#DjangoRiverMLConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.apps.DjangoRiverMLConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.apps.DjangoRiverMLConfig.name">
+<code class="sig-name descname"><span class="pre">name</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_river_ml'</span></em><a class="headerlink" href="#django_river_ml.apps.DjangoRiverMLConfig.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.apps.DjangoRiverMLConfig.ready">
+<code class="sig-name descname"><span class="pre">ready</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/apps.html#DjangoRiverMLConfig.ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.apps.DjangoRiverMLConfig.ready" title="Permalink to this definition"></a></dt>
+<dd><p>Override this method in subclasses to run code when Django starts.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.apps.DjangoRiverMLConfig.verbose_name">
+<code class="sig-name descname"><span class="pre">verbose_name</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'River</span> <span class="pre">Online</span> <span class="pre">Machine</span> <span class="pre">Learning</span> <span class="pre">for</span> <span class="pre">Django'</span></em><a class="headerlink" href="#django_river_ml.apps.DjangoRiverMLConfig.verbose_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.auth">
+<span id="django-river-ml-auth-module"></span><h2>django_river_ml.auth module<a class="headerlink" href="#module-django_river_ml.auth" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.generate_jwt">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">generate_jwt</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#generate_jwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.generate_jwt" title="Permalink to this definition"></a></dt>
+<dd><p>Given a username generate a jwt
+token to return to the user with a default expiration of 10 minutes.</p>
+<p>username (str)  : the user’s username to add under “sub”</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.get_challenge">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">get_challenge</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#get_challenge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.get_challenge" title="Permalink to this definition"></a></dt>
+<dd><p>Given an unauthenticated request, return a challenge in
+the Www-Authenticate header</p>
+<p>request (requests.Request): the Request object to inspect</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.get_token">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">get_token</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#get_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.get_token" title="Permalink to this definition"></a></dt>
+<dd><p>The same as validate_token, but return the token object to check the
+associated user.</p>
+<p>request (requests.Request)    : the Request object to inspect</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.get_user">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">get_user</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#get_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.get_user" title="Permalink to this definition"></a></dt>
+<dd><p>Given a request, read the Authorization header to get the base64 encoded
+username and token (password) which is a basic auth. If we return the user
+object, the user is successfully authenticated. Otherwise, return None.
+and the calling function should return Forbidden status.</p>
+<p>request (requests.Request)    : the Request object to inspect</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.is_authenticated">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">is_authenticated</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#is_authenticated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.is_authenticated" title="Permalink to this definition"></a></dt>
+<dd><p>Function to check if a request is authenticated.
+Returns a boolean to indicate if the user is authenticated, and a response with
+the challenge if not.</p>
+<p>request (requests.Request)    : the Request object to inspect</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.auth.validate_jwt">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.auth.</span></code><code class="sig-name descname"><span class="pre">validate_jwt</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/auth.html#validate_jwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.auth.validate_jwt" title="Permalink to this definition"></a></dt>
+<dd><p>Given a jwt token, decode and validate</p>
+<p>request (requests.Request)    : the Request object to inspect</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.client">
+<span id="django-river-ml-client-module"></span><h2>django_river_ml.client module<a class="headerlink" href="#module-django_river_ml.client" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.client.</span></code><code class="sig-name descname"><span class="pre">RiverClient</span></code><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A river client includes shared functions for interacting with storage.
+This implementation was chosen so it can easily be plugged into another
+kind of server without needing to deal with the server-specific requests.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.add_model">
+<code class="sig-name descname"><span class="pre">add_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">flavor</span></span></em>, <em><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.add_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.add_model" title="Permalink to this definition"></a></dt>
+<dd><p>Add a model by name (e.g., via API post)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.announce_event">
+<code class="sig-name descname"><span class="pre">announce_event</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.announce_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.announce_event" title="Permalink to this definition"></a></dt>
+<dd><p>Announce the event</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.announce_metrics">
+<code class="sig-name descname"><span class="pre">announce_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">metrics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.announce_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.announce_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Announce the current metric values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.delete_id">
+<code class="sig-name descname"><span class="pre">delete_id</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.delete_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.delete_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.delete_model">
+<code class="sig-name descname"><span class="pre">delete_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.delete_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.delete_model" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a model by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.get_model">
+<code class="sig-name descname"><span class="pre">get_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.get_model" title="Permalink to this definition"></a></dt>
+<dd><p>Get a model by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.learn">
+<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.learn" title="Permalink to this definition"></a></dt>
+<dd><p>A learning event takes a learning schema</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.metrics">
+<code class="sig-name descname"><span class="pre">metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Get metrics from the database</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.models">
+<code class="sig-name descname"><span class="pre">models</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.models" title="Permalink to this definition"></a></dt>
+<dd><p>Get models known to a database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Run a prediction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stats">
+<code class="sig-name descname"><span class="pre">stats</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.stats" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stream_events">
+<code class="sig-name descname"><span class="pre">stream_events</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.stream_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.stream_events" title="Permalink to this definition"></a></dt>
+<dd><p>Stream events from the events announcer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stream_metrics">
+<code class="sig-name descname"><span class="pre">stream_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.stream_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.stream_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Stream events from the metrics announcer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.update_metrics">
+<code class="sig-name descname"><span class="pre">update_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.update_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.update_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Given a prediction, update metrics to reflect it.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.exceptions">
+<span id="django-river-ml-exceptions-module"></span><h2>django_river_ml.exceptions module<a class="headerlink" href="#module-django_river_ml.exceptions" title="Permalink to this headline"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="django_river_ml.exceptions.FlavorNotSet">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.exceptions.</span></code><code class="sig-name descname"><span class="pre">FlavorNotSet</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/exceptions.html#FlavorNotSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.exceptions.FlavorNotSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.exceptions.InvalidUsage" title="django_river_ml.exceptions.InvalidUsage"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.exceptions.InvalidUsage</span></code></a></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="django_river_ml.exceptions.InvalidUsage">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.exceptions.</span></code><code class="sig-name descname"><span class="pre">InvalidUsage</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">message</span></span></em>, <em><span class="n"><span class="pre">status_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/exceptions.html#InvalidUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.exceptions.InvalidUsage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.exceptions.InvalidUsage.status_code">
+<code class="sig-name descname"><span class="pre">status_code</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">400</span></em><a class="headerlink" href="#django_river_ml.exceptions.InvalidUsage.status_code" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.exceptions.InvalidUsage.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/exceptions.html#InvalidUsage.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.exceptions.InvalidUsage.to_dict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="django_river_ml.exceptions.UnknownFlavor">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.exceptions.</span></code><code class="sig-name descname"><span class="pre">UnknownFlavor</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/exceptions.html#UnknownFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.exceptions.UnknownFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.flavors">
+<span id="django-river-ml-flavors-module"></span><h2>django_river_ml.flavors module<a class="headerlink" href="#module-django_river_ml.flavors" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.BinaryFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">BinaryFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#BinaryFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.BinaryFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.BinaryFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#BinaryFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.BinaryFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.BinaryFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#BinaryFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.BinaryFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.BinaryFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.BinaryFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.BinaryFlavor.pred_func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_func</span></code><a class="headerlink" href="#django_river_ml.flavors.BinaryFlavor.pred_func" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the required prediction function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">Flavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#Flavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.Flavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.check_model">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#Flavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.Flavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.default_metrics">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">river.metrics.base.Metric</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#Flavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.Flavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.Flavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.pred_func">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_func</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#django_river_ml.flavors.Flavor.pred_func" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the required prediction function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.MultiClassFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">MultiClassFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#MultiClassFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.MultiClassFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.MultiClassFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#MultiClassFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.MultiClassFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.MultiClassFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#MultiClassFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.MultiClassFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.MultiClassFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.MultiClassFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.MultiClassFlavor.pred_func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_func</span></code><a class="headerlink" href="#django_river_ml.flavors.MultiClassFlavor.pred_func" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the required prediction function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.RegressionFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">RegressionFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#RegressionFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.RegressionFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.RegressionFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#RegressionFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.RegressionFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.RegressionFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#RegressionFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.RegressionFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.RegressionFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.RegressionFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.RegressionFlavor.pred_func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_func</span></code><a class="headerlink" href="#django_river_ml.flavors.RegressionFlavor.pred_func" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the required prediction function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.flavors.allowed_flavors">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">allowed_flavors</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#allowed_flavors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.allowed_flavors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.flavors.check">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">check</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">flavor_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.check" title="Permalink to this definition"></a></dt>
+<dd><p>Check a model against all flavors available</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.middleware">
+<span id="django-river-ml-middleware-module"></span><h2>django_river_ml.middleware module<a class="headerlink" href="#module-django_river_ml.middleware" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.middleware.timer_middleware">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.middleware.</span></code><code class="sig-name descname"><span class="pre">timer_middleware</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">get_response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/middleware.html#timer_middleware"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.middleware.timer_middleware" title="Permalink to this definition"></a></dt>
+<dd><p>A custom class to start and end a counter.
+This should be used to decorate api.learn and api.predict</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.model">
+<span id="django-river-ml-model-module"></span><h2>django_river_ml.model module<a class="headerlink" href="#module-django_river_ml.model" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.model.model_to_dict">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.model.</span></code><code class="sig-name descname"><span class="pre">model_to_dict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/model.html#model_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.model.model_to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Dump a model to json</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.namer">
+<span id="django-river-ml-namer-module"></span><h2>django_river_ml.namer module<a class="headerlink" href="#module-django_river_ml.namer" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.namer.Namer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.namer.</span></code><code class="sig-name descname"><span class="pre">Namer</span></code><a class="reference internal" href="../../_modules/django_river_ml/namer.html#Namer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.namer.Namer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.namer.Namer.generate">
+<code class="sig-name descname"><span class="pre">generate</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">delim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0123456789'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/namer.html#Namer.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.namer.Namer.generate" title="Permalink to this definition"></a></dt>
+<dd><dl class="docutils">
+<dt>Generate a robot name. Inspiration from Haikunator, but much more</dt><dd>poorly implemented ;)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>delim</strong> (<em>Delimiter</em>) – </li>
+<li><strong>length</strong> (<em>TokenLength</em>) – </li>
+<li><strong>chars</strong> (<em>TokenChars</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.settings">
+<span id="django-river-ml-settings-module"></span><h2>django_river_ml.settings module<a class="headerlink" href="#module-django_river_ml.settings" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.settings.generate_secret_keys">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.settings.</span></code><code class="sig-name descname"><span class="pre">generate_secret_keys</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/settings.html#generate_secret_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.settings.generate_secret_keys" title="Permalink to this definition"></a></dt>
+<dd><p>A helper function to write a randomly generated secret key to file</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.signals">
+<span id="django-river-ml-signals-module"></span><h2>django_river_ml.signals module<a class="headerlink" href="#module-django_river_ml.signals" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.signals.create_auth_token">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.signals.</span></code><code class="sig-name descname"><span class="pre">create_auth_token</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">sender</span></span></em>, <em><span class="n"><span class="pre">instance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">created</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/signals.html#create_auth_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.signals.create_auth_token" title="Permalink to this definition"></a></dt>
+<dd><p>Create a token for the user when the user is created (with oAuth2)</p>
+<ol class="arabic simple">
+<li>Assign user a token</li>
+<li>Assign user to default group</li>
+</ol>
+<p>Create a token instance for all newly created User instances. We only
+run on user creation to avoid having to check for existence on each call
+to User.save.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.storage">
+<span id="django-river-ml-storage-module"></span><h2>django_river_ml.storage module<a class="headerlink" href="#module-django_river_ml.storage" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.storage.RedisBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">RedisBackend</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">host</span></span></em>, <em><span class="n"><span class="pre">port</span></span></em>, <em><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#RedisBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.RedisBackend" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.storage.StorageBackend" title="django_river_ml.storage.StorageBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.storage.StorageBackend</span></code></a></p>
+<p>Redis is the suggest backend for a more production database.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.storage.RedisBackend.close">
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#RedisBackend.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.RedisBackend.close" title="Permalink to this definition"></a></dt>
+<dd><p>Do something when the app shuts down.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.storage.ShelveBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">ShelveBackend</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">filename</span></span></em>, <em><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">writeback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#ShelveBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.ShelveBackend" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">shelve.DbfilenameShelf</span></code>, <a class="reference internal" href="#django_river_ml.storage.StorageBackend" title="django_river_ml.storage.StorageBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.storage.StorageBackend</span></code></a></p>
+<p>Storage backend based on the shelve module from the standard library.</p>
+<p>This should mainly be used for development and testing, but not production.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.storage.StorageBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">StorageBackend</span></code><a class="reference internal" href="../../_modules/django_river_ml/storage.html#StorageBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.StorageBackend" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract storage backend.</p>
+<p>This interface defines a set of methods to implement in order for a database to be used as a
+storage backend. This allows using different databases in a homogeneous manner by proving a
+single interface. Since online-ml models are largely defined by Python dictionaries, we use
+key value store databases like redis.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.storage.StorageBackend.close">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#StorageBackend.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.StorageBackend.close" title="Permalink to this definition"></a></dt>
+<dd><p>Do something when the app shuts down.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.storage.StorageBackend.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">key</span></span></em>, <em><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#StorageBackend.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.StorageBackend.get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.add_model">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">add_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">river.base.estimator.Estimator</span></span></em>, <em><span class="n"><span class="pre">flavor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#add_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.add_model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.close_db">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">close_db</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#close_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.close_db" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.delete_model">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">delete_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#delete_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.delete_model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.drop_db">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">drop_db</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#drop_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.drop_db" title="Permalink to this definition"></a></dt>
+<dd><p>This function’s responsability is to wipe out a database.</p>
+<p>This could be implement within each StorageBackend, it’s just a bit more akward because at this
+point the database connection is not stored in the app anymore.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.get_db">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">get_db</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#django_river_ml.storage.StorageBackend" title="django_river_ml.storage.StorageBackend"><span class="pre">django_river_ml.storage.StorageBackend</span></a></span></span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.get_db" title="Permalink to this definition"></a></dt>
+<dd><p>Get the database, an attribute of settings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.init_metrics">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">init_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#init_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.init_metrics" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.init_stats">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">init_stats</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#init_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.init_stats" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.storage.set_flavor">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.storage.</span></code><code class="sig-name descname"><span class="pre">set_flavor</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">flavor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/storage.html#set_flavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.storage.set_flavor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.urls">
+<span id="django-river-ml-urls-module"></span><h2>django_river_ml.urls module<a class="headerlink" href="#module-django_river_ml.urls" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-django_river_ml.utils">
+<span id="django-river-ml-utils-module"></span><h2>django_river_ml.utils module<a class="headerlink" href="#module-django_river_ml.utils" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.utils.format_sse">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.utils.</span></code><code class="sig-name descname"><span class="pre">format_sse</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/django_river_ml/utils.html#format_sse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.utils.format_sse" title="Permalink to this definition"></a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_sse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;abc&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}),</span> <span class="n">event</span><span class="o">=</span><span class="s1">&#39;Jackson 5&#39;</span><span class="p">)</span>
+<span class="go">&#39;event: Jackson 5\ndata: {&quot;abc&quot;: 123}\n\n&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.utils.get_server">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.utils.</span></code><code class="sig-name descname"><span class="pre">get_server</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/utils.html#get_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.utils.get_server" title="Permalink to this definition"></a></dt>
+<dd><p>Given a request, parse it to determine the server name and using http/https</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.utils.humanize_ns">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.utils.</span></code><code class="sig-name descname"><span class="pre">humanize_ns</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">ns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/django_river_ml/utils.html#humanize_ns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.utils.humanize_ns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.version">
+<span id="django-river-ml-version-module"></span><h2>django_river_ml.version module<a class="headerlink" href="#module-django_river_ml.version" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-django_river_ml.views">
+<span id="django-river-ml-views-module"></span><h2>django_river_ml.views module<a class="headerlink" href="#module-django_river_ml.views" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-django_river_ml.views.auth">
+<span id="django-river-ml-views-auth-module"></span><h2>django_river_ml.views.auth module<a class="headerlink" href="#module-django_river_ml.views.auth" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.auth.GetAuthToken">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.auth.</span></code><code class="sig-name descname"><span class="pre">GetAuthToken</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/auth.html#GetAuthToken"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.auth.GetAuthToken" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>Given a GET request for a token, validate and return it.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.auth.GetAuthToken.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.auth.GetAuthToken.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.auth.GetAuthToken.authentication_classes">
+<code class="sig-name descname"><span class="pre">authentication_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.auth.GetAuthToken.authentication_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.auth.GetAuthToken.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/auth.html#GetAuthToken.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.auth.GetAuthToken.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /auth/token</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.auth.GetAuthToken.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.auth.GetAuthToken.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.views.base">
+<span id="django-river-ml-views-base-module"></span><h2>django_river_ml.views.base module<a class="headerlink" href="#module-django_river_ml.views.base" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.base.ServiceInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.base.</span></code><code class="sig-name descname"><span class="pre">ServiceInfo</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/base.html#ServiceInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.base.ServiceInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>provide version support information based on response statuses.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.base.ServiceInfo.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.base.ServiceInfo.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.base.ServiceInfo.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/base.html#ServiceInfo.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.base.ServiceInfo.get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.base.ServiceInfo.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.base.ServiceInfo.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.views.learn">
+<span id="django-river-ml-views-learn-module"></span><h2>django_river_ml.views.learn module<a class="headerlink" href="#module-django_river_ml.views.learn" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.learn.LearnView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.learn.</span></code><code class="sig-name descname"><span class="pre">LearnView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/learn.html#LearnView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.learn.LearnView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>LearnView is a learning API endpoint for a model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.learn.LearnView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('POST',)</span></em><a class="headerlink" href="#django_river_ml.views.learn.LearnView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.learn.LearnView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.learn.LearnView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.learn.LearnView.post">
+<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/learn.html#LearnView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.learn.LearnView.post" title="Permalink to this definition"></a></dt>
+<dd><p>POST /api/learn/</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.views.metrics">
+<span id="django-river-ml-views-metrics-module"></span><h2>django_river_ml.views.metrics module<a class="headerlink" href="#module-django_river_ml.views.metrics" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.MetricsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.metrics.</span></code><code class="sig-name descname"><span class="pre">MetricsView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#MetricsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.MetricsView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>Get metrics for a database</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.MetricsView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.metrics.MetricsView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.MetricsView.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#MetricsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.MetricsView.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/metrics/</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.MetricsView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.metrics.MetricsView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.StatsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.metrics.</span></code><code class="sig-name descname"><span class="pre">StatsView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#StatsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.StatsView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>Get stats for the database</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.StatsView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.metrics.StatsView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.StatsView.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#StatsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.StatsView.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/stats/</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.StatsView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.metrics.StatsView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.stream_events">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.views.metrics.</span></code><code class="sig-name descname"><span class="pre">stream_events</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#stream_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.stream_events" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/stream/events/</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.views.metrics.stream_metrics">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.views.metrics.</span></code><code class="sig-name descname"><span class="pre">stream_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/metrics.html#stream_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.metrics.stream_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/stream/metrics/</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.views.model">
+<span id="django-river-ml-views-model-module"></span><h2>django_river_ml.views.model module<a class="headerlink" href="#module-django_river_ml.views.model" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelDownloadView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.model.</span></code><code class="sig-name descname"><span class="pre">ModelDownloadView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelDownloadView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelDownloadView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelDownloadView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelDownloadView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelDownloadView.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelDownloadView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelDownloadView.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/model/download/&lt;name&gt;/</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelDownloadView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelDownloadView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.model.</span></code><code class="sig-name descname"><span class="pre">ModelView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',</span> <span class="pre">'POST',</span> <span class="pre">'DELETE')</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView.delete">
+<code class="sig-name descname"><span class="pre">delete</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelView.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelView.delete" title="Permalink to this definition"></a></dt>
+<dd><p>DELETE /api/model/&lt;name&gt;/</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelView.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/model/&lt;name&gt;/</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelView.post">
+<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelView.post" title="Permalink to this definition"></a></dt>
+<dd><p>POST /api/model/&lt;flavor&gt;/&lt;name&gt;</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.model.</span></code><code class="sig-name descname"><span class="pre">ModelsView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelsView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelsView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('GET',)</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelsView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelsView.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/model.html#ModelsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.model.ModelsView.get" title="Permalink to this definition"></a></dt>
+<dd><p>GET /api/models/</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.model.ModelsView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.model.ModelsView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-django_river_ml.views.predict">
+<span id="django-river-ml-views-predict-module"></span><h2>django_river_ml.views.predict module<a class="headerlink" href="#module-django_river_ml.views.predict" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.views.predict.PredictView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.views.predict.</span></code><code class="sig-name descname"><span class="pre">PredictView</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/predict.html#PredictView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.predict.PredictView" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.views.APIView</span></code></p>
+<p>PredictView is a prediction API endpoint for a model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.predict.PredictView.allowed_methods">
+<code class="sig-name descname"><span class="pre">allowed_methods</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('POST',)</span></em><a class="headerlink" href="#django_river_ml.views.predict.PredictView.allowed_methods" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django_river_ml.views.predict.PredictView.permission_classes">
+<code class="sig-name descname"><span class="pre">permission_classes</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#django_river_ml.views.predict.PredictView.permission_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.views.predict.PredictView.post">
+<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/views/predict.html#PredictView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.views.predict.PredictView.post" title="Permalink to this definition"></a></dt>
+<dd><p>POST /api/predict/</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Internal API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

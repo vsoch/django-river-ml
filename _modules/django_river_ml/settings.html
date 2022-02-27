@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django_river_ml.settings &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>django_river_ml.settings</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for django_river_ml.settings</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.core.management.utils</span> <span class="kn">import</span> <span class="n">get_random_secret_key</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">here</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">here</span><span class="p">)</span>
+
+<span class="c1"># Default views to Authenticate</span>
+<span class="c1"># TODO update here</span>
+<span class="n">authenticated_views</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1">#    &quot;django_river_ml.views.learn.&quot;,</span>
+    <span class="c1">#    &quot;django_river_ml.views.blobs.BlobDownload&quot;,</span>
+    <span class="c1">#    &quot;django_river_ml.views.image.ImageTags&quot;,</span>
+    <span class="c1">#   &quot;django_river_ml.views.image.ImageManifest&quot;,</span>
+<span class="p">]</span>
+
+<span class="c1"># Defaults for models and storage</span>
+
+<span class="n">backends</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;shelve&quot;</span><span class="p">,</span> <span class="s2">&quot;redis&quot;</span><span class="p">]</span>
+
+
+<span class="n">DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Url base prefix</span>
+    <span class="s2">&quot;URL_PREFIX&quot;</span><span class="p">:</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+    <span class="c1"># Model storage</span>
+    <span class="s2">&quot;STORAGE_BACKEND&quot;</span><span class="p">:</span> <span class="s2">&quot;shelve&quot;</span><span class="p">,</span>
+    <span class="c1"># Redis (if used)</span>
+    <span class="s2">&quot;REDIS_DB&quot;</span><span class="p">:</span> <span class="s2">&quot;river-redis&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;REDIS_HOST&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;REDIS_PORT&quot;</span><span class="p">:</span> <span class="s2">&quot;6379&quot;</span><span class="p">,</span>
+    <span class="c1"># Base directory for storing secrets</span>
+    <span class="s2">&quot;APP_DIR&quot;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span>
+    <span class="s2">&quot;CACHE_DIR&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="c1"># Disable authentication</span>
+    <span class="s2">&quot;DISABLE_AUTHENTICATION&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="c1"># Domain used in templates, api prefix</span>
+    <span class="s2">&quot;DOMAIN_URL&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:8000&quot;</span><span class="p">,</span>
+    <span class="c1"># The number of seconds a session (upload request) is valid (10 minutes)</span>
+    <span class="s2">&quot;SESSION_EXPIRES_SECONDS&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="c1"># The number of seconds a token is valid (10 minutes)</span>
+    <span class="s2">&quot;TOKEN_EXPIRES_SECONDS&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="c1"># Disable deletion of an image by tag or manifest (default is not disabled)</span>
+    <span class="c1"># Default views to put under authentication, given that DISABLE_AUTHENTICTION is False</span>
+    <span class="s2">&quot;AUTHENTICATED_VIEWS&quot;</span><span class="p">:</span> <span class="n">authenticated_views</span><span class="p">,</span>
+    <span class="c1"># If you have a custom authentication server to generate tokens (defaults to /registry/auth/token</span>
+    <span class="s2">&quot;AUTHENTICATION_SERVER&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="c1"># jwt encoding secret: set server wide or generated on the fly</span>
+    <span class="s2">&quot;JWT_SERVER_SECRET&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span>
+    <span class="c1"># View rate limit, defaults to 100/1day using django-ratelimit based on ipaddress</span>
+    <span class="s2">&quot;VIEW_RATE_LIMIT&quot;</span><span class="p">:</span> <span class="s2">&quot;10000/1d&quot;</span><span class="p">,</span>
+    <span class="c1"># Given that someone goes over, are they blocked for a period?</span>
+    <span class="s2">&quot;VIEW_RATE_LIMIT_BLOCK&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># Shelve and jwt keys (will be generated if not found)</span>
+    <span class="s2">&quot;SHELVE_SECRET_KEY&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;JWT_SECRET_KEY&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># The user can define a section for django_river_ml in settings</span>
+<span class="n">CACHES</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;CACHES&quot;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;MIDDLEWARE&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+<span class="n">ml</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s2">&quot;django_river_ml&quot;</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">)</span>
+
+<span class="c1"># Add middleware to calculate times and stats</span>
+<span class="n">timer_middleware</span> <span class="o">=</span> <span class="s2">&quot;django_river_ml.middleware.timer_middleware&quot;</span>
+
+<span class="k">if</span> <span class="n">timer_middleware</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MIDDLEWARE</span><span class="p">:</span>
+    <span class="n">MIDDLEWARE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timer_middleware</span><span class="p">)</span>
+
+<span class="c1"># Over-ride defaults with user settings!</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">DEFAULTS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+    <span class="c1"># If we find it in the environment, use this first</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="c1"># Handle environment booleans</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Fall back to user settings and defaults</span>
+    <span class="nb">locals</span><span class="p">()[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="c1"># Default shelve path is root of install - should be updated to be within app</span>
+<span class="n">SHELVE_PATH</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SHELVE_PATH&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">APP_DIR</span><span class="p">,</span> <span class="s2">&quot;shelve.db&quot;</span><span class="p">))</span>
+
+<span class="c1"># Validation of django-river-ml settings</span>
+<span class="k">if</span> <span class="n">STORAGE_BACKEND</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">backends</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a valid storage backend, but me one of </span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">STORAGE_BACKEND</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">backends</span><span class="p">))</span>
+    <span class="p">)</span>
+
+<span class="c1"># The database state will be held via settings</span>
+<span class="c1"># db = None</span>
+
+<span class="c1"># Generate secret key for shelve if used</span>
+<div class="viewcode-block" id="generate_secret_keys"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.settings.generate_secret_keys">[docs]</a><span class="k">def</span> <span class="nf">generate_secret_keys</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A helper function to write a randomly generated secret key to file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">keyname</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;SHELVE_SECRET_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;JWT_SERVER_SECRET&quot;</span><span class="p">]:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">get_random_secret_key</span><span class="p">()</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> = &#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">keyname</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span></div>
+
+
+<span class="c1"># **Important** this will generate in the install directory</span>
+<span class="c1"># so recommended to already add to app settings.</span>
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
+<span class="c1"># Generate secret key for API (jwt) and shelve if do not exist, and not defined in environment</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">SHELVE_SECRET_KEY</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">JWT_SERVER_SECRET</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">.secret_key</span> <span class="kn">import</span> <span class="n">SHELVE_SECRET_KEY</span><span class="p">,</span> <span class="n">JWT_SERVER_SECRET</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">generate_secret_keys</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s2">&quot;secret_key.py&quot;</span><span class="p">))</span>
+        <span class="kn">from</span> <span class="nn">.secret_key</span> <span class="kn">import</span> <span class="n">SHELVE_SECRET_KEY</span><span class="p">,</span> <span class="n">JWT_SERVER_SECRET</span>
+
+<span class="c1"># Create a filesystem cache for jwt tokens</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">CACHE_DIR</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">APP_DIR</span><span class="p">,</span> <span class="s2">&quot;cache&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating cache directory </span><span class="si">{</span><span class="n">cache</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+
+<span class="n">CACHES</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;django_river_ml&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;BACKEND&quot;</span><span class="p">:</span> <span class="s2">&quot;django.core.cache.backends.filebased.FileBasedCache&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LOCATION&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">cache</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

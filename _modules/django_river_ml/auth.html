@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django_river_ml.auth &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>django_river_ml.auth</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for django_river_ml.auth</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">resolve</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+
+<span class="kn">from</span> <span class="nn">rest_framework.authtoken.models</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="kn">from</span> <span class="nn">django.middleware</span> <span class="kn">import</span> <span class="n">cache</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
+
+
+<div class="viewcode-block" id="is_authenticated"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.is_authenticated">[docs]</a><span class="k">def</span> <span class="nf">is_authenticated</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to check if a request is authenticated.</span>
+<span class="sd">    Returns a boolean to indicate if the user is authenticated, and a response with</span>
+<span class="sd">    the challenge if not.</span>
+
+<span class="sd">    request (requests.Request)    : the Request object to inspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Derive the view name from the request PATH_INFO</span>
+    <span class="n">func</span><span class="p">,</span> <span class="n">two</span><span class="p">,</span> <span class="n">three</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;PATH_INFO&quot;</span><span class="p">])</span>
+    <span class="n">view_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="c1"># If authentication is disabled, return the original view</span>
+    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">DISABLE_AUTHENTICATION</span> <span class="ow">or</span> <span class="n">view_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">AUTHENTICATED_VIEWS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="c1"># Case 2: Already has a jwt valid token</span>
+    <span class="n">is_valid</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="n">validate_jwt</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_valid</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">user</span>
+
+    <span class="c1"># Case 3: False and response will return request for auth</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Www-Authenticate&quot;</span><span class="p">:</span> <span class="n">get_challenge</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">view_name</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">user</span>
+
+    <span class="c1"># Denied for any other reason</span>
+    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">403</span><span class="p">),</span> <span class="n">user</span></div>
+
+
+<div class="viewcode-block" id="generate_jwt"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.generate_jwt">[docs]</a><span class="k">def</span> <span class="nf">generate_jwt</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a username generate a jwt</span>
+<span class="sd">    token to return to the user with a default expiration of 10 minutes.</span>
+
+<span class="sd">    username (str)  : the user&#39;s username to add under &quot;sub&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># The jti expires after TOKEN_EXPIRES_SECONDS</span>
+    <span class="n">issued_at</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ&quot;</span><span class="p">)</span>
+    <span class="n">filecache</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="s2">&quot;django_river_ml&quot;</span><span class="p">]</span>
+    <span class="n">jti</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+    <span class="n">filecache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">jti</span><span class="p">,</span> <span class="s2">&quot;good&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">TOKEN_EXPIRES_SECONDS</span><span class="p">)</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">expires_at</span> <span class="o">=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">settings</span><span class="o">.</span><span class="n">TOKEN_EXPIRES_SECONDS</span>
+
+    <span class="c1"># import jwt and generate token</span>
+    <span class="c1"># https://tools.ietf.org/html/rfc7519#section-4.1.5</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+        <span class="s2">&quot;exp&quot;</span><span class="p">:</span> <span class="n">expires_at</span><span class="p">,</span>
+        <span class="s2">&quot;nbf&quot;</span><span class="p">:</span> <span class="n">now</span><span class="p">,</span>
+        <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="n">now</span><span class="p">,</span>
+        <span class="s2">&quot;jti&quot;</span><span class="p">:</span> <span class="n">jti</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">JWT_SERVER_SECRET</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+        <span class="s2">&quot;expires_in&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">TOKEN_EXPIRES_SECONDS</span><span class="p">,</span>
+        <span class="s2">&quot;issued_at&quot;</span><span class="p">:</span> <span class="n">issued_at</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="validate_jwt"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.validate_jwt">[docs]</a><span class="k">def</span> <span class="nf">validate_jwt</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a jwt token, decode and validate</span>
+
+<span class="sd">    request (requests.Request)    : the Request object to inspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HTTP_AUTHORIZATION&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># Any reason not valid will issue an error here</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                <span class="n">encoded</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">JWT_SERVER_SECRET</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;jwt could no be decoded, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exc</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Ensure that the jti is still valid</span>
+        <span class="n">filecache</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="s2">&quot;django_river_ml&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filecache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jti&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;good&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Filecache with jti not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># The user must exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Username </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">user</span></div>
+
+
+<div class="viewcode-block" id="get_user"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.get_user">[docs]</a><span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a request, read the Authorization header to get the base64 encoded</span>
+<span class="sd">    username and token (password) which is a basic auth. If we return the user</span>
+<span class="sd">    object, the user is successfully authenticated. Otherwise, return None.</span>
+<span class="sd">    and the calling function should return Forbidden status.</span>
+
+<span class="sd">    request (requests.Request)    : the Request object to inspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HTTP_AUTHORIZATION&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">username</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="n">decoded</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">username</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">token</span><span class="o">.</span><span class="n">user</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_token"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.get_token">[docs]</a><span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The same as validate_token, but return the token object to check the</span>
+<span class="sd">    associated user.</span>
+
+<span class="sd">    request (requests.Request)    : the Request object to inspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Coming from HTTP, look for authorization as bearer token</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HTTP_AUTHORIZATION&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Token</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;BEARER&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">Token</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># Next attempt - try to get token via user session</span>
+    <span class="k">elif</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_anonymous</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Token</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Token</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_challenge"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.get_challenge">[docs]</a><span class="k">def</span> <span class="nf">get_challenge</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given an unauthenticated request, return a challenge in</span>
+<span class="sd">    the Www-Authenticate header</span>
+
+<span class="sd">    request (requests.Request): the Request object to inspect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DOMAIN_NAME</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_server</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">auth_server</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_SERVER</span> <span class="ow">or</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/auth/token&quot;</span> <span class="o">%</span> <span class="n">DOMAIN_NAME</span>
+    <span class="k">return</span> <span class="s1">&#39;realm=&quot;</span><span class="si">%s</span><span class="s1">&quot;,service=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">auth_server</span><span class="p">,</span>
+        <span class="n">DOMAIN_NAME</span><span class="p">,</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

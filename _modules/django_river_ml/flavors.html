@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django_river_ml.flavors &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>django_river_ml.flavors</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for django_river_ml.flavors</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+
+<span class="kn">from</span> <span class="nn">river</span> <span class="kn">import</span> <span class="n">metrics</span>
+
+<span class="c1"># A &quot;flavor&quot; is a different kind of online-ml model.</span>
+<span class="c1"># We need to know the correct check / prediction to do for different kinds!</span>
+<span class="c1"># https://github.com/online-ml/chantilly/blob/master/chantilly/flavors.py#L1</span>
+
+
+<div class="viewcode-block" id="check"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.check">[docs]</a><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check a model against all flavors available</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">flavor</span> <span class="ow">in</span> <span class="p">[</span><span class="n">RegressionFlavor</span><span class="p">,</span> <span class="n">BinaryFlavor</span><span class="p">,</span> <span class="n">MultiClassFlavor</span><span class="p">]:</span>
+        <span class="n">flavor</span> <span class="o">=</span> <span class="n">flavor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">flavor_name</span> <span class="o">==</span> <span class="n">flavor</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">flavor</span><span class="o">.</span><span class="n">check_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;This model flavor </span><span class="si">%s</span><span class="s2"> is not recognized&quot;</span> <span class="o">%</span> <span class="n">flavor_name</span></div>
+
+
+<div class="viewcode-block" id="allowed_flavors"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.allowed_flavors">[docs]</a><span class="k">def</span> <span class="nf">allowed_flavors</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">f</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">RegressionFlavor</span><span class="p">,</span> <span class="n">BinaryFlavor</span><span class="p">,</span> <span class="n">MultiClassFlavor</span><span class="p">]}</span></div>
+
+
+<div class="viewcode-block" id="Flavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.Flavor">[docs]</a><span class="k">class</span> <span class="nc">Flavor</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractproperty</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Flavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.Flavor.check_model">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether or not a model works for a flavor.&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Flavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.Flavor.default_metrics">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">metrics</span><span class="o">.</span><span class="n">Metric</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Default metrics to record globally as well as for each model.&quot;&quot;&quot;</span></div>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractproperty</span>
+    <span class="k">def</span> <span class="nf">pred_func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The name of the required prediction function.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RegressionFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.RegressionFlavor">[docs]</a><span class="k">class</span> <span class="nc">RegressionFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;regression&quot;</span>
+
+<div class="viewcode-block" id="RegressionFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.RegressionFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;learn_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_one&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The model does not implement </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="RegressionFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.RegressionFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">metrics</span><span class="o">.</span><span class="n">MAE</span><span class="p">(),</span> <span class="n">metrics</span><span class="o">.</span><span class="n">RMSE</span><span class="p">(),</span> <span class="n">metrics</span><span class="o">.</span><span class="n">SMAPE</span><span class="p">()]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;predict_one&quot;</span></div>
+
+
+<div class="viewcode-block" id="BinaryFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.BinaryFlavor">[docs]</a><span class="k">class</span> <span class="nc">BinaryFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;binary&quot;</span>
+
+<div class="viewcode-block" id="BinaryFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.BinaryFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;learn_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_proba_one&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The model does not implement </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="BinaryFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.BinaryFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">Accuracy</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">LogLoss</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">Precision</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">Recall</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">F1</span><span class="p">(),</span>
+        <span class="p">]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;predict_proba_one&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiClassFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.MultiClassFlavor">[docs]</a><span class="k">class</span> <span class="nc">MultiClassFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;multiclass&quot;</span>
+
+<div class="viewcode-block" id="MultiClassFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;learn_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_proba_one&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The model does not implement </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MultiClassFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">Accuracy</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">CrossEntropy</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MacroPrecision</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MacroRecall</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MacroF1</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MicroPrecision</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MicroRecall</span><span class="p">(),</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">MicroF1</span><span class="p">(),</span>
+        <span class="p">]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;predict_proba_one&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

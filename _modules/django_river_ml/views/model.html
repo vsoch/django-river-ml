@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>django_river_ml.views.model &mdash; Django River ML 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Django River ML
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/user-guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/django-river-ml.html">Django River ML Python Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Django River ML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>django_river_ml.views.model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for django_river_ml.views.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rest_framework.views</span> <span class="kn">import</span> <span class="n">APIView</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">QueryDict</span><span class="p">,</span> <span class="n">HttpResponse</span>
+
+<span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">settings</span> <span class="k">as</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django_river_ml.client</span> <span class="kn">import</span> <span class="n">RiverClient</span>
+<span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">model</span> <span class="k">as</span> <span class="n">models</span>
+
+<span class="kn">from</span> <span class="nn">ratelimit.decorators</span> <span class="kn">import</span> <span class="n">ratelimit</span>
+<span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<span class="kn">import</span> <span class="nn">dill</span>
+
+
+<div class="viewcode-block" id="ModelDownloadView"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelDownloadView">[docs]</a><span class="k">class</span> <span class="nc">ModelDownloadView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="ModelDownloadView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelDownloadView.get">[docs]</a>    <span class="nd">@method_decorator</span><span class="p">(</span>
+        <span class="n">ratelimit</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="n">block</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT_BLOCK</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET /api/model/download/&lt;name&gt;/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;A model name is required&quot;</span><span class="p">})</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">dill</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/octet-stream&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ModelView"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelView">[docs]</a><span class="k">class</span> <span class="nc">ModelView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ModelView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelView.get">[docs]</a>    <span class="nd">@method_decorator</span><span class="p">(</span>
+        <span class="n">ratelimit</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="n">block</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT_BLOCK</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET /api/model/&lt;name&gt;/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;A model name is required&quot;</span><span class="p">})</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">dumped</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">model_to_dict</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">dumped</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelView.post"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelView.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        POST /api/model/&lt;flavor&gt;/&lt;name&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># if we only have one arg, we have flavor</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">flavor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if we only have one arg, we have flavor</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">flavor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;flavor&quot;</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">dill</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
+        <span class="n">added</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">flavor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">added</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">201</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelView.delete"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelView.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        DELETE /api/model/&lt;name&gt;/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">QueryDict</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="mi">204</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ModelsView"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelsView">[docs]</a><span class="k">class</span> <span class="nc">ModelsView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="ModelsView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.model.ModelsView.get">[docs]</a>    <span class="nd">@method_decorator</span><span class="p">(</span>
+        <span class="n">ratelimit</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+            <span class="n">block</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT_BLOCK</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET /api/models/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="p">())</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
