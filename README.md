@@ -1,5 +1,6 @@
 # django-river-ml
 
+[![CI](https://github.com/vsoch/django-river-ml/actions/workflows/main.yml/badge.svg)](https://github.com/vsoch/django-river-ml/actions/workflows/main.yml)
 [![PyPI version](https://badge.fury.io/py/django-river-ml.svg)](https://badge.fury.io/py/django-river-ml)
 
 Django models to deploy [river](https://riverml.xyz) online machine learning. 
@@ -7,7 +8,6 @@ This is a Django version of [chantilly](https://github.com/online-ml/chantilly) 
 same overall design. We also include [example clients](examples/) and a test application in [tests](tests).
 
 See the ⭐️ [Documentation](https://vsoch.github.io/django-river-ml/) ⭐️ to get started!
-
 
 ## TODO
 
@@ -18,4 +18,4 @@ See the ⭐️ [Documentation](https://vsoch.github.io/django-river-ml/) ⭐️ 
 - implement more examples?
 - add and test authenticated views
 - do we want a default interface for something?
-- upload to pypi
+- upload to pypi and automated release after that
