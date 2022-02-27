@@ -1,0 +1,42 @@
+name: Update Docs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: "gh-pages"
+
+      - name: Create environment
+        run: python -m venv env
+
+      - name: Generate Docs
+        run: |
+          source env/bin/activate
+          python --version
+          root=$PWD
+          ls
+          cd /tmp
+          git clone https://github.com/vsoch/django-river-ml
+          cd django-river-ml
+          pip install -e .
+          cd docs
+          pip install -r requirements.txt
+          make html
+          mv $root/.git _build/html/.git
+          rm -rf $root
+          mv _build/html $root
+          cd $root
+          touch .nojekyll
+          ls
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: .

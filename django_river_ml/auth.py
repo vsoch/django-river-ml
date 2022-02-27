@@ -23,8 +23,6 @@ def is_authenticated(request):
     Returns a boolean to indicate if the user is authenticated, and a response with
     the challenge if not.
 
-    Arguments:
-    ==========
     request (requests.Request)    : the Request object to inspect
     """
     # Derive the view name from the request PATH_INFO
@@ -54,8 +52,6 @@ def generate_jwt(username):
     """Given a username generate a jwt
     token to return to the user with a default expiration of 10 minutes.
 
-    Arguments:
-    ==========
     username (str)  : the user's username to add under "sub"
     """
     # The jti expires after TOKEN_EXPIRES_SECONDS
@@ -86,10 +82,9 @@ def generate_jwt(username):
 
 
 def validate_jwt(request):
-    """Given a jwt token, decode and validate
+    """
+    Given a jwt token, decode and validate
 
-    Arguments:
-    ==========
     request (requests.Request)    : the Request object to inspect
     """
     header = request.META.get("HTTP_AUTHORIZATION", "")
@@ -127,8 +122,6 @@ def get_user(request):
     object, the user is successfully authenticated. Otherwise, return None.
     and the calling function should return Forbidden status.
 
-    Arguments:
-    ==========
     request (requests.Request)    : the Request object to inspect
     """
     header = request.META.get("HTTP_AUTHORIZATION", "")
@@ -149,8 +142,6 @@ def get_token(request):
     """The same as validate_token, but return the token object to check the
     associated user.
 
-    Arguments:
-    ==========
     request (requests.Request)    : the Request object to inspect
     """
     # Coming from HTTP, look for authorization as bearer token
@@ -174,8 +165,6 @@ def get_challenge(request):
     """Given an unauthenticated request, return a challenge in
     the Www-Authenticate header
 
-    Arguments:
-    ==========
     request (requests.Request): the Request object to inspect
     """
     DOMAIN_NAME = utils.get_server(request)

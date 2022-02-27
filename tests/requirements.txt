@@ -1,0 +1,5 @@
+django
+djangorestframework
+django-ratelimit==3.0.0
+django-river-ml
+pyjwt==1.7.1
