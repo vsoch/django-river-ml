@@ -57,6 +57,7 @@ jobs:
         run: |
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate testing
+          pip install -e .
           pip install -r tests/requirements.txt
           # TODO TESTS NOT WRITTEN YET
           #python manage.py makemigrations django_river_ml
