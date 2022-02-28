@@ -88,7 +88,6 @@
 <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">here</span><span class="p">)</span>
 
 <span class="c1"># Default views to Authenticate</span>
-<span class="c1"># TODO update here</span>
 <span class="n">authenticated_views</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;django_river_ml.views.learn.view&quot;</span><span class="p">,</span>
     <span class="s2">&quot;django_river_ml.views.predict.view&quot;</span><span class="p">,</span>
@@ -98,6 +97,10 @@
     <span class="s2">&quot;django_river_ml.views.metrics.stream_metrics&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
+
+<span class="n">timed_views</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;django_river_ml.views.learn.view&quot;</span><span class="p">,</span> <span class="s2">&quot;django_river_ml.views.predict.view&quot;</span><span class="p">]</span>
+
+<span class="c1"># TODO do we need this?</span>
 <span class="n">authenticated_prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;/api/model/&quot;</span><span class="p">]</span>
 
 <span class="c1"># Defaults for models and storage</span>
@@ -118,7 +121,7 @@
     <span class="s2">&quot;APP_DIR&quot;</span><span class="p">:</span> <span class="n">root</span><span class="p">,</span>
     <span class="s2">&quot;CACHE_DIR&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="c1"># Disable authentication</span>
-    <span class="s2">&quot;DISABLE_AUTHENTICATION&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;DISABLE_AUTHENTICATION&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="c1"># Domain used in templates, api prefix</span>
     <span class="s2">&quot;DOMAIN_URL&quot;</span><span class="p">:</span> <span class="s2">&quot;http://127.0.0.1:8000&quot;</span><span class="p">,</span>
     <span class="c1"># The number of seconds a session (upload request) is valid (10 minutes)</span>

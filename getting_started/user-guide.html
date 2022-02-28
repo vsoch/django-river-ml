@@ -51,6 +51,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sample-application">Sample Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
 </ul>
 </li>
 </ul>
@@ -201,7 +202,7 @@ and do not use the default of the plugin:</p>
 <td>/opt/cache</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></td>
-<td>False</td>
+<td>True</td>
 <td>For views that require authentication, disable them.</td>
 <td>True</td>
 </tr>
@@ -280,8 +281,15 @@ you can use to test. Once you have your environment setup, you can do:</p>
 </pre></div>
 </div>
 <p>In another terminal, you can then run a sample script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python examples/regression/run.py
-$ python examples/binary/run.py
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python examples/regression/run.py
+<span class="gp">$ </span>python examples/binary/run.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<p>Running tests with the example server is also fairly easy!</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python runtests.py</span>
 </pre></div>
 </div>
 <p>This library is under development and we will have more endpoints and functionality

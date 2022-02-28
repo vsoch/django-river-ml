@@ -233,7 +233,7 @@
 
 <div class="viewcode-block" id="init_stats"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.storage.init_stats">[docs]</a><span class="k">def</span> <span class="nf">init_stats</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">()</span>
-    <span class="n">db</span><span class="p">[</span><span class="s2">&quot;stats/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;learn_mean&quot;</span><span class="p">:</span> <span class="n">river</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Mean</span><span class="p">(),</span>
         <span class="s2">&quot;learn_ewm&quot;</span><span class="p">:</span> <span class="n">river</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">EWMean</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
         <span class="s2">&quot;predict_mean&quot;</span><span class="p">:</span> <span class="n">river</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Mean</span><span class="p">(),</span>
@@ -244,10 +244,9 @@
 <div class="viewcode-block" id="init_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.storage.init_metrics">[docs]</a><span class="k">def</span> <span class="nf">init_metrics</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">flavor</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;flavor/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">flavor</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">FlavorNotSet</span>
-
     <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flavor</span><span class="o">.</span><span class="n">default_metrics</span><span class="p">()</span></div>
 
 

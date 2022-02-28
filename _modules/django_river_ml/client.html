@@ -100,7 +100,7 @@
 
 <div class="viewcode-block" id="RiverClient.stats"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="s2">&quot;stats/</span><span class="si">{model_name}</span><span class="s2">&quot;</span><span class="p">]</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidUsage</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;We don&#39;t have stats for that model&quot;</span><span class="p">)</span>
 
@@ -349,13 +349,6 @@
                 <span class="n">pred</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
                 <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
 
-            <span class="c1"># In some cases we have a dict that isn&#39;t a Classification Metric</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-
-                <span class="c1"># The ground truth may not be present</span>
-                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">y_pred</span><span class="p">:</span>
-                    <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">prediction</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span>

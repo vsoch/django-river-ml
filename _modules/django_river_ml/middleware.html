@@ -77,9 +77,13 @@
              
   <h1>Source code for django_river_ml.middleware</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">resolve</span>
 
 <span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">settings</span> <span class="k">as</span> <span class="n">settings</span>
 <span class="kn">import</span> <span class="nn">django_river_ml.storage</span> <span class="k">as</span> <span class="nn">storage</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="c1"># The following are pre and post events that should be run alongside views</span>
 <span class="c1"># to update either metrics or stats</span>
@@ -94,16 +98,36 @@
 
     <span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 
+        <span class="c1"># Derive the view name from the request PATH_INFO</span>
+        <span class="n">func</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;PATH_INFO&quot;</span><span class="p">])</span>
+        <span class="n">view_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">in_timed_view</span> <span class="o">=</span> <span class="n">view_name</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">timed_views</span>
+
         <span class="c1"># Grab the started at time</span>
         <span class="n">started_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter_ns</span><span class="p">()</span>
+
+        <span class="c1"># Deep copy the request body to see if we hav a name param</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">copied</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">copied</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="n">model_name</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
         <span class="n">response</span> <span class="o">=</span> <span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Cut out early if not in a timed view</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">in_timed_view</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">model_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response</span>
 
         <span class="c1"># Calculate the duration and add to stats</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter_ns</span><span class="p">()</span> <span class="o">-</span> <span class="n">started_at</span>
         <span class="n">db</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">get_db</span><span class="p">()</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;stats&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">storage</span><span class="o">.</span><span class="n">init_stats</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;/</span><span class="si">%s</span><span class="s2">/learn/&quot;</span> <span class="o">%</span> <span class="n">settings</span><span class="o">.</span><span class="n">URL_PREFIX</span><span class="p">:</span>
             <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
             <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;learn_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
@@ -111,7 +135,7 @@
             <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
             <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;predict_ewm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
 
-        <span class="n">db</span><span class="p">[</span><span class="s2">&quot;stats&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+        <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
         <span class="k">return</span> <span class="n">response</span>
 
     <span class="k">return</span> <span class="n">middleware</span></div>
