@@ -46,10 +46,9 @@ def timer_middleware(get_response):
         # Calculate the duration and add to stats
         duration = time.perf_counter_ns() - started_at
         db = storage.get_db()
-        if f"stats/{model_name}" in db:
-            stats = db[f"stats/{model_name}"]
-        else:
-            stats = {}
+        if f"stats/{model_name}" not in db:
+            storage.init_stats(model_name)
+        stats = db[f"stats/{model_name}"]
 
         if request.path == "/%s/learn/" % settings.URL_PREFIX:
             stats["learn_mean"].update(duration)
