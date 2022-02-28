@@ -153,7 +153,6 @@ class RiverClient:
         if prediction is None:
             flavor = self.db[f"flavor/{model_name}"]
             pred_func = getattr(model, flavor.pred_func)
-            print("FOUND FLAVOR LEARN %s" % flavor)
             try:
                 prediction = pred_func(x=copy.deepcopy(features))
             except Exception as e:
@@ -199,7 +198,6 @@ class RiverClient:
 
         # Make the prediction
         flavor = self.db[f"flavor/{model_name}"]
-        print("FOUND FLAVOR PREDICT %s" % flavor)
         pred_func = getattr(model, flavor.pred_func)
         try:
             pred = pred_func(x=features)
