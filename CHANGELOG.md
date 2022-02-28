@@ -14,4 +14,5 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
- - skeleton release  (0.0.0)
+ - first version that has authentication and tests (0.0.11)
+ - skeleton release  (0.0.1)
