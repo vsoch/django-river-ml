@@ -155,7 +155,7 @@ def set_flavor(flavor: str, name: str):
 
 def init_stats(name: str):
     db = get_db()
-    db["stats/{name}"] = {
+    db[f"stats/{name}"] = {
         "learn_mean": river.stats.Mean(),
         "learn_ewm": river.stats.EWMean(0.3),
         "predict_mean": river.stats.Mean(),
@@ -166,10 +166,9 @@ def init_stats(name: str):
 def init_metrics(name: str):
     db = get_db()
     try:
-        flavor = db["flavor/{name}"]
+        flavor = db[f"flavor/{name}"]
     except KeyError:
         raise exceptions.FlavorNotSet
-
     db[f"metrics/{name}"] = flavor.default_metrics()
 
 

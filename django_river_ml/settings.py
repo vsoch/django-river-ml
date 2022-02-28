@@ -10,7 +10,6 @@ here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.dirname(here)
 
 # Default views to Authenticate
-# TODO update here
 authenticated_views = [
     "django_river_ml.views.learn.view",
     "django_river_ml.views.predict.view",
@@ -20,6 +19,10 @@ authenticated_views = [
     "django_river_ml.views.metrics.stream_metrics",
 ]
 
+
+timed_views = ["django_river_ml.views.learn.view", "django_river_ml.views.predict.view"]
+
+# TODO do we need this?
 authenticated_prefixes = ["/api/model/"]
 
 # Defaults for models and storage
@@ -40,7 +43,7 @@ DEFAULTS = {
     "APP_DIR": root,
     "CACHE_DIR": None,
     # Disable authentication
-    "DISABLE_AUTHENTICATION": False,
+    "DISABLE_AUTHENTICATION": True,
     # Domain used in templates, api prefix
     "DOMAIN_URL": "http://127.0.0.1:8000",
     # The number of seconds a session (upload request) is valid (10 minutes)

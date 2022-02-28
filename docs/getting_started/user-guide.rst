@@ -107,7 +107,7 @@ The following additonal settings are available to set in your ``settings.py``:
      - The cache directory for tokens, recommended to set a custom ``APP_DIR`` and it will be a sub-directory ``cache`` there
      - /opt/cache
    * - ``DISABLE_AUTHENTICATION``
-     - False
+     - True
      - For views that require authentication, disable them.
      - True
    * - ``DOMAIN_URL``
@@ -196,10 +196,20 @@ you can use to test. Once you have your environment setup, you can do:
 In another terminal, you can then run a sample script:
 
     
-.. code-block:: bash
+.. code-block:: console
 
     $ python examples/regression/run.py
     $ python examples/binary/run.py
+
+
+Testing
+-------
+
+Running tests with the example server is also fairly easy!
+
+.. code-block:: console
+
+    python runtests.py
 
 
 This library is under development and we will have more endpoints and functionality

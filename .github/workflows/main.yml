@@ -24,6 +24,7 @@ jobs:
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate black
 
+          pyflakes tests/*.py
           pyflakes django_river_ml/announce.py
           pyflakes django_river_ml/apps.py
           pyflakes django_river_ml/auth.py
@@ -59,12 +60,6 @@ jobs:
           source activate testing
           pip install -e .
           pip install -r tests/requirements.txt
-          # TODO TESTS NOT WRITTEN YET
-          #python manage.py makemigrations django_river_ml
-          #python manage.py makemigrations
-          #python manage.py migrate
-          #python manage.py migrate django_river_ml
-          #echo ::group::tests.test_api
-          #python manage.py test tests.test_api
-          #echo ::endgroup::tests.test_api
-          #rm db-test.sqlite3
+          echo ::group::tests.test_api
+          python runtests.py
+          echo ::endgroup::tests.test_api
