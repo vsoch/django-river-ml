@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from django_river_ml import settings
+from django_river_ml.auth import is_authenticated
 
 from ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
@@ -38,6 +39,10 @@ class PredictView(APIView):
         model_name = payload.get("model")
         identifier = payload.get("identifier")
         features = payload.get("features")
+
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
 
         if not model_name or not features:
             return Response(status=400, message="model and features are required.")

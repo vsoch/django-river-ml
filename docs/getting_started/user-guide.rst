@@ -135,6 +135,49 @@ The following additonal settings are available to set in your ``settings.py``:
 For more advanced settings like customizing the endpoints with authentication, see
 the `settings.py <https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py>`_ in the application.
 
+Authentication
+--------------
+
+If you have ``DISABLE_AUTHENTICATION`` set to true, or you customize the settings ``AUTHENTICATED_VIEWS`` to change
+the defaults, then you shouldn't need to do any kind of authentication. This might be ideal for a development or
+closed environment that is only accessible to you or your team. However, for most cases you are strongly encouraged to
+have authentication. Authentication will require creating a user, to which Django River ML will add a token generated
+by Django Restful, if not already generated. For purposes of example, we can quickly create a user as follows:
+
+.. code-block:: console
+
+    python manage.py createsuperuser
+    Username (leave blank to use 'dinosaur'):
+    Email address: 
+    Password: 
+    Password (again): 
+    Superuser created successfully.
+
+And at this point, you can also ask for the token.
+
+.. code-block:: console
+
+    python manage.py get_token dinosaur
+    Enter Password:
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+You can then export this token in the environment to be found by the `river api client <https://github.com/vsoch/riverapi>`_.
+
+.. code-block:: console
+
+    export RIVER_ML_USER=dinosaur
+    export RIVER_ML_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+Otherwise you will need to manually go through a standard OAuth2 workflow of using basic
+auth to look for a 401 response with a ``Www-Authenticate`` header, parsing that to find the "realm" 
+(the authentication server) and then making a request to that endpoint with the base64 encoded user and token 
+in the Authenticate header. It's much easier to use the client to do it for you, which will cache your token
+(until it expires and you need to request a new one automatically).
+
+Of course if you have a Django interface with OAuth for login, you can make a settings
+or profile page to easily retrieve the same token. Open an issue if you need guidance to do this.
+We might consider adding a front-end view to provide by default if it's desired.
 
 Sample Application
 ------------------

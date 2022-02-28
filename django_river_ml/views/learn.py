@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from django_river_ml import settings
-
+from django_river_ml.auth import is_authenticated
 from ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
 
@@ -35,6 +35,10 @@ class LearnView(APIView):
             payload = json.loads(request.body.decode("utf-8"))
         except:
             return Response(status=400)
+
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
 
         model_name = payload.get("model")
         features = payload.get("features")

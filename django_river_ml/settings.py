@@ -12,14 +12,15 @@ root = os.path.dirname(here)
 # Default views to Authenticate
 # TODO update here
 authenticated_views = [
-    #    "django_river_ml.views.learn.view",
-    #    "django_river_ml.views.metrics.view",
-    #   "django_river_ml.views.model.view",
-    #   "django_river_ml.views.predict.view",
-    #    "django_river_ml.views.metrics.view",
-    #    "django_river_ml.views.metrics.stream_events",
-    #    "django_river_ml.views.metrics.stream_metrics",
+    "django_river_ml.views.learn.view",
+    "django_river_ml.views.predict.view",
+    "django_river_ml.views.model.view",
+    "django_river_ml.views.metrics.view",
+    "django_river_ml.views.metrics.stream_events",
+    "django_river_ml.views.metrics.stream_metrics",
 ]
+
+authenticated_prefixes = ["/api/model/"]
 
 # Defaults for models and storage
 

@@ -5,6 +5,7 @@ __pycache__
 
 # Django development
 env
+cache
 migrations
 images
 _site

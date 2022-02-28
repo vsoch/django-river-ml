@@ -19,7 +19,7 @@ from recommonmark.parser import CommonMarkParser
 
 source_parsers = {".md": CommonMarkParser}
 
-import django 
+import django
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -149,7 +149,7 @@ html_theme = "sphinx_rtd_theme"
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = 'assets/favicon.ico'
+html_favicon = "assets/favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -221,7 +221,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ("index", "django_river_ml.tex", "django_river_ml Documentation", "Vanessa Sochat", "manual"),
+    (
+        "index",
+        "django_river_ml.tex",
+        "django_river_ml Documentation",
+        "Vanessa Sochat",
+        "manual",
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

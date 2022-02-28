@@ -26,7 +26,7 @@ def main():
     model_json
 
     # Saves to model-name>.pkl in pwd unless you provide a second arg, dest
-    cli.download_model(model_name)
+    # cli.download_model(model_name)
 
     # Make predictions
     for x, y in datasets.TrumpApproval().take(10):

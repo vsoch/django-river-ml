@@ -54,14 +54,14 @@ class RiverClient:
         Stream events from the events announcer.
         """
         messages = announce.EVENTS_ANNOUNCER.listen()
-        return self._stream_announcer(self, messages)
+        return self._stream_announcer(messages)
 
     def stream_metrics(self):
         """
         Stream events from the metrics announcer.
         """
         messages = announce.METRICS_ANNOUNCER.listen()
-        return self._stream_announcer(self, messages)
+        return self._stream_announcer(messages)
 
     def metrics(self):
         """

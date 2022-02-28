@@ -6,6 +6,7 @@ from django.http import QueryDict, HttpResponse
 from django_river_ml import settings as settings
 from django_river_ml.client import RiverClient
 from django_river_ml import model as models
+from django_river_ml.auth import is_authenticated
 
 from ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
@@ -28,6 +29,10 @@ class ModelDownloadView(APIView):
         """
         GET /api/model/download/<name>/
         """
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
+
         name = kwargs.get("name")
         if not name:
             return Response(status=400, data={"message": "A model name is required"})
@@ -52,6 +57,10 @@ class ModelView(APIView):
         """
         GET /api/model/<name>/
         """
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
+
         name = kwargs.get("name")
         if not name:
             return Response(status=400, data={"message": "A model name is required"})
@@ -64,6 +73,10 @@ class ModelView(APIView):
         """
         POST /api/model/<flavor>/<name>
         """
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
+
         name = None
 
         # if we only have one arg, we have flavor
@@ -88,6 +101,11 @@ class ModelView(APIView):
         """
         params = QueryDict(request.body)
         name = params.get("name")
+
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
+
         client = RiverClient()
         if not client.delete_model(name):
             return Response(status=404)
@@ -110,5 +128,9 @@ class ModelsView(APIView):
         """
         GET /api/models/
         """
+        allow_continue, response, _ = is_authenticated(request)
+        if not allow_continue:
+            return response
+
         client = RiverClient()
         return Response(status=200, data=client.models())

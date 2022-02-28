@@ -26,9 +26,10 @@ def is_authenticated(request):
     request (requests.Request)    : the Request object to inspect
     """
     # Derive the view name from the request PATH_INFO
-    func, two, three = resolve(request.META["PATH_INFO"])
+    func, _, _ = resolve(request.META["PATH_INFO"])
     view_name = "%s.%s" % (func.__module__, func.__name__)
 
+    print("VIEW NAME: %s" % view_name)
     # If authentication is disabled, return the original view
     if settings.DISABLE_AUTHENTICATION or view_name not in settings.AUTHENTICATED_VIEWS:
         return True, None, None
@@ -41,7 +42,7 @@ def is_authenticated(request):
     # Case 3: False and response will return request for auth
     user = get_user(request)
     if not user:
-        headers = {"Www-Authenticate": get_challenge(request, view_name)}
+        headers = {"Www-Authenticate": get_challenge(request)}
         return False, Response(status=401, headers=headers), user
 
     # Denied for any other reason
@@ -109,11 +110,12 @@ def validate_jwt(request):
         # The user must exist
         try:
             user = User.objects.get(username=decoded.get("sub"))
+            return True, user
         except User.DoesNotExist:
             print("Username %s not found" % decoded.get("sub"))
             return False, None
 
-    return True, user
+    return False, None
 
 
 def get_user(request):
@@ -125,7 +127,6 @@ def get_user(request):
     request (requests.Request)    : the Request object to inspect
     """
     header = request.META.get("HTTP_AUTHORIZATION", "")
-
     if re.search("basic", header, re.IGNORECASE):
         encoded = re.sub("basic", "", header, flags=re.IGNORECASE).strip()
         decoded = base64.b64decode(encoded).decode("utf-8")
@@ -168,7 +169,7 @@ def get_challenge(request):
     request (requests.Request): the Request object to inspect
     """
     DOMAIN_NAME = utils.get_server(request)
-    auth_server = settings.AUTH_SERVER or "%s/auth/token" % DOMAIN_NAME
+    auth_server = "%s/auth/token" % DOMAIN_NAME
     return 'realm="%s",service="%s"' % (
         auth_server,
         DOMAIN_NAME,

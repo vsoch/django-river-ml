@@ -5,7 +5,6 @@ from ratelimit.decorators import ratelimit
 
 from django_river_ml import settings
 from django_river_ml.version import __version__
-from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 
 
@@ -17,7 +16,6 @@ class ServiceInfo(APIView):
     permission_classes = []
     allowed_methods = ("GET",)
 
-    @never_cache
     @method_decorator(
         ratelimit(
             key="ip",
@@ -35,7 +33,6 @@ class ServiceInfo(APIView):
             "name": "Django River ML Endpoint",
             "description": "This service provides an api for models",
             "documentationUrl": "https://vsoch.github.io/django-river-ml",
-            "flavor": settings.MODEL_FLAVOR,
             "storage": settings.STORAGE_BACKEND,
             "river_version": river.__version__,
             "version": __version__,
