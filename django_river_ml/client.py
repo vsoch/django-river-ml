@@ -271,9 +271,10 @@ class RiverClient:
                 pred = max(prediction, key=prediction.get)
                 metric.update(y_true=ground_truth, y_pred=pred)
 
-            # In some cases the prediction dict either has or doesn't have the ground truth
-            # is this correct?
+            # In some cases we have a dict that isn't a Classification Metric
             elif isinstance(prediction, dict):
+
+                # The ground truth may not be present
                 y_pred = prediction.get(ground_truth)
                 if y_pred:
                     metric.update(y_true=ground_truth, y_pred=y_pred)
