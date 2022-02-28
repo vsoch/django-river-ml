@@ -349,9 +349,10 @@
                 <span class="n">pred</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
                 <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
 
-            <span class="c1"># In some cases the prediction dict either has or doesn&#39;t have the ground truth</span>
-            <span class="c1"># is this correct?</span>
+            <span class="c1"># In some cases we have a dict that isn&#39;t a Classification Metric</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+
+                <span class="c1"># The ground truth may not be present</span>
                 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">y_pred</span><span class="p">:</span>
                     <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
