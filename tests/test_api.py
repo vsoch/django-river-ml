@@ -104,7 +104,6 @@ class APIBaseTests(APITestCase):
         for x, y in stream.iter_array(X, Y):
             print(self.client.predict(model_name, x=x))
 
-
     def test_authenticated(self):
         """
         Testing of a regression model (with auth)

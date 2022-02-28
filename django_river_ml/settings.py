@@ -10,7 +10,6 @@ here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.dirname(here)
 
 # Default views to Authenticate
-# TODO update here
 authenticated_views = [
     "django_river_ml.views.learn.view",
     "django_river_ml.views.predict.view",
@@ -20,6 +19,10 @@ authenticated_views = [
     "django_river_ml.views.metrics.stream_metrics",
 ]
 
+
+timed_views = ["django_river_ml.views.learn.view", "django_river_ml.views.predict.view"]
+
+# TODO do we need this?
 authenticated_prefixes = ["/api/model/"]
 
 # Defaults for models and storage
