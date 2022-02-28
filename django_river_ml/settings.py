@@ -40,7 +40,7 @@ DEFAULTS = {
     "APP_DIR": root,
     "CACHE_DIR": None,
     # Disable authentication
-    "DISABLE_AUTHENTICATION": False,
+    "DISABLE_AUTHENTICATION": True,
     # Domain used in templates, api prefix
     "DOMAIN_URL": "http://127.0.0.1:8000",
     # The number of seconds a session (upload request) is valid (10 minutes)

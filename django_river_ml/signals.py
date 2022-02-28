@@ -3,7 +3,30 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+import sys
+
 UserModel = get_user_model()
+
+
+def get_user_token(user):
+    """
+    Get a user token.
+    """
+    try:
+        return str(Token.objects.get(user=user))
+    except Token.DoesNotExist:
+        sys.exit("Token for %s does not exist." % user)
+
+
+def create_user_token(user):
+    """
+    Function to create the token for the user, if it doesn't exist.
+    """
+    try:
+        token = Token.objects.get(user=user)
+    except Token.DoesNotExist:
+        token = Token.objects.create(user=user)
+    return str(token)
 
 
 @receiver(post_save, sender=UserModel)
@@ -18,7 +41,4 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     or the main user application is running the same function.
     """
     if created:
-        try:
-            Token.objects.get(user=instance)
-        except Token.DoesNotExist:
-            Token.objects.create(user=instance)
+        create_user_token(instance)

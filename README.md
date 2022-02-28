@@ -33,13 +33,7 @@ tool to generate a contributors graphic below.
 
 ## TODO
 
-- tests
 - should we have a server generic client to plug in here instead?
-- create client that can easily interact with API
 - add some basic set of frontend views?
 - do we want a spec? [issue](https://github.com/online-ml/river/issues/845)
-- clean up docstrings -> docs and python docs -> envars list and how to define -> pretty docs
-- implement more examples?
-- add and test authenticated views
-- do we want a default interface for something?
-
+- multiclass example [datasets](https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/)

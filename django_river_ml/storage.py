@@ -166,10 +166,9 @@ def init_stats(name: str):
 def init_metrics(name: str):
     db = get_db()
     try:
-        flavor = db["flavor/{name}"]
+        flavor = db[f"flavor/{name}"]
     except KeyError:
         raise exceptions.FlavorNotSet
-
     db[f"metrics/{name}"] = flavor.default_metrics()
 
 

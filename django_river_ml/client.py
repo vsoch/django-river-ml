@@ -153,6 +153,7 @@ class RiverClient:
         if prediction is None:
             flavor = self.db[f"flavor/{model_name}"]
             pred_func = getattr(model, flavor.pred_func)
+            print("FOUND FLAVOR LEARN %s" % flavor)
             try:
                 prediction = pred_func(x=copy.deepcopy(features))
             except Exception as e:
@@ -198,6 +199,7 @@ class RiverClient:
 
         # Make the prediction
         flavor = self.db[f"flavor/{model_name}"]
+        print("FOUND FLAVOR PREDICT %s" % flavor)
         pred_func = getattr(model, flavor.pred_func)
         try:
             pred = pred_func(x=features)
@@ -271,13 +273,6 @@ class RiverClient:
                 pred = max(prediction, key=prediction.get)
                 metric.update(y_true=ground_truth, y_pred=pred)
 
-            # In some cases we have a dict that isn't a Classification Metric
-            elif isinstance(prediction, dict):
-
-                # The ground truth may not be present
-                y_pred = prediction.get(ground_truth)
-                if y_pred:
-                    metric.update(y_true=ground_truth, y_pred=y_pred)
             else:
                 metric.update(y_true=ground_truth, y_pred=prediction)
         self.db[f"metrics/{model_name}"] = metrics
