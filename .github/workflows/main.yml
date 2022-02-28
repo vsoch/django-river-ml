@@ -24,6 +24,7 @@ jobs:
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate black
 
+          pyflakes tests/*.py
           pyflakes django_river_ml/announce.py
           pyflakes django_river_ml/apps.py
           pyflakes django_river_ml/auth.py

@@ -22,7 +22,7 @@ class RiverClient:
 
     def stats(self, model_name):
         try:
-            stats = self.db["stats/{model_name}"]
+            stats = self.db[f"stats/{model_name}"]
         except KeyError:
             raise exceptions.InvalidUsage(message="We don't have stats for that model")
 
