@@ -107,7 +107,7 @@ The following additonal settings are available to set in your ``settings.py``:
      - The cache directory for tokens, recommended to set a custom ``APP_DIR`` and it will be a sub-directory ``cache`` there
      - /opt/cache
    * - ``DISABLE_AUTHENTICATION``
-     - False
+     - True
      - For views that require authentication, disable them.
      - True
    * - ``DOMAIN_URL``
