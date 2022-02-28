@@ -79,8 +79,6 @@
 <span></span><span class="kn">from</span> <span class="nn">rest_framework.views</span> <span class="kn">import</span> <span class="n">APIView</span>
 <span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">rest_framework.decorators</span> <span class="kn">import</span> <span class="n">authentication_classes</span><span class="p">,</span> <span class="n">permission_classes</span>
-<span class="kn">from</span> <span class="nn">django.views.decorators.cache</span> <span class="kn">import</span> <span class="n">never_cache</span>
-
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseForbidden</span>
 
 <span class="kn">import</span> <span class="nn">django_river_ml.auth</span> <span class="k">as</span> <span class="nn">auth</span>
@@ -96,8 +94,7 @@
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,)</span>
 
-<div class="viewcode-block" id="GetAuthToken.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.auth.GetAuthToken.get">[docs]</a>    <span class="nd">@never_cache</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="GetAuthToken.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.auth.GetAuthToken.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;GET /auth/token&quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GET /auth/token&quot;</span><span class="p">)</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>

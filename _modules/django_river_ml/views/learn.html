@@ -80,7 +80,7 @@
 <span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
 
 <span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">settings</span>
-
+<span class="kn">from</span> <span class="nn">django_river_ml.auth</span> <span class="kn">import</span> <span class="n">is_authenticated</span>
 <span class="kn">from</span> <span class="nn">ratelimit.decorators</span> <span class="kn">import</span> <span class="n">ratelimit</span>
 <span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
 
@@ -113,6 +113,10 @@
             <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">allow_continue</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">is_authenticated</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_continue</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response</span>
 
         <span class="n">model_name</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
         <span class="n">features</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>

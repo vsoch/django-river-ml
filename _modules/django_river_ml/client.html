@@ -132,14 +132,14 @@
 <span class="sd">        Stream events from the events announcer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RiverClient.stream_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">stream_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stream events from the metrics announcer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RiverClient.metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.metrics">[docs]</a>    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

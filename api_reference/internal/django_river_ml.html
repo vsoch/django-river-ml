@@ -525,14 +525,14 @@ This should be used to decorate api.learn and api.predict</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="django_river_ml.signals.create_auth_token">
 <code class="sig-prename descclassname"><span class="pre">django_river_ml.signals.</span></code><code class="sig-name descname"><span class="pre">create_auth_token</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">sender</span></span></em>, <em><span class="n"><span class="pre">instance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">created</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/signals.html#create_auth_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.signals.create_auth_token" title="Permalink to this definition"></a></dt>
-<dd><p>Create a token for the user when the user is created (with oAuth2)</p>
+<dd><p>Create a token for the user when the user is created</p>
 <ol class="arabic simple">
 <li>Assign user a token</li>
-<li>Assign user to default group</li>
 </ol>
 <p>Create a token instance for all newly created User instances. We only
 run on user creation to avoid having to check for existence on each call
-to User.save.</p>
+to User.save. We also check if one is already created in case another app
+or the main user application is running the same function.</p>
 </dd></dl>
 
 </div>

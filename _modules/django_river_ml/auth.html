@@ -104,9 +104,10 @@
 <span class="sd">    request (requests.Request)    : the Request object to inspect</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Derive the view name from the request PATH_INFO</span>
-    <span class="n">func</span><span class="p">,</span> <span class="n">two</span><span class="p">,</span> <span class="n">three</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;PATH_INFO&quot;</span><span class="p">])</span>
+    <span class="n">func</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s2">&quot;PATH_INFO&quot;</span><span class="p">])</span>
     <span class="n">view_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VIEW NAME: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">view_name</span><span class="p">)</span>
     <span class="c1"># If authentication is disabled, return the original view</span>
     <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">DISABLE_AUTHENTICATION</span> <span class="ow">or</span> <span class="n">view_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">AUTHENTICATED_VIEWS</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
@@ -119,7 +120,7 @@
     <span class="c1"># Case 3: False and response will return request for auth</span>
     <span class="n">user</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Www-Authenticate&quot;</span><span class="p">:</span> <span class="n">get_challenge</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">view_name</span><span class="p">)}</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Www-Authenticate&quot;</span><span class="p">:</span> <span class="n">get_challenge</span><span class="p">(</span><span class="n">request</span><span class="p">)}</span>
         <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">user</span>
 
     <span class="c1"># Denied for any other reason</span>
@@ -187,11 +188,12 @@
         <span class="c1"># The user must exist</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">user</span>
         <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Username </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">decoded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub&quot;</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
 
-    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">user</span></div>
+    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="get_user"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.auth.get_user">[docs]</a><span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
@@ -203,7 +205,6 @@
 <span class="sd">    request (requests.Request)    : the Request object to inspect</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HTTP_AUTHORIZATION&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
         <span class="n">encoded</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
@@ -246,7 +247,7 @@
 <span class="sd">    request (requests.Request): the Request object to inspect</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">DOMAIN_NAME</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_server</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="n">auth_server</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_SERVER</span> <span class="ow">or</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/auth/token&quot;</span> <span class="o">%</span> <span class="n">DOMAIN_NAME</span>
+    <span class="n">auth_server</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/auth/token&quot;</span> <span class="o">%</span> <span class="n">DOMAIN_NAME</span>
     <span class="k">return</span> <span class="s1">&#39;realm=&quot;</span><span class="si">%s</span><span class="s1">&quot;,service=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span>
         <span class="n">auth_server</span><span class="p">,</span>
         <span class="n">DOMAIN_NAME</span><span class="p">,</span>

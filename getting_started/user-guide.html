@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sample-application">Sample Application</a></li>
 </ul>
 </li>
@@ -233,6 +234,41 @@ and do not use the default of the plugin:</p>
 </table>
 <p>For more advanced settings like customizing the endpoints with authentication, see
 the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
+</div>
+<div class="section" id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline"></a></h3>
+<p>If you have <code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code> set to true, or you customize the settings <code class="docutils literal notranslate"><span class="pre">AUTHENTICATED_VIEWS</span></code> to change
+the defaults, then you shouldn’t need to do any kind of authentication. This might be ideal for a development or
+closed environment that is only accessible to you or your team. However, for most cases you are strongly encouraged to
+have authentication. Authentication will require creating a user, to which Django River ML will add a token generated
+by Django Restful, if not already generated. For purposes of example, we can quickly create a user as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python manage.py createsuperuser</span>
+<span class="go">Username (leave blank to use &#39;dinosaur&#39;):</span>
+<span class="go">Email address:</span>
+<span class="go">Password:</span>
+<span class="go">Password (again):</span>
+<span class="go">Superuser created successfully.</span>
+</pre></div>
+</div>
+<p>And at this point, you can also ask for the token.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python manage.py get_token dinosaur</span>
+<span class="go">Enter Password:</span>
+<span class="go">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+</pre></div>
+</div>
+<p>You can then export this token in the environment to be found by the <a class="reference external" href="https://github.com/vsoch/riverapi">river api client</a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export RIVER_ML_USER=dinosaur</span>
+<span class="go">export RIVER_ML_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+</pre></div>
+</div>
+<p>Otherwise you will need to manually go through a standard OAuth2 workflow of using basic
+auth to look for a 401 response with a <code class="docutils literal notranslate"><span class="pre">Www-Authenticate</span></code> header, parsing that to find the “realm”
+(the authentication server) and then making a request to that endpoint with the base64 encoded user and token
+in the Authenticate header. It’s much easier to use the client to do it for you, which will cache your token
+(until it expires and you need to request a new one automatically).</p>
+<p>Of course if you have a Django interface with OAuth for login, you can make a settings
+or profile page to easily retrieve the same token. Open an issue if you need guidance to do this.
+We might consider adding a front-end view to provide by default if it’s desired.</p>
 </div>
 <div class="section" id="sample-application">
 <h3>Sample Application<a class="headerlink" href="#sample-application" title="Permalink to this headline"></a></h3>
