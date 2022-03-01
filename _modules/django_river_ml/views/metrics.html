@@ -78,7 +78,6 @@
   <h1>Source code for django_river_ml.views.metrics</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">rest_framework.views</span> <span class="kn">import</span> <span class="n">APIView</span>
 <span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
-<span class="kn">from</span> <span class="nn">django.views.decorators.cache</span> <span class="kn">import</span> <span class="n">never_cache</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">StreamingHttpResponse</span>
 
 <span class="kn">from</span> <span class="nn">ratelimit.decorators</span> <span class="kn">import</span> <span class="n">ratelimit</span>
@@ -86,6 +85,8 @@
 <span class="kn">from</span> <span class="nn">django.views.decorators.http</span> <span class="kn">import</span> <span class="n">require_http_methods</span>
 <span class="kn">from</span> <span class="nn">django_river_ml.client</span> <span class="kn">import</span> <span class="n">RiverClient</span>
 <span class="kn">import</span> <span class="nn">django_river_ml.settings</span> <span class="k">as</span> <span class="nn">settings</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
 
 
 <div class="viewcode-block" id="MetricsView"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.MetricsView">[docs]</a><span class="k">class</span> <span class="nc">MetricsView</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
@@ -96,8 +97,7 @@
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,)</span>
 
-<div class="viewcode-block" id="MetricsView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.MetricsView.get">[docs]</a>    <span class="nd">@never_cache</span>
-    <span class="nd">@method_decorator</span><span class="p">(</span>
+<div class="viewcode-block" id="MetricsView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.MetricsView.get">[docs]</a>    <span class="nd">@method_decorator</span><span class="p">(</span>
         <span class="n">ratelimit</span><span class="p">(</span>
             <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span><span class="p">,</span>
@@ -109,12 +109,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        GET /api/metrics/</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
         <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">metrics</span><span class="p">())</span></div></div>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span><span class="n">model_name</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="stream_metrics"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.stream_metrics">[docs]</a><span class="nd">@never_cache</span>
-<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="stream_metrics"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.stream_metrics">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
 <span class="nd">@ratelimit</span><span class="p">(</span>
     <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT_BLOCK</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span>
 <span class="p">)</span>
@@ -126,8 +134,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="stream_events"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.stream_events">[docs]</a><span class="nd">@never_cache</span>
-<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="stream_events"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.stream_events">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
 <span class="nd">@ratelimit</span><span class="p">(</span>
     <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT_BLOCK</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span>
 <span class="p">)</span>
@@ -149,8 +156,7 @@
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">allowed_methods</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,)</span>
 
-<div class="viewcode-block" id="StatsView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.StatsView.get">[docs]</a>    <span class="nd">@never_cache</span>
-    <span class="nd">@method_decorator</span><span class="p">(</span>
+<div class="viewcode-block" id="StatsView.get"><a class="viewcode-back" href="../../../api_reference/internal/django_river_ml.html#django_river_ml.views.metrics.StatsView.get">[docs]</a>    <span class="nd">@method_decorator</span><span class="p">(</span>
         <span class="n">ratelimit</span><span class="p">(</span>
             <span class="n">key</span><span class="o">=</span><span class="s2">&quot;ip&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">VIEW_RATE_LIMIT</span><span class="p">,</span>
@@ -159,10 +165,20 @@
         <span class="p">)</span>
     <span class="p">)</span>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;GET /api/stats/&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET /api/stats/</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 
         <span class="n">client</span> <span class="o">=</span> <span class="n">RiverClient</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">stats</span><span class="p">())</span></div></div>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">model_name</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

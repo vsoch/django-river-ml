@@ -10,7 +10,6 @@ Django River ML
 
 
 To see the code, head over to the `repository <https://github.com/vsoch/django-river-ml/>`_.
-To browse modules available as containers, see `the library <https://vsoch.github.io/django-river-ml/>`_.
 
 .. _main-getting-started:
 
@@ -46,7 +45,7 @@ Support
 -------
 
 * For **bugs and feature requests**, please use the `issue tracker <https://github.com/vsoch/django-river-ml/issues>`_.
-* For **contributions**, visit Caliper on `Github <https://github.com/vsoch/django-river-ml>`_.
+* For **contributions**, visit us on `Github <https://github.com/vsoch/django-river-ml>`_.
 
 ---------
 Resources
