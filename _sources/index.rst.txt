@@ -20,7 +20,9 @@ Getting started with Django River ML
 Django models to deploy `river <https://riverml.xyz>`_ online machine learning. 
 This is a Django version of `chantilly <https://github.com/online-ml/chantilly>`_ that aims to use the
 same overall design. We also include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a 
-test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_.
+test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_. You can use
+the Python `riverapi <https://github.com/vsoch/riverapi>`_ to interact with the server, which describes and
+implements the client side of the `spec <https://vsoch.github.io/riverapi/getting_started/spec.html>`_ implemented on the server here.
 
 How is it different?
 --------------------
@@ -54,12 +56,17 @@ Resources
 `GitHub Repository <https://github.com/vsoch/django-river-ml>`_
     The code on GitHub.
 
+`river Documentation <https://riverml.xyz/latest/>`_
+
+`riverapi Python client <https://github.com/vsoch/riverapi/>`_
+
+`riverapi specification <https://vsoch.github.io/riverapi/getting_started/spec.html>`_
 
 .. toctree::
    :caption: Getting started
    :name: getting_started
    :hidden:
-   :maxdepth: 2
+   :maxdepth: 3
 
    getting_started/index
    getting_started/user-guide
