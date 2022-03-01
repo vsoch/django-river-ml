@@ -9,7 +9,7 @@ for a `Django <https://www.djangoproject.com/>`_ project. It is based off of `ch
 with hopes of having similar design. We include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a 
 test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_.
 We are excited about what you might build with this, and please
-`give us a ping <https://github.com/US-RSE/usrse-python>`_. if you have a question, find a bug, or want to request a feature!
+`give us a ping <https://github.com/vsoch/django-river-ml/issues>`_. if you have a question, find a bug, or want to request a feature!
 This is an open source project and we are eager for your contribution. 🎉️
 
 Quick Start

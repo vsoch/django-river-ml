@@ -100,7 +100,7 @@ class ModelView(APIView):
         DELETE /api/model/<name>/
         """
         params = QueryDict(request.body)
-        name = params.get("name")
+        name = params.get("model")
 
         allow_continue, response, _ = is_authenticated(request)
         if not allow_continue:

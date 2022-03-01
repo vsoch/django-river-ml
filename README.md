@@ -37,3 +37,5 @@ tool to generate a contributors graphic below.
 - add some basic set of frontend views?
 - do we want a spec? [issue](https://github.com/online-ml/river/issues/845)
 - multiclass example [datasets](https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/)
+- add frontend views - some kind of sockets?
+- work on same thing with FastAPI?
