@@ -100,7 +100,7 @@ class RiverClient:
             if key in self.db:
                 del self.db[key]
                 found = True
-        return True
+        return found
 
     def models(self):
         """
