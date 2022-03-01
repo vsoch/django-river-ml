@@ -57,6 +57,10 @@ and do not use the default of the plugin:
    :widths: 25 25 25 25
    :header-rows: 1
 
+   * - Name
+     - Default
+     - Description
+     - Example
    * - ``APP_DIR``
      - $root
      - Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)
