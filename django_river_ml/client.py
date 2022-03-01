@@ -63,12 +63,12 @@ class RiverClient:
         messages = announce.METRICS_ANNOUNCER.listen()
         return self._stream_announcer(messages)
 
-    def metrics(self):
+    def metrics(self, model_name):
         """
-        Get metrics from the database
+        Get metrics from the database for a specific model
         """
         try:
-            metrics = self.db["metrics"]
+            metrics = self.db[f"metrics/{model_name}"]
         except KeyError:
             raise exceptions.FlavorNotSet
         return {metric.__class__.__name__: metric.get() for metric in metrics}
@@ -94,10 +94,12 @@ class RiverClient:
         """
         Delete a model by name.
         """
-        key = f"models/{name}"
-        if key not in self.db:
-            return False
-        del self.db[key]
+        keys = [f"models/{name}", f"stats/{name}", f"metrics/{name}", f"flavor/{name}"]
+        found = False
+        for key in keys:
+            if key in self.db:
+                del self.db[key]
+                found = True
         return True
 
     def models(self):

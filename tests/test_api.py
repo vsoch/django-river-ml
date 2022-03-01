@@ -83,6 +83,11 @@ class APIBaseTests(APITestCase):
         models = self.client.models()
         assert model_name in models["models"]
 
+        # Get stats and metrics
+        assert self.client.stats(model_name)
+        assert self.client.metrics(model_name)
+        self.client.delete_model(model_name)
+
     def test_binary(self):
         """
         Testing of a binary model

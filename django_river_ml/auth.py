@@ -29,7 +29,6 @@ def is_authenticated(request):
     func, _, _ = resolve(request.META["PATH_INFO"])
     view_name = "%s.%s" % (func.__module__, func.__name__)
 
-    print("VIEW NAME: %s" % view_name)
     # If authentication is disabled, return the original view
     if settings.DISABLE_AUTHENTICATION or view_name not in settings.AUTHENTICATED_VIEWS:
         return True, None, None

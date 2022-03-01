@@ -1,6 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.views.decorators.cache import never_cache
 from django.http import StreamingHttpResponse
 
 from ratelimit.decorators import ratelimit
@@ -8,6 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django_river_ml.client import RiverClient
 import django_river_ml.settings as settings
+
+import json
 
 
 class MetricsView(APIView):
@@ -18,7 +19,6 @@ class MetricsView(APIView):
     permission_classes = []
     allowed_methods = ("GET",)
 
-    @never_cache
     @method_decorator(
         ratelimit(
             key="ip",
@@ -31,11 +31,19 @@ class MetricsView(APIView):
         """
         GET /api/metrics/
         """
+        try:
+            payload = json.loads(request.body.decode("utf-8"))
+        except:
+            return Response(status=400)
+
+        model_name = payload.get("model")
+        if not model_name:
+            return Response(status=400)
+
         client = RiverClient()
-        return Response(status=200, data=client.metrics())
+        return Response(status=200, data=client.metrics(model_name))
 
 
-@never_cache
 @require_http_methods(["GET"])
 @ratelimit(
     key="ip", block=settings.VIEW_RATE_LIMIT_BLOCK, rate=settings.VIEW_RATE_LIMIT
@@ -48,7 +56,6 @@ def stream_metrics(request):
     )
 
 
-@never_cache
 @require_http_methods(["GET"])
 @ratelimit(
     key="ip", block=settings.VIEW_RATE_LIMIT_BLOCK, rate=settings.VIEW_RATE_LIMIT
@@ -71,7 +78,6 @@ class StatsView(APIView):
     permission_classes = []
     allowed_methods = ("GET",)
 
-    @never_cache
     @method_decorator(
         ratelimit(
             key="ip",
@@ -81,7 +87,17 @@ class StatsView(APIView):
         )
     )
     def get(self, request, *args, **kwargs):
-        """GET /api/stats/"""
+        """
+        GET /api/stats/
+        """
+        try:
+            payload = json.loads(request.body.decode("utf-8"))
+        except:
+            return Response(status=400)
+
+        model_name = payload.get("model")
+        if not model_name:
+            return Response(status=400)
 
         client = RiverClient()
-        return Response(status=200, data=client.stats())
+        return Response(status=200, data=client.stats(model_name))

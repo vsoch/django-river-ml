@@ -4,12 +4,13 @@
 Getting Started
 ===============
 
-Singularity Registry (HPC) is a tool that makes it easy to install containers as
-Lmod modules. You can create your own registry entries (e.g., a specification
-to pull a particular container and expose some number of entrypoints) or
-the library also provides you with a community set.
 
-If you have any questions or issues, please `let us know <https://github.com/singularityhub/singularity-hpc/issues>`_
+Django River ML provides a means to deploy `river <https://riverml.xyz>`_ online machine learning models. 
+It is a Django version of `chantilly <https://github.com/online-ml/chantilly>`_ that aims to use the
+same overall design. We also include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a 
+test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_.
+
+If you have any questions or issues, please `let us know <https://github.com/vsoch/django-river-ml/issues>`_
 
 .. toctree::
    :maxdepth: 2
