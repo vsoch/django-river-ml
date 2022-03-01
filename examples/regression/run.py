@@ -23,7 +23,6 @@ def main():
 
     # Get the model (this is a json representation)
     model_json = cli.get_model_json(model_name)
-    model_json
 
     # Saves to model-name>.pkl in pwd unless you provide a second arg, dest
     # cli.download_model(model_name)
@@ -43,6 +42,7 @@ def main():
 
     # Delete the model to cleanup
     cli.delete_model(model_name)
+
 
 if __name__ == "__main__":
     main()

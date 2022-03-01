@@ -97,7 +97,7 @@ class ModelView(APIView):
 
     def delete(self, request, *args, **kwargs):
         """
-        DELETE /api/model/<name>/
+        DELETE /api/model/
         """
         params = QueryDict(request.body)
         name = params.get("model")

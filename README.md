@@ -5,8 +5,8 @@
 
 Django models to deploy [river](https://riverml.xyz) online machine learning. 
 This is a Django version of [chantilly](https://github.com/online-ml/chantilly) that aims to use the
-same overall design. We also include [example clients](examples/) and a test application in [tests](tests).
-We also are developing an [API client](https://github.com/vsoch/riverapi) and early work on a specification that can be extended to other
+same overall design. We also include [example clients](https://github.com/vsoch/django-river-ml/tree/main/examples) and a test application in [tests](https://github.com/vsoch/django-river-ml/tree/main/tests). We also are developing an [API client](https://github.com/vsoch/riverapi) and early work on a 
+[specification](https://vsoch.github.io/riverapi/getting_started/spec.html) that can be extended to other
 Python based servers intended for river.
 
 See the ⭐️ [Documentation](https://vsoch.github.io/django-river-ml/) ⭐️ to get started!
@@ -35,7 +35,6 @@ tool to generate a contributors graphic below.
 
 - should we have a server generic client to plug in here instead?
 - add some basic set of frontend views?
-- do we want a spec? [issue](https://github.com/online-ml/river/issues/845)
 - multiclass example [datasets](https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/)
 - add frontend views - some kind of sockets?
 - work on same thing with FastAPI?

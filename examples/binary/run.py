@@ -35,8 +35,17 @@ def main():
     for x, y in stream.iter_array(X, Y):
         print(cli.predict(model_name, x=x))
 
+    # Get metrics for the model
+    metrics = cli.metrics(model_name)
+
+    # Get stats for the model
+    stats = cli.stats(model_name)
+
     # Get all models
     print(cli.models())
+
+    # Delete the model to cleanup
+    cli.delete_model(model_name)
 
 
 if __name__ == "__main__":
