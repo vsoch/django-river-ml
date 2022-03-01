@@ -135,19 +135,24 @@ and do not use the default of the plugin:</p>
 <col width="25%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code></th>
-<th class="head">$root</th>
-<th class="head">Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)</th>
-<th class="head"><code class="docutils literal notranslate"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code></th>
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SHELVE_SECRET_KEY</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code></td>
+<td>$root</td>
+<td>Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)</td>
+<td><code class="docutils literal notranslate"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">SHELVE_SECRET_KEY</span></code></td>
 <td>None</td>
 <td>Secret key for shelve (if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> set to “shelve” (will be generated if not found)</td>
 <td>fgayudsiushfdsfdf</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">JWT_SECRET_KEY</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">JWT_SECRET_KEY</span></code></td>
 <td>None</td>
 <td>Secret key for json web tokens (if authentication enabled, and will be generated if not found)</td>
 <td>fgayudsiushfdsfdf</td>

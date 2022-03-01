@@ -57,10 +57,14 @@ Resources
     The code on GitHub.
 
 `river Documentation <https://riverml.xyz/latest/>`_
+   The official river Documentation.
 
 `riverapi Python client <https://github.com/vsoch/riverapi/>`_
+    A python client intended to interact with a server like this one.
 
 `riverapi specification <https://vsoch.github.io/riverapi/getting_started/spec.html>`_
+   The specification for the server endpoints and client.
+   
 
 .. toctree::
    :caption: Getting started
