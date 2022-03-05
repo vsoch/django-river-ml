@@ -17,4 +17,5 @@ $ python manage.py runserver
 ```
 
  - [regression](regression)
- 
+ - [binary](binary)
+ - [multiclass](multiclass)

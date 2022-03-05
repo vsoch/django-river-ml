@@ -5,9 +5,11 @@ import django_river_ml.exceptions as exceptions
 import django_river_ml.utils as utils
 import django_river_ml.announce as announce
 import django_river_ml.flavors as flavors
+import django_river_ml.settings as settings
 
 import json
 import copy
+import uuid
 
 
 class RiverClient:
@@ -119,7 +121,7 @@ class RiverClient:
             item = announcer.get()  # blocks until a new message arrives
             yield item
 
-    # Learn and predict!
+    # Learning and Labeling
 
     def learn(
         self,
@@ -133,6 +135,8 @@ class RiverClient:
         A learning event takes a learning schema
         """
         # If an ID is given, then retrieve the stored info.
+        # This is akin to label, except for label we require the identifier
+        # to exist
         try:
             memory = self.db["#%s" % identifier] if identifier else {}
         except KeyError:
@@ -146,23 +150,74 @@ class RiverClient:
         if features is None:
             return False, "No features are stored and none were provided."
 
-        try:
-            model = self.db[f"models/{model_name}"]
-        except KeyError:
-            return False, f"No model named '{model_name}'."
-
         # Obtain a prediction if none was made earlier
         if prediction is None:
-            flavor = self.db[f"flavor/{model_name}"]
-            pred_func = getattr(model, flavor.pred_func)
-            try:
-                prediction = pred_func(x=copy.deepcopy(features))
-            except Exception as e:
-                return False, repr(e)
+            success, prediction = self.make_prediction(features, model_name)
 
+            # If we aren't successful, second value is exception
+            if not success:
+                return success, prediction
+
+        # Update metrics, learn one, and announce events for learn event
+        return self.finish_learn(
+            "learn",
+            prediction=prediction,
+            features=features,
+            ground_truth=ground_truth,
+            model_name=model_name,
+            identifier=identifier,
+        )
+
+    def label(self, label, identifier, model_name):
+        """
+        Given a previous prediction (we can get with an identifier) add a label.
+        """
+        # We are required to have the record
+        key = "#%s" % identifier
+        if key not in self.db:
+            return False, f"No information stored for ID '{identifier}'"
+
+        # Unlink predict, we are required to find these!
+        memory = self.db["#%s" % identifier]
+        name = memory.get("model")
+        features = memory.get("features")
+        prediction = memory.get("prediction")
+
+        # We are required to have everything
+        if not model_name or not features or prediction is None:
+            return False, "Missing one of features, model_name, or prediction."
+
+        # Ensure the label is for the intended model
+        if name != model_name:
+            return (
+                False,
+                f"{model_name} was provided, but identifier references {name}.",
+            )
+
+        # Update metrics, learn one, and announce events for label event
+        return self.finish_learn(
+            "label",
+            prediction=prediction,
+            features=features,
+            ground_truth=label,
+            model_name=model_name,
+            identifier=identifier,
+        )
+
+    def finish_learn(
+        self, event, prediction, features, ground_truth, model_name, identifier=None
+    ):
+        """
+        Finish a learning event. This can either be a prediction 'predict'
+        event that was done on the server, or a 'label' event that retrieved
+        a previous prediction and then updated metrics or the model.
+        """
         metrics = self.update_metrics(prediction, ground_truth, model_name)
 
-        # Update the model
+        # Update the model (we've already retrieved it in make_prediction
+        # by this point so we know it exists!
+        model = self.db[f"models/{model_name}"]
+
         try:
             model.learn_one(x=copy.deepcopy(features), y=ground_truth)
         except Exception as e:
@@ -170,7 +225,7 @@ class RiverClient:
 
         self.db[f"models/{model_name}"] = model
         self.announce_event(
-            "learn",
+            event,
             {
                 "model": model_name,
                 "features": features,
@@ -183,31 +238,18 @@ class RiverClient:
         # Delete the id from the db
         if identifier:
             self.delete_id(identifier)
-        return True, "Successful learn."
+        return True, "Successful %s." % event
 
-    def predict(self, features, model_name, identifier=None, model=None):
+    # Prediction
+
+    def predict(self, features, model_name, identifier, model=None):
         """
         Run a prediction
         """
-        try:
-            model = self.db[f"models/{model_name}"]
-        except KeyError:
-            return False, f"No model named '{model_name}'."
-
-        # We make a copy because the model might modify the features in-place while we want to be able
-        # to store an identical copy
-        features = copy.deepcopy(features)
-
         # Make the prediction
-        flavor = self.db[f"flavor/{model_name}"]
-        pred_func = getattr(model, flavor.pred_func)
-        try:
-            pred = pred_func(x=features)
-        except Exception as e:
-            return False, repr(e)
-
-        # The unsupervised parts of the model might be updated after a prediction, so we need to store it
-        self.db[f"models/{model_name}"] = model
+        success, prediction = self.make_prediction(features, model_name)
+        if not success:
+            return success, prediction
 
         # Announce the prediction
         self.announce_event(
@@ -215,21 +257,62 @@ class RiverClient:
             {
                 "model": model_name,
                 "features": features,
-                "prediction": pred,
+                "prediction": prediction,
             },
         )
 
-        # If an ID is provided, then we store the features in order to be able to use them for learning
-        # further down the line. We remove granularity about creation (200 vs 201) here.
-        created = False
+        # Generate an ID for learning further down the line.
+        identifier = identifier or (
+            str(uuid.uuid4()) if settings.GENERATE_IDENTIFIERS else None
+        )
+
+        # Was an identifier created?
         if identifier:
             self.db["#%s" % identifier] = {
                 "model": model_name,
                 "features": features,
-                "prediction": pred,
+                "prediction": prediction,
             }
-            created = True
-        return True, {"model": model_name, "prediction": pred, "created": created}
+            return True, {
+                "model": model_name,
+                "prediction": prediction,
+                "identifier": identifier,
+            }
+        return True, {"model": model_name, "prediction": prediction}
+
+    def make_prediction(self, features, model_name):
+        """
+        Shared function to make a prediction.
+
+        Returns True if successful with a prediction, otherwise
+        False and an exception to return to the user.
+        """
+        try:
+            model = self.db[f"models/{model_name}"]
+        except KeyError:
+            return False, f"No model named '{model_name}'."
+
+        # If we have a model, we will have a flavor!
+        flavor = self.db[f"flavor/{model_name}"]
+
+        # We can fallback to secondary prediction functions
+        # given that models can be used in different contexts
+        for p, pred_func_name in enumerate(flavor.pred_funcs):
+            pred_func = getattr(model, pred_func_name)
+            try:
+                # Always copy because the model might modify the features in-place
+                prediction = pred_func(x=copy.deepcopy(features))
+
+                # The unsupervised parts of the model might be updated after a prediction, so we need to store it
+                self.db[f"models/{model_name}"] = model
+
+                return True, prediction
+            except Exception as e:
+                # If we've failed on the last attempt, return failure
+                if p == len(flavor.pred_funcs) - 1:
+                    return False, repr(e)
+
+    # Metrics
 
     def announce_metrics(self, metrics):
         """
@@ -274,7 +357,14 @@ class RiverClient:
                 metric.update(y_true=ground_truth, y_pred=pred)
 
             else:
-                metric.update(y_true=ground_truth, y_pred=prediction)
+                # If we use predict_one and get a string back, we can get
+                # down here and have metrics that require labels (and we cannot
+                # give them a string) so we should skip.
+                try:
+                    metric.update(y_true=ground_truth, y_pred=prediction)
+                except:
+                    pass
+
         self.db[f"metrics/{model_name}"] = metrics
         return metrics
 

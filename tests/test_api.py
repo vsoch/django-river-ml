@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django_river_ml import settings
 from django_river_ml.signals import create_user_token
 from rest_framework.test import APITestCase
-from river import datasets, linear_model, preprocessing, naive_bayes, stream
+from river import datasets, linear_model, preprocessing, naive_bayes, stream, multiclass
 
 from riverapi.main import Client
 from time import sleep
@@ -79,6 +79,12 @@ class APIBaseTests(APITestCase):
             value = self.client.predict(model_name, x=x)
             assert value["model"] == model_name
 
+        # By default the server will generate an identifier on predict that you can
+        # later use to label it. Let's do that for the last predict call!
+        identifier = value["identifier"]
+        res = self.client.label(label=y, identifier=identifier, model_name=model_name)
+        assert res == "Successful label."
+
         # Get all models
         models = self.client.models()
         assert model_name in models["models"]
@@ -86,6 +92,21 @@ class APIBaseTests(APITestCase):
         # Get stats and metrics
         assert self.client.stats(model_name)
         assert self.client.metrics(model_name)
+
+        # Get metrics for the model
+        metrics = self.client.metrics(model_name)
+        for metric in ["MAE", "RMSE", "SMAPE"]:
+            assert metric in metrics
+            assert metrics[metric] != 0
+
+        # Get stats for the model
+        stats = self.client.stats(model_name)
+        for key in ["predict", "learn"]:
+            assert key in stats and isinstance(stats[key], dict)
+
+        assert stats["predict"]["n_calls"] == 10
+        assert stats["learn"]["n_calls"] == 100
+
         self.client.delete_model(model_name)
 
     def test_binary(self):
@@ -108,6 +129,69 @@ class APIBaseTests(APITestCase):
         # Make predictions
         for x, y in stream.iter_array(X, Y):
             print(self.client.predict(model_name, x=x))
+
+        # Get metrics for the model
+        metrics = self.client.metrics(model_name)
+        for metric in ["Accuracy", "LogLoss", "Precision", "Recall", "F1"]:
+            assert metric in metrics and metrics[metric] != 0
+
+        # Get stats for the model
+        stats = self.client.stats(model_name)
+        for key in ["predict", "learn"]:
+            assert key in stats and isinstance(stats[key], dict)
+
+        assert stats["predict"]["n_calls"] == 6
+        assert stats["learn"]["n_calls"] == 6
+        self.client.delete_model(model_name)
+
+    def test_multiclass(self):
+        """
+        Testing of a multiclass model
+        """
+        model = preprocessing.StandardScaler() | naive_bayes.GaussianNB()
+
+        dataset = datasets.ImageSegments()
+        scaler = preprocessing.StandardScaler()
+        ovo = multiclass.OneVsOneClassifier(linear_model.LogisticRegression())
+        model = scaler | ovo
+
+        # Save the model name for other endpoint interaction
+        model_name = self.client.upload_model(model, "multiclass")
+        print("Created model %s" % model_name)
+
+        # Train on some data
+        for x, y in dataset.take(100):
+            self.client.learn(model_name, x=x, y=y)
+
+        # Make predictions
+        for x, y in dataset.take(100):
+            print(self.client.predict(model_name, x=x))
+
+        # Get metrics for the model
+        metrics = self.client.metrics(model_name)
+        for metric in [
+            "Accuracy",
+            "CrossEntropy",
+            "MacroPrecision",
+            "MacroRecall",
+            "MacroF1",
+            "MicroPrecision",
+            "MicroRecall",
+            "MicroF1",
+        ]:
+            assert metric in metrics
+            if metric != "CrossEntropy":
+                assert metrics[metric] != 0
+
+        # Get stats for the model
+        stats = self.client.stats(model_name)
+        for key in ["predict", "learn"]:
+            assert key in stats and isinstance(stats[key], dict)
+
+        assert stats["predict"]["n_calls"] == 100
+        assert stats["learn"]["n_calls"] == 100
+
+        self.client.delete_model(model_name)
 
     def test_authenticated(self):
         """

@@ -11,9 +11,9 @@ from django_river_ml.client import RiverClient
 import json
 
 
-class PredictView(APIView):
+class LabelView(APIView):
     """
-    PredictView is a prediction API endpoint for a model.
+    Apply a label to a previous prediction.
     """
 
     permission_classes = []
@@ -29,33 +29,30 @@ class PredictView(APIView):
     )
     def post(self, request, *args, **kwargs):
         """
-        POST /api/predict/
+        POST /api/label/
         """
         try:
             payload = json.loads(request.body.decode("utf-8"))
         except:
             return Response(status=400)
 
-        # We generate an identifier for the user if not provided
-        identifier = payload.get("identifier")
         model_name = payload.get("model")
-        features = payload.get("features")
+        identifier = payload.get("identifier")
+        label = payload.get("label")
 
         allow_continue, response, _ = is_authenticated(request)
         if not allow_continue:
             return response
 
-        if not model_name or not features:
-            return Response(status=400, message="model and features are required.")
+        if not model_name or not label or not identifier:
+            return Response(
+                status=400, message="model, label, and identifier are required."
+            )
 
         client = RiverClient()
-        success, data = client.predict(
-            features=features, identifier=identifier, model_name=model_name
+        success, data = client.label(
+            label=label, identifier=identifier, model_name=model_name
         )
         if not success:
             return Response(status=400, data=data)
-
-        # An identifier was created for the prediction
-        if "identifier" in data:
-            return Response(status=201, data=data)
         return Response(status=200, data=data)

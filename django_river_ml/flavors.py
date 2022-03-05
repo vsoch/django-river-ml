@@ -37,8 +37,8 @@ class Flavor(abc.ABC):
         """Default metrics to record globally as well as for each model."""
 
     @abc.abstractproperty
-    def pred_func(self) -> str:
-        """The name of the required prediction function."""
+    def pred_funcs(self) -> str:
+        """Listing of prediction functions to try (in that order)"""
 
 
 class RegressionFlavor(Flavor):
@@ -56,8 +56,8 @@ class RegressionFlavor(Flavor):
         return [metrics.MAE(), metrics.RMSE(), metrics.SMAPE()]
 
     @property
-    def pred_func(self):
-        return "predict_one"
+    def pred_funcs(self):
+        return ["predict_one"]
 
 
 class BinaryFlavor(Flavor):
@@ -81,8 +81,8 @@ class BinaryFlavor(Flavor):
         ]
 
     @property
-    def pred_func(self):
-        return "predict_proba_one"
+    def pred_funcs(self):
+        return ["predict_proba_one"]
 
 
 class MultiClassFlavor(Flavor):
@@ -109,5 +109,5 @@ class MultiClassFlavor(Flavor):
         ]
 
     @property
-    def pred_func(self):
-        return "predict_proba_one"
+    def pred_funcs(self):
+        return ["predict_one", "predict_proba_one"]
