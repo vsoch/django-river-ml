@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; Django River ML 0.0.11 documentation</title>
+  <title>User Guide &mdash; Django River ML 0.0.12 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.11
+                0.0.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -206,32 +206,37 @@ and do not use the default of the plugin:</p>
 <td>The cache directory for tokens, recommended to set a custom <code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code> and it will be a sub-directory <code class="docutils literal notranslate"><span class="pre">cache</span></code> there</td>
 <td>/opt/cache</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">GENERATE_IDENTIFIERS</span></code></td>
+<td>True</td>
+<td>Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></td>
 <td>True</td>
 <td>For views that require authentication, disable them.</td>
 <td>True</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DOMAIN_URL</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DOMAIN_URL</span></code></td>
 <td><a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></td>
 <td>Domain used in templates, and api prefix</td>
 <td><a class="reference external" href="https://ml-server">https://ml-server</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SESSION_EXPIRES_SECONDS</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">SESSION_EXPIRES_SECONDS</span></code></td>
 <td>600</td>
 <td>The number of seconds a session (upload request) is valid (10 minutes)</td>
 <td>6000</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">TOKEN_EXPIRES_SECONDS</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TOKEN_EXPIRES_SECONDS</span></code></td>
 <td>600</td>
 <td>The number of seconds a token is valid (10 minutes)</td>
 <td>6000</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT</span></code></td>
 <td>10000/1day</td>
 <td>View rate limit using django-ratelimit based on ipaddress</td>
 <td>100/1day</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_BLOCK</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_BLOCK</span></code></td>
 <td>True</td>
 <td>Given that someone goes over, are they blocked for a period?</td>
 <td>False</td>
@@ -288,6 +293,7 @@ you can use to test. Once you have your environment setup, you can do:</p>
 <p>In another terminal, you can then run a sample script:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python examples/regression/run.py
 <span class="gp">$ </span>python examples/binary/run.py
+<span class="gp">$ </span>python examples/multiclass/run.py
 </pre></div>
 </div>
 </div>
