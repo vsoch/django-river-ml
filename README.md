@@ -33,8 +33,8 @@ tool to generate a contributors graphic below.
 
 ## TODO
 
+- flush out case without a label to learn (try kmeans)
 - should we have a server generic client to plug in here instead?
 - add some basic set of frontend views?
-- multiclass example [datasets](https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/)
 - add frontend views - some kind of sockets?
 - work on same thing with FastAPI?

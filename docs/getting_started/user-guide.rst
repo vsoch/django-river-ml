@@ -110,6 +110,10 @@ The following additonal settings are available to set in your ``settings.py``:
      - None (and then is set to ``os.path.join(APP_DIR, "cache")``)
      - The cache directory for tokens, recommended to set a custom ``APP_DIR`` and it will be a sub-directory ``cache`` there
      - /opt/cache
+   * - ``GENERATE_IDENTIFIERS``
+     - True
+     - Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.
+     - True
    * - ``DISABLE_AUTHENTICATION``
      - True
      - For views that require authentication, disable them.
@@ -204,6 +208,7 @@ In another terminal, you can then run a sample script:
 
     $ python examples/regression/run.py
     $ python examples/binary/run.py
+    $ python examples/multiclass/run.py
 
 
 Testing

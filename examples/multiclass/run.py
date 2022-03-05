@@ -1,8 +1,9 @@
-from river import datasets
-from river import linear_model
-from river import preprocessing
+from river import datasets, evaluate, linear_model, multiclass, preprocessing
 
 from riverapi.main import Client
+
+
+# https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/
 
 
 def main():
@@ -11,14 +12,17 @@ def main():
     cli = Client("http://localhost:8000")
 
     # Upload a model
-    model = preprocessing.StandardScaler() | linear_model.LinearRegression()
+    dataset = datasets.ImageSegments()
+    scaler = preprocessing.StandardScaler()
+    ovo = multiclass.OneVsOneClassifier(linear_model.LogisticRegression())
+    model = scaler | ovo
 
     # Save the model name for other endpoint interaction
-    model_name = cli.upload_model(model, "regression")
+    model_name = cli.upload_model(model, "multiclass")
     print("Created model %s" % model_name)
 
     # Train on some data
-    for x, y in datasets.TrumpApproval().take(100):
+    for x, y in dataset.take(100):
         cli.learn(model_name, x=x, y=y)
 
     # Get the model (this is a json representation)
@@ -28,7 +32,7 @@ def main():
     # cli.download_model(model_name)
 
     # Make predictions
-    for x, y in datasets.TrumpApproval().take(10):
+    for x, y in dataset.take(100):
         res = cli.predict(model_name, x=x)
         print(res)
 
