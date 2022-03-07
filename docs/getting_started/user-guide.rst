@@ -110,6 +110,10 @@ The following additonal settings are available to set in your ``settings.py``:
      - None (and then is set to ``os.path.join(APP_DIR, "cache")``)
      - The cache directory for tokens, recommended to set a custom ``APP_DIR`` and it will be a sub-directory ``cache`` there
      - /opt/cache
+   * - ``CUSTOM_MODELS``
+     - unset (empty dict)
+     - Define a lookup (dict) of custom models, where the key is the import path, and value is the full filename path
+     - ``{"tests.custom.VariableVocabKMeans": os.path.join(APP_DIR, "custom.py")}``
    * - ``GENERATE_IDENTIFIERS``
      - True
      - Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.
@@ -142,6 +146,28 @@ The following additonal settings are available to set in your ``settings.py``:
 
 For more advanced settings like customizing the endpoints with authentication, see
 the `settings.py <https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py>`_ in the application.
+
+Custom Models
+^^^^^^^^^^^^^
+
+Django River ML has support for custom models, where a custom model is one you've defined in your application
+to use with river. In order for this to work, you should define the ``CUSTOM_MODELS`` dictionary in settings:
+
+.. code-block:: python
+
+   DJANGO_RIVER_ML = {
+       ...
+       "CUSTOM_MODELS": {"tests.custom.VariableVocabKMeans": os.path.join(APP_DIR, "custom.py")}
+      ...
+   }
+   
+In the example above, our app is called "tests" and there is a file ``custom.py`` there.
+Since this is our application, Django River ML will be able to import the class to un-pickle it with
+dill. Custom models currently support stats but not metrics, and metrics could be supported
+if we think about how to go about it. the ``CustomModel`` flavor is designed to be mostly
+forgiving to allow you to choose any prediction function you might have, and we can extend this
+if needed.
+
 
 Authentication
 --------------

@@ -219,7 +219,11 @@ class RiverClient:
         model = self.db[f"models/{model_name}"]
 
         try:
-            model.learn_one(x=copy.deepcopy(features), y=ground_truth)
+            # unsupervised
+            if not ground_truth:
+                model = model.learn_one(x=copy.deepcopy(features))
+            else:
+                model.learn_one(x=copy.deepcopy(features), y=ground_truth)
         except Exception as e:
             return False, repr(e)
 
@@ -298,8 +302,9 @@ class RiverClient:
         # We can fallback to secondary prediction functions
         # given that models can be used in different contexts
         for p, pred_func_name in enumerate(flavor.pred_funcs):
-            pred_func = getattr(model, pred_func_name)
             try:
+                pred_func = getattr(model, pred_func_name)
+
                 # Always copy because the model might modify the features in-place
                 prediction = pred_func(x=copy.deepcopy(features))
 

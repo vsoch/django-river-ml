@@ -12,9 +12,22 @@ import shutil
 import tempfile
 import os
 import re
+import sys
 
 
 here = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, here)
+sys.path.insert(0, os.path.dirname(here))
+
+import os
+import sys
+
+# This adds the root of the repository so tests is importable
+# This is the same path seen by our server (important)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Our custom model and supporting function
+from tests.custom import iter_counts, VariableVocabKMeans
 
 # Boolean from environment that determines authentication required variable
 auth_regex = re.compile('(\w+)[:=] ?"?([^"]+)"?')
@@ -48,6 +61,47 @@ class APIBaseTests(APITestCase):
             "version",
         ]:
             assert key in info
+
+    def test_custom_model(self):
+        """
+        Basic testing of a custom model
+        """
+        # Instead of numbers, we provide vectors of tokens (or strings)
+        X = [
+            ["one", "two"],
+            ["one", "four"],
+            ["one", "zero"],
+            ["five", "six"],
+            ["seven", "eight"],
+            ["nine", "nine"],
+        ]
+
+        model = VariableVocabKMeans(n_clusters=2, halflife=0.4, sigma=3, seed=0)
+        model_name = self.client.upload_model(model, "custom")
+        print("Created model %s" % model_name)
+
+        for i, vocab in enumerate(iter_counts(X)):
+            print(f"Learning from {vocab}")
+            self.client.learn(model_name, x=vocab)
+
+        # Make predictions
+        for i, vocab in enumerate(iter_counts(X)):
+            res = self.client.predict(model_name, x=vocab)
+            print(res)
+
+        # Note that custom models currently don't support metrics.
+        # If you are interested in adding this please open an issue to discuss!
+
+        # Get stats for the model
+        stats = self.client.stats(model_name)
+        for key in ["predict", "learn"]:
+            assert key in stats and isinstance(stats[key], dict)
+
+        assert stats["predict"]["n_calls"] == 6
+        assert stats["learn"]["n_calls"] == 6
+
+        # Delete the model to cleanup
+        self.clint.delete_model(model_name)
 
     def test_regression(self):
         """

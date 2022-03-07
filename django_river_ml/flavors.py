@@ -8,11 +8,15 @@ from river import metrics
 # https://github.com/online-ml/chantilly/blob/master/chantilly/flavors.py#L1
 
 
+def all_models():
+    return [RegressionFlavor, BinaryFlavor, MultiClassFlavor, CustomFlavor]
+
+
 def check(model, flavor_name):
     """
     Check a model against all flavors available
     """
-    for flavor in [RegressionFlavor, BinaryFlavor, MultiClassFlavor]:
+    for flavor in all_models():
         flavor = flavor()
         if flavor_name == flavor.name:
             return flavor.check_model(model)
@@ -20,7 +24,7 @@ def check(model, flavor_name):
 
 
 def allowed_flavors():
-    return {f().name: f() for f in [RegressionFlavor, BinaryFlavor, MultiClassFlavor]}
+    return {f().name: f() for f in all_models()}
 
 
 class Flavor(abc.ABC):
@@ -111,3 +115,42 @@ class MultiClassFlavor(Flavor):
     @property
     def pred_funcs(self):
         return ["predict_one", "predict_proba_one"]
+
+
+class CustomFlavor(Flavor):
+    """
+    A custom flavor aims to support a user custom model.
+    """
+
+    @property
+    def name(self):
+        return "custom"
+
+    def check_model(self, model):
+        return True, None
+
+    def default_metrics(self):
+        return []
+
+    @property
+    def pred_funcs(self):
+        return ["predict_one", "predict_proba_one"]
+
+
+class ClusterFlavor(Flavor):
+    @property
+    def name(self):
+        return "cluster"
+
+    def check_model(self, model):
+        for method in ("learn_one", "predict_one"):
+            if not hasattr(model, method):
+                return False, f"The model does not implement {method}."
+        return True, None
+
+    def default_metrics(self):
+        return []
+
+    @property
+    def pred_funcs(self):
+        return ["predict_one"]

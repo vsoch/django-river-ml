@@ -3,6 +3,7 @@ from django.conf import settings
 import logging
 import uuid
 import os
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +22,6 @@ authenticated_views = [
 
 
 timed_views = ["django_river_ml.views.learn.view", "django_river_ml.views.predict.view"]
-
-# TODO do we need this?
-authenticated_prefixes = ["/api/model/"]
 
 # Defaults for models and storage
 
@@ -67,13 +65,15 @@ DEFAULTS = {
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": None,
     "JWT_SECRET_KEY": None,
+    # Lookup of custom modules
+    "CUSTOM_MODELS": {},
 }
 
 # The user can define a section for django_river_ml in settings
 CACHES = getattr(settings, "CACHES", [])
 MIDDLEWARE = getattr(settings, "MIDDLEWARE", [])
 
-ml = getattr(settings, "django_river_ml", DEFAULTS)
+ml = getattr(settings, "DJANGO_RIVER_ML", DEFAULTS)
 
 # Add middleware to calculate times and stats
 timer_middleware = "django_river_ml.middleware.timer_middleware"
