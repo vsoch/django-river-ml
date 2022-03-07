@@ -151,19 +151,14 @@ Custom Models
 ^^^^^^^^^^^^^
 
 Django River ML has support for custom models, where a custom model is one you've defined in your application
-to use with river. In order for this to work, you should define the ``CUSTOM_MODELS`` dictionary in settings:
+to use with river. In order for this to work, you will need to define your model somewhere
+in your app so it is importable across Django apps (e.g., and when Django River ML tries to unpickle
+a model object of that type, it will be found). If needed, we can further define a custom
+set of classes in settings that can be looked for via importlib, however the simple
+approch to define it in your app or otherwise install a module that makes it importable is
+suggested.
 
-.. code-block:: python
-
-   DJANGO_RIVER_ML = {
-       ...
-       "CUSTOM_MODELS": {"tests.custom.VariableVocabKMeans": os.path.join(APP_DIR, "custom.py")}
-      ...
-   }
-   
-In the example above, our app is called "tests" and there is a file ``custom.py`` there.
-Since this is our application, Django River ML will be able to import the class to un-pickle it with
-dill. Custom models currently support stats but not metrics, and metrics could be supported
+Custom models currently support stats but not metrics, and metrics could be supported
 if we think about how to go about it. the ``CustomModel`` flavor is designed to be mostly
 forgiving to allow you to choose any prediction function you might have, and we can extend this
 if needed.
@@ -235,6 +230,8 @@ In another terminal, you can then run a sample script:
     $ python examples/regression/run.py
     $ python examples/binary/run.py
     $ python examples/multiclass/run.py
+    $ python examples/cluster/run.py
+    $ python examples/custom/run.py
 
 
 Testing

@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tests.custom import iter_counts, VariableVocabKMeans
 
+
 def main():
 
     # This is the default, just to show how to customize
@@ -18,12 +19,12 @@ def main():
 
     # Instead of numbers, we provide vectors of tokens (or strings)
     X = [
-       ["one", "two"],
-       ["one", "four"],
-       ["one", "zero"],
-       ["five", "six"],
-       ["seven", "eight"],
-       ["nine", "nine"]
+        ["one", "two"],
+        ["one", "four"],
+        ["one", "zero"],
+        ["five", "six"],
+        ["seven", "eight"],
+        ["nine", "nine"],
     ]
 
     model = VariableVocabKMeans(n_clusters=2, halflife=0.4, sigma=3, seed=0)

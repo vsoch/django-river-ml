@@ -9,7 +9,13 @@ from river import metrics
 
 
 def all_models():
-    return [RegressionFlavor, BinaryFlavor, MultiClassFlavor, CustomFlavor]
+    return [
+        RegressionFlavor,
+        BinaryFlavor,
+        MultiClassFlavor,
+        ClusterFlavor,
+        CustomFlavor,
+    ]
 
 
 def check(model, flavor_name):

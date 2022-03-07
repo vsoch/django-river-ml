@@ -19,5 +19,6 @@ $ python manage.py runserver
  - [regression](regression)
  - [binary](binary)
  - [multiclass](multiclass)
+ - [cluster](cluster)
  - [custom](custom): currently is an example for a custom model (kmeans) 
 

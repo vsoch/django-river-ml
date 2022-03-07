@@ -2,7 +2,15 @@ from django.contrib.auth.models import User
 from django_river_ml import settings
 from django_river_ml.signals import create_user_token
 from rest_framework.test import APITestCase
-from river import datasets, linear_model, preprocessing, naive_bayes, stream, multiclass
+from river import (
+    datasets,
+    linear_model,
+    preprocessing,
+    naive_bayes,
+    stream,
+    multiclass,
+    cluster,
+)
 
 from riverapi.main import Client
 from time import sleep
@@ -101,6 +109,38 @@ class APIBaseTests(APITestCase):
         assert stats["learn"]["n_calls"] == 6
 
         # Delete the model to cleanup
+        self.client.delete_model(model_name)
+
+    def test_cluster(self):
+        """
+        Test a basic clustering
+        """
+        # Upload a model
+        X = [[1, 2], [1, 4], [1, 0], [4, 2], [4, 4], [4, 0]]
+
+        model = cluster.KMeans(n_clusters=2, halflife=0.4, sigma=3, seed=0)
+        model_name = self.client.upload_model(model, "cluster")
+        print("Created model %s" % model_name)
+
+        for i, (x, _) in enumerate(stream.iter_array(X)):
+            self.client.learn(model_name, x=x)
+
+        for i, (x, _) in enumerate(stream.iter_array(X)):
+            value = self.client.predict(model_name, x=x)
+            assert value["model"] == model_name
+            assert value["prediction"] in [0, 1]
+
+        # cluster models don't have stats (yet)
+        assert not self.client.metrics(model_name)
+
+        # Get stats for the model
+        stats = self.client.stats(model_name)
+        for key in ["predict", "learn"]:
+            assert key in stats and isinstance(stats[key], dict)
+
+        assert stats["predict"]["n_calls"] == 6
+        assert stats["learn"]["n_calls"] == 6
+
         self.client.delete_model(model_name)
 
     def test_regression(self):

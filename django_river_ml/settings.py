@@ -65,8 +65,6 @@ DEFAULTS = {
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": None,
     "JWT_SECRET_KEY": None,
-    # Lookup of custom modules
-    "CUSTOM_MODELS": {},
 }
 
 # The user can define a section for django_river_ml in settings

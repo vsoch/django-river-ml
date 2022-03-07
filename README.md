@@ -33,8 +33,6 @@ tool to generate a contributors graphic below.
 
 ## TODO
 
-- flush out case without a label to learn (try kmeans)
 - should we have a server generic client to plug in here instead?
-- add some basic set of frontend views?
-- add frontend views - some kind of sockets?
+- add some basic set of frontend views? some kind of sockets?
 - work on same thing with FastAPI?

@@ -18,10 +18,6 @@ DJANGO_RIVER_ML = {
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": "pancakes",
     "JWT_SECRET_KEY": "pancakes",
-    # import tests.custom.VariableVocabMeans as custom model type
-    "CUSTOM_MODELS": {
-        "tests.custom.VariableVocabKMeans": os.path.join(APP_DIR, "custom.py")
-    },
 }
 
 # SECURITY WARNING: keep the secret key used in production secret!
