@@ -47,6 +47,37 @@ Add django-river-ml's URL patterns:
     ]
 
 
+If you use something like `Django Rest Swagger <https://django-rest-swagger.readthedocs.io/en/latest/>`_
+for yur API documentation, registering the ``django_river_urls`` alongside your app should render
+the endpoints nicely in the user interface! E.g., to extend the above, we might have a set of
+API views (to show up in docs) and server views (to not show up):
+
+.. code-block:: python
+
+    from django_river_ml import urls as django_river_urls
+
+    from rest_framework_swagger.views import get_swagger_view
+    schema_view = get_swagger_view(title="Spack Monitor API")
+
+    server_views = [
+        url(r"^api/docs/", schema_view, name="docs"),
+    ]
+
+    urlpatterns = [
+        ...
+        path("", include("django_river_ml.urls", namespace="django_river_ml")),
+        url(r"^", include((server_views, "api"), namespace="internal_apis")),
+        ...
+    ]
+
+
+And this will render the Django River ML API alongside your other API prefixes. For example,
+here is Django River ML deployed under "ml":
+
+.. image:: img/schema-view.png
+  :alt: An example of Django River ML with ``URL_PREFIX`` "ml" showing up in the API docs
+
+
 Settings
 --------
 

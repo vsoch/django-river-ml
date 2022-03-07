@@ -124,6 +124,30 @@ can do basic setup.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
+<p>If you use something like <a class="reference external" href="https://django-rest-swagger.readthedocs.io/en/latest/">Django Rest Swagger</a>
+for yur API documentation, registering the <code class="docutils literal notranslate"><span class="pre">django_river_urls</span></code> alongside your app should render
+the endpoints nicely in the user interface! E.g., to extend the above, we might have a set of
+API views (to show up in docs) and server views (to not show up):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_river_ml</span> <span class="kn">import</span> <span class="n">urls</span> <span class="k">as</span> <span class="n">django_river_urls</span>
+
+<span class="kn">from</span> <span class="nn">rest_framework_swagger.views</span> <span class="kn">import</span> <span class="n">get_swagger_view</span>
+<span class="n">schema_view</span> <span class="o">=</span> <span class="n">get_swagger_view</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Spack Monitor API&quot;</span><span class="p">)</span>
+
+<span class="n">server_views</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^api/docs/&quot;</span><span class="p">,</span> <span class="n">schema_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;docs&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s2">&quot;django_river_ml.urls&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;django_river_ml&quot;</span><span class="p">)),</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">((</span><span class="n">server_views</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">),</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;internal_apis&quot;</span><span class="p">)),</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>And this will render the Django River ML API alongside your other API prefixes. For example,
+here is Django River ML deployed under “ml”:</p>
+<img alt="An example of Django River ML with ``URL_PREFIX`` &quot;ml&quot; showing up in the API docs" src="../_images/schema-view.png" />
 </div>
 <div class="section" id="settings">
 <h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline"></a></h3>
