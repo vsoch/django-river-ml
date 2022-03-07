@@ -101,7 +101,7 @@ class APIBaseTests(APITestCase):
         assert stats["learn"]["n_calls"] == 6
 
         # Delete the model to cleanup
-        self.clint.delete_model(model_name)
+        self.client.delete_model(model_name)
 
     def test_regression(self):
         """
