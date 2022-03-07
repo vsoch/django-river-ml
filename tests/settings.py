@@ -1,23 +1,24 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(APP_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
-# Django River ML Settings.
+# Django River ML Example Settings.
 
-django_river_ml = {
+DJANGO_RIVER_ML = {
+    # Url base prefix
+    "URL_PREFIX": "api",
     "STORAGE_BACKEND": "shelve",
     "APP_DIR": BASE_DIR,
     "DISABLE_AUTHENTICATION": True,
-    "MODEL_FLAVOR": "regression",
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": "pancakes",
     "JWT_SECRET_KEY": "pancakes",
 }
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "@=n*^a0q4($45&jl5x+8_f_1yt5w+brp^&r5tk@5_yt-4=h27f"
@@ -82,21 +83,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db-test.sqlite3"),
     }
-}
-
-# Django OCI Example (with defaults_
-
-DJANGO_OCI = {
-    # Url base prefix
-    "URL_PREFIX": "v2",
-    # Version of distribution spec
-    "SPEC_VERSION": "1",
-    # Repository permissions
-    "PRIVATE_ONLY": False,
-    # Disabled authentication, boolean triggered by environment for testing
-    "DISABLE_AUTHENTICATION": os.environ.get("DISABLE_AUTHENTICATION") is not None,
-    # "secret" for jwt decoding, hard coded for tests here. Likely you'd want to set in enviroment
-    "JWT_SERVER_SECRET": "c4978944-8ea4-41f2-ac55-e38dcc09cff4'",
 }
 
 # Password validation
