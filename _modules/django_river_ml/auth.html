@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.auth &mdash; Django River ML 0.0.13 documentation</title>
+  <title>django_river_ml.auth &mdash; Django River ML 0.0.14 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -246,7 +246,7 @@
 <span class="sd">    request (requests.Request): the Request object to inspect</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">DOMAIN_NAME</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_server</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="n">auth_server</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/auth/token&quot;</span> <span class="o">%</span> <span class="n">DOMAIN_NAME</span>
+    <span class="n">auth_server</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/auth/token&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">DOMAIN_NAME</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">URL_PREFIX</span><span class="p">)</span>
     <span class="k">return</span> <span class="s1">&#39;realm=&quot;</span><span class="si">%s</span><span class="s1">&quot;,service=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span>
         <span class="n">auth_server</span><span class="p">,</span>
         <span class="n">DOMAIN_NAME</span><span class="p">,</span>
