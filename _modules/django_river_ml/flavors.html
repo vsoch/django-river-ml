@@ -86,11 +86,21 @@
 <span class="c1"># https://github.com/online-ml/chantilly/blob/master/chantilly/flavors.py#L1</span>
 
 
+<div class="viewcode-block" id="all_models"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.all_models">[docs]</a><span class="k">def</span> <span class="nf">all_models</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">RegressionFlavor</span><span class="p">,</span>
+        <span class="n">BinaryFlavor</span><span class="p">,</span>
+        <span class="n">MultiClassFlavor</span><span class="p">,</span>
+        <span class="n">ClusterFlavor</span><span class="p">,</span>
+        <span class="n">CustomFlavor</span><span class="p">,</span>
+    <span class="p">]</span></div>
+
+
 <div class="viewcode-block" id="check"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.check">[docs]</a><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check a model against all flavors available</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">flavor</span> <span class="ow">in</span> <span class="p">[</span><span class="n">RegressionFlavor</span><span class="p">,</span> <span class="n">BinaryFlavor</span><span class="p">,</span> <span class="n">MultiClassFlavor</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">flavor</span> <span class="ow">in</span> <span class="n">all_models</span><span class="p">():</span>
         <span class="n">flavor</span> <span class="o">=</span> <span class="n">flavor</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">flavor_name</span> <span class="o">==</span> <span class="n">flavor</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">flavor</span><span class="o">.</span><span class="n">check_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -98,7 +108,7 @@
 
 
 <div class="viewcode-block" id="allowed_flavors"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.allowed_flavors">[docs]</a><span class="k">def</span> <span class="nf">allowed_flavors</span><span class="p">():</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">f</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">RegressionFlavor</span><span class="p">,</span> <span class="n">BinaryFlavor</span><span class="p">,</span> <span class="n">MultiClassFlavor</span><span class="p">]}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="n">f</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_models</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="Flavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.Flavor">[docs]</a><span class="k">class</span> <span class="nc">Flavor</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
@@ -189,6 +199,45 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;predict_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_proba_one&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CustomFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CustomFlavor">[docs]</a><span class="k">class</span> <span class="nc">CustomFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A custom flavor aims to support a user custom model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;custom&quot;</span>
+
+<div class="viewcode-block" id="CustomFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CustomFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="CustomFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CustomFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;predict_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_proba_one&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ClusterFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.ClusterFlavor">[docs]</a><span class="k">class</span> <span class="nc">ClusterFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;cluster&quot;</span>
+
+<div class="viewcode-block" id="ClusterFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.ClusterFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;learn_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_one&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The model does not implement </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ClusterFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.ClusterFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;predict_one&quot;</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

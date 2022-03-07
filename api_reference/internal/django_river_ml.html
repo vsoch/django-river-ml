@@ -386,6 +386,65 @@ False and an exception to return to the user.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.ClusterFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">ClusterFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#ClusterFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.ClusterFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.ClusterFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#ClusterFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.ClusterFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.ClusterFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#ClusterFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.ClusterFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.ClusterFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.ClusterFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.ClusterFlavor.pred_funcs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_funcs</span></code><a class="headerlink" href="#django_river_ml.flavors.ClusterFlavor.pred_funcs" title="Permalink to this definition"></a></dt>
+<dd><p>Listing of prediction functions to try (in that order)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">CustomFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CustomFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<p>A custom flavor aims to support a user custom model.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CustomFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CustomFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor.pred_funcs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_funcs</span></code><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor.pred_funcs" title="Permalink to this definition"></a></dt>
+<dd><p>Listing of prediction functions to try (in that order)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="django_river_ml.flavors.Flavor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">Flavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#Flavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.Flavor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
@@ -471,6 +530,11 @@ False and an exception to return to the user.</p>
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django_river_ml.flavors.all_models">
+<code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">all_models</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.all_models" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="django_river_ml.flavors.allowed_flavors">

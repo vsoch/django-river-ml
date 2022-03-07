@@ -48,7 +48,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#custom-models">Custom Models</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sample-application">Sample Application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
@@ -245,6 +248,20 @@ and do not use the default of the plugin:</p>
 </table>
 <p>For more advanced settings like customizing the endpoints with authentication, see
 the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
+<div class="section" id="custom-models">
+<h4>Custom Models<a class="headerlink" href="#custom-models" title="Permalink to this headline"></a></h4>
+<p>Django River ML has support for custom models, where a custom model is one you’ve defined in your application
+to use with river. In order for this to work, you will need to define your model somewhere
+in your app so it is importable across Django apps (e.g., and when Django River ML tries to unpickle
+a model object of that type, it will be found). If needed, we can further define a custom
+set of classes in settings that can be looked for via importlib, however the simple
+approch to define it in your app or otherwise install a module that makes it importable is
+suggested.</p>
+<p>Custom models currently support stats but not metrics, and metrics could be supported
+if we think about how to go about it. the <code class="docutils literal notranslate"><span class="pre">CustomModel</span></code> flavor is designed to be mostly
+forgiving to allow you to choose any prediction function you might have, and we can extend this
+if needed.</p>
+</div>
 </div>
 <div class="section" id="authentication">
 <h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline"></a></h3>
@@ -294,6 +311,8 @@ you can use to test. Once you have your environment setup, you can do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python examples/regression/run.py
 <span class="gp">$ </span>python examples/binary/run.py
 <span class="gp">$ </span>python examples/multiclass/run.py
+<span class="gp">$ </span>python examples/cluster/run.py
+<span class="gp">$ </span>python examples/custom/run.py
 </pre></div>
 </div>
 </div>
