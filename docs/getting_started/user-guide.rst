@@ -110,10 +110,6 @@ The following additonal settings are available to set in your ``settings.py``:
      - None (and then is set to ``os.path.join(APP_DIR, "cache")``)
      - The cache directory for tokens, recommended to set a custom ``APP_DIR`` and it will be a sub-directory ``cache`` there
      - /opt/cache
-   * - ``CUSTOM_MODELS``
-     - unset (empty dict)
-     - Define a lookup (dict) of custom models, where the key is the import path, and value is the full filename path
-     - ``{"tests.custom.VariableVocabKMeans": os.path.join(APP_DIR, "custom.py")}``
    * - ``GENERATE_IDENTIFIERS``
      - True
      - Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.
