@@ -13,7 +13,7 @@ test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/t
 If you have any questions or issues, please `let us know <https://github.com/vsoch/django-river-ml/issues>`_
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    installation
    user-guide
