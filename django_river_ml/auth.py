@@ -168,7 +168,7 @@ def get_challenge(request):
     request (requests.Request): the Request object to inspect
     """
     DOMAIN_NAME = utils.get_server(request)
-    auth_server = "%s/auth/token" % DOMAIN_NAME
+    auth_server = "%s/%s/auth/token" % (DOMAIN_NAME, settings.URL_PREFIX)
     return 'realm="%s",service="%s"' % (
         auth_server,
         DOMAIN_NAME,
