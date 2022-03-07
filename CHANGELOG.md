@@ -14,6 +14,7 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
+ - support for custom and cluster models (0.0.13)
  - addition of label endpoint (0.0.12)
  - first version that has authentication and tests (0.0.11)
  - skeleton release  (0.0.1)
