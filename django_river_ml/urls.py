@@ -6,7 +6,7 @@ app_name = "django_river_ml"
 
 urlpatterns = [
     path(
-        "%s/auth/token/", % settings.URL_PREFIX,
+        "%s/auth/token/" % settings.URL_PREFIX,
         views.GetAuthToken.as_view(),
         name="auth_token",
     ),
