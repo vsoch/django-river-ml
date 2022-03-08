@@ -14,6 +14,7 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
+ - support for disable of ratelimit (0.0.15)
  - auth token needs to be in same namespace! (0.0.14)
  - support for custom and cluster models (0.0.13)
  - addition of label endpoint (0.0.12)

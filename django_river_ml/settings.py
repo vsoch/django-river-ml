@@ -62,6 +62,8 @@ DEFAULTS = {
     "VIEW_RATE_LIMIT": "10000/1d",
     # Given that someone goes over, are they blocked for a period?
     "VIEW_RATE_LIMIT_BLOCK": True,
+    # Globally disable rate limit
+    "VIEW_RATE_LIMIT_DISABLE": True,
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": None,
     "JWT_SECRET_KEY": None,
@@ -146,3 +148,7 @@ CACHES.update(
         }
     }
 )
+
+RATELIMIT_ENABLE = not VIEW_RATE_LIMIT_DISABLE
+if not RATELIMIT_ENABLE:
+    VIEW_RATE_LIMIT = None
