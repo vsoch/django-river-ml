@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.settings &mdash; Django River ML 0.0.14 documentation</title>
+  <title>django_river_ml.settings &mdash; Django River ML 0.0.15 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.14
+                0.0.15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -140,6 +140,8 @@
     <span class="s2">&quot;VIEW_RATE_LIMIT&quot;</span><span class="p">:</span> <span class="s2">&quot;10000/1d&quot;</span><span class="p">,</span>
     <span class="c1"># Given that someone goes over, are they blocked for a period?</span>
     <span class="s2">&quot;VIEW_RATE_LIMIT_BLOCK&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="c1"># Globally disable rate limit</span>
+    <span class="s2">&quot;VIEW_RATE_LIMIT_DISABLE&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="c1"># Shelve and jwt keys (will be generated if not found)</span>
     <span class="s2">&quot;SHELVE_SECRET_KEY&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="s2">&quot;JWT_SECRET_KEY&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
@@ -224,6 +226,10 @@
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">)</span>
+
+<span class="n">RATELIMIT_ENABLE</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">VIEW_RATE_LIMIT_DISABLE</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">RATELIMIT_ENABLE</span><span class="p">:</span>
+    <span class="n">VIEW_RATE_LIMIT</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 
            </div>
