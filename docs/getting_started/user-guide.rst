@@ -169,6 +169,10 @@ The following additonal settings are available to set in your ``settings.py``:
      - True
      - Given that someone goes over, are they blocked for a period?
      - False
+   * - ``VIEW_RATE_LIMIT_DISABLE``
+     - True
+     - Globally disable rate limiting (ideal for development or for a heavily used learning server)
+     - False
 
 
 For more advanced settings like customizing the endpoints with authentication, see

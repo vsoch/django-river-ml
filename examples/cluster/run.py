@@ -31,6 +31,7 @@ def main():
         print(res)
 
     # Note that cluster models currently don't have metrics
+    metrics = cli.metrics(model_name)
     # If you are interested in adding this please open an issue to discuss!
 
     # Get stats for the model

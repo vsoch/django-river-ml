@@ -155,7 +155,10 @@ class ClusterFlavor(Flavor):
         return True, None
 
     def default_metrics(self):
-        return []
+        return [
+            metrics.cluster.BIC(),
+            metrics.cluster.Silhouette(),
+        ]
 
     @property
     def pred_funcs(self):

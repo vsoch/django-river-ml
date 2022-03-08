@@ -70,10 +70,20 @@ class RiverClient:
         Get metrics from the database for a specific model
         """
         try:
-            metrics = self.db[f"metrics/{model_name}"]
+            raw = self.db[f"metrics/{model_name}"]
         except KeyError:
             raise exceptions.FlavorNotSet
-        return {metric.__class__.__name__: metric.get() for metric in metrics}
+        metrics = {}
+
+        # Handle inf, -inf and nan (not serializable)
+        for metric in raw:
+            value = metric.get()
+            for field in ["inf", "-inf", "nan"]:
+                if str(value) == field:
+                    value = field
+                    break
+            metrics[metric.__class__.__name__] = value
+        return metrics
 
     def add_model(self, model, flavor, name=None):
         """

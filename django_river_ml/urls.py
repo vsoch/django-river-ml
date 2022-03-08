@@ -51,6 +51,11 @@ urlpatterns = [
         name="stats",
     ),
     path(
+        "%s/model/download/<str:name>/" % settings.URL_PREFIX,
+        views.ModelDownloadView.as_view(),
+        name="model_download",
+    ),
+    path(
         "%s/model/" % settings.URL_PREFIX,
         views.ModelView.as_view(),
         name="model",
@@ -69,10 +74,5 @@ urlpatterns = [
         "%s/models/" % settings.URL_PREFIX,
         views.ModelsView.as_view(),
         name="models",
-    ),
-    path(
-        "%s/model/download/<str:name>/" % settings.URL_PREFIX,
-        views.ModelDownloadView.as_view(),
-        name="model_download",
     ),
 ]
