@@ -1,7 +1,6 @@
 from river.metrics.base import ClassificationMetric
 
 import django_river_ml.storage as storage
-import django_river_ml.exceptions as exceptions
 import django_river_ml.utils as utils
 import django_river_ml.announce as announce
 import django_river_ml.flavors as flavors
@@ -12,22 +11,25 @@ import copy
 import uuid
 
 
-class RiverClient:
+class DjangoClient:
     """
-    A river client includes shared functions for interacting with storage.
-    This implementation was chosen so it can easily be plugged into another
-    kind of server without needing to deal with the server-specific requests.
+    The Django client provides the main interaction between the storage and
+    an internal user. It directly wraps the database, and is used by
+    RiverClient to return responses to the API. If you need to interact
+    with your models from inside of a Django application, use this class.
     """
 
     def __init__(self):
         self.db = storage.get_db()
 
     def stats(self, model_name):
+        """
+        Get stats for a model name. If they don't exist, we return None.
+        """
         try:
             stats = self.db[f"stats/{model_name}"]
         except KeyError:
-            raise exceptions.InvalidUsage(message="We don't have stats for that model")
-
+            return None
         return {
             "predict": {
                 "n_calls": int(stats["predict_mean"].n),
@@ -51,29 +53,25 @@ class RiverClient:
             },
         }
 
-    def stream_events(self):
+    def delete_id(self, identifier):
         """
-        Stream events from the events announcer.
+        Delete a known identifier (cached prediction) from the database.
         """
-        messages = announce.EVENTS_ANNOUNCER.listen()
-        return self._stream_announcer(messages)
-
-    def stream_metrics(self):
-        """
-        Stream events from the metrics announcer.
-        """
-        messages = announce.METRICS_ANNOUNCER.listen()
-        return self._stream_announcer(messages)
+        try:
+            del self.db["#%s" % identifier]
+        except KeyError:
+            pass
 
     def metrics(self, model_name):
         """
         Get metrics from the database for a specific model
         """
+        metrics = {}
         try:
             raw = self.db[f"metrics/{model_name}"]
+        # Empty metrics is the equivalent of 404
         except KeyError:
-            raise exceptions.FlavorNotSet
-        metrics = {}
+            return metrics
 
         # Handle inf, -inf and nan (not serializable)
         for metric in raw:
@@ -92,15 +90,21 @@ class RiverClient:
         # Validate the model
         ok, error = flavors.check(model, flavor)
         if not ok:
-            return False, {"message": error}
-        name = storage.add_model(model, name=name, flavor=flavor)
-        return True, {"name": name}
+            return False, error
+        return True, storage.add_model(model, name=name, flavor=flavor)
+
+    def save_model(self, model, model_name):
+        """
+        Save a model by name.
+        """
+        self.db[f"models/{model_name}"] = model
 
     def get_model(self, name):
         """
         Get a model by name
         """
-        return self.db[f"models/{name}"]
+        if f"models/{name}" in self.db:
+            return self.db[f"models/{name}"]
 
     def delete_model(self, name):
         """
@@ -121,17 +125,26 @@ class RiverClient:
         model_names = sorted(
             [k.split("/", 1)[1] for k in self.db if k.startswith("models/")]
         )
-        return {"models": model_names}
+        return model_names
 
-    def _stream_announcer(self, announcer):
+    def announce_metrics(self, metrics):
         """
-        Shared function to stream events from an announcer.
+        Announce the current metric values
         """
-        while True:
-            item = announcer.get()  # blocks until a new message arrives
-            yield item
+        if announce.METRICS_ANNOUNCER.listeners:
+            msg = json.dumps(
+                {metric.__class__.__name__: metric.get() for metric in metrics}
+            )
+            announce.METRICS_ANNOUNCER.announce(utils.format_sse(data=msg))
 
-    # Learning and Labeling
+    def announce_event(self, event, data):
+        """
+        Announce the event
+        """
+        if announce.EVENTS_ANNOUNCER.listeners:
+            announce.EVENTS_ANNOUNCER.announce(
+                utils.format_sse(data=json.dumps(data), event=event)
+            )
 
     def learn(
         self,
@@ -237,7 +250,7 @@ class RiverClient:
         except Exception as e:
             return False, repr(e)
 
-        self.db[f"models/{model_name}"] = model
+        self.save_model(model, model_name)
         self.announce_event(
             event,
             {
@@ -256,10 +269,11 @@ class RiverClient:
 
     # Prediction
 
-    def predict(self, features, model_name, identifier, model=None):
+    def predict(self, features, model_name, identifier):
         """
         Run a prediction
         """
+
         # Make the prediction
         success, prediction = self.make_prediction(features, model_name)
         if not success:
@@ -327,27 +341,6 @@ class RiverClient:
                 if p == len(flavor.pred_funcs) - 1:
                     return False, repr(e)
 
-    # Metrics
-
-    def announce_metrics(self, metrics):
-        """
-        Announce the current metric values
-        """
-        if announce.METRICS_ANNOUNCER.listeners:
-            msg = json.dumps(
-                {metric.__class__.__name__: metric.get() for metric in metrics}
-            )
-            announce.METRICS_ANNOUNCER.announce(utils.format_sse(data=msg))
-
-    def announce_event(self, event, data):
-        """
-        Announce the event
-        """
-        if announce.EVENTS_ANNOUNCER.listeners:
-            announce.EVENTS_ANNOUNCER.announce(
-                utils.format_sse(data=json.dumps(data), event=event)
-            )
-
     def update_metrics(self, prediction, ground_truth, model_name):
         """
         Given a prediction, update metrics to reflect it.
@@ -383,8 +376,126 @@ class RiverClient:
         self.db[f"metrics/{model_name}"] = metrics
         return metrics
 
+
+class RiverClient:
+    """
+    A river client includes shared functions for interacting with storage.
+    This implementation was chosen so it can easily be plugged into another
+    kind of server without needing to deal with the server-specific requests.
+    """
+
+    def __init__(self):
+        self.cli = DjangoClient()
+
+    def stats(self, model_name):
+        """
+        A wrapper to return stats from the database
+        """
+        stats = self.cli.stats(model_name)
+        if not stats:
+            return False, f"We don't have stats for model {model_name}"
+        return True, stats
+
+    def stream_events(self):
+        """
+        Stream events from the events announcer.
+        """
+        messages = announce.EVENTS_ANNOUNCER.listen()
+        return self._stream_announcer(messages)
+
+    def stream_metrics(self):
+        """
+        Stream events from the metrics announcer.
+        """
+        messages = announce.METRICS_ANNOUNCER.listen()
+        return self._stream_announcer(messages)
+
+    def metrics(self, model_name):
+        """
+        Get metrics from the database for a specific model
+        """
+        return self.cli.metrics(model_name)
+
+    def add_model(self, model, flavor, name=None):
+        """
+        Add a model by name (e.g., via API post)
+        """
+        added, name = self.cli.add_model(model, flavor, name)
+        if not added:
+            return False, {"message": name}
+        return True, {"name": name}
+
+    def get_model(self, name):
+        """
+        Get a model by name
+        """
+        return self.cli.get_model(name)
+
+    def delete_model(self, name):
+        """
+        Delete a model by name.
+        """
+        return self.cli.delete_model(name)
+
+    def models(self):
+        """
+        Get models known to a database.
+        """
+        return {"models": self.cli.models()}
+
+    def _stream_announcer(self, announcer):
+        """
+        Shared function to stream events from an announcer.
+        """
+        while True:
+            item = announcer.get()  # blocks until a new message arrives
+            yield item
+
+    # Learning and Labeling
+
+    def learn(
+        self,
+        model_name,
+        ground_truth=None,
+        prediction=None,
+        features=None,
+        identifier=None,
+    ):
+        """
+        A learning event takes a learning schema
+        """
+        return self.cli.learn(
+            model_name=model_name,
+            ground_truth=ground_truth,
+            prediction=prediction,
+            features=features,
+            identifier=identifier,
+        )
+
+    def label(self, label, identifier, model_name):
+        """
+        Given a previous prediction (we can get with an identifier) add a label.
+        """
+        return self.cli.label(label=label, identifier=identifier, model_name=model_name)
+
+    # Prediction
+
+    def predict(self, features, model_name, identifier):
+        """
+        Run a prediction
+        """
+        return self.cli.predict(
+            features=features, model_name=model_name, identifier=identifier
+        )
+
+    def make_prediction(self, features, model_name):
+        """
+        Shared function to make a prediction.
+
+        Returns True if successful with a prediction, otherwise
+        False and an exception to return to the user.
+        """
+        return self.cli.make_prediction(features, model_name)
+
     def delete_id(self, identifier):
-        try:
-            del self.db["#%s" % identifier]
-        except KeyError:
-            pass
+        self.cli.delete_id(identifier)

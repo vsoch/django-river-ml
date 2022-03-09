@@ -173,10 +173,11 @@ The following additonal settings are available to set in your ``settings.py``:
      - True
      - Globally disable rate limiting (ideal for development or for a heavily used learning server)
      - False
+   * - ``API_VIEWS_ENABLED``
+     - ``[]``
+     - Provide a list of view names (strings) to enable. If not set (empty list or None) all are enabled.
+     - ``['predict', 'service_info', 'metrics', 'models', 'model_download', 'stats']``
 
-
-For more advanced settings like customizing the endpoints with authentication, see
-the `settings.py <https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py>`_ in the application.
 
 Custom Models
 ^^^^^^^^^^^^^
@@ -193,6 +194,44 @@ Custom models currently support stats but not metrics, and metrics could be supp
 if we think about how to go about it. the ``CustomModel`` flavor is designed to be mostly
 forgiving to allow you to choose any prediction function you might have, and we can extend this
 if needed.
+
+
+API Views Enabled
+^^^^^^^^^^^^^^^^^
+
+If you want to disable some views, you can set of a list of views to enable using 
+``API_VIEWS_ENABLED``. As an example, let's say we are going to have learning
+done internally, and we just want to expose metadata and prediction endpoints.
+We could do:
+
+.. code-block:: python
+
+    DJANGO_RIVER_ML = {
+        ...
+        # Only allow these API views
+        "API_VIEWS_ENABLED": ['predict', 'service_info', 'metrics', 'models', 'model_download', 'stats']
+        ...
+    }
+
+The views to choose from include:
+
+ - auth_token
+ - service_info
+ - learn
+ - predict
+ - label
+ - metrics
+ - stream_metrics
+ - stream_events
+ - stats
+ - model_download
+ - model
+ - models
+
+Note that "model" includes most interactions to create or get a model.
+
+For more advanced settings like customizing the endpoints with authentication, see
+the `settings.py <https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py>`_ in the application.
 
 
 Authentication
@@ -275,5 +314,172 @@ Running tests with the example server is also fairly easy!
     python runtests.py
 
 
-This library is under development and we will have more endpoints and functionality
+
+Interaction from Inside your Application
+----------------------------------------
+
+While a user is going to be interacting with your API endpoints, you might want to
+interact with models from within your Django application. This is possible
+by interacting with the ``DjangoClient`` directly, which wraps the database 
+and is exposed to the API via a light additional wrapper. The following examples can walk
+you through the different kinds of interactions. For all interactions, you'll
+wait to create a client first:
+
+.. code-block:: python
+
+    from django_river_ml.client import DjangoClient
+    client = DjangoClient()
+    
+This also means you can choose to not add the Django River URLs to your application
+and have more control over your ML interactions internally. You can also take an approach
+between those two extremes, and just expose a limited set using the ``API_VIEWS_ENABLED``
+setting. When empty, all views are enabled. Otherwise, you can set a custom set of names to
+enable (and those not in the list will not be enabled).
+
+.. note::
+
+   We are planning to allow retrieving a model from version control, e.g., given that 
+   you are starting a Kubernetes run of Spack Monitor (which will need to use redis to store
+   model information) and the model is not found.
+
+
+Get Models
+^^^^^^^^^^
+
+To get models, simply ask for them! This will return a list of names to interact
+with further.
+
+.. code-block:: python
+
+    client.models()
+    ['milky-despacito', 'tart-bicycle']
+
+
+Create a Model
+^^^^^^^^^^^^^^
+
+If you want your server to create some initial model (as opposed to allowing users
+to upload them) you can easily do that:
+
+
+.. code-block:: python
+
+    from river import feature_extraction, cluster
+    model_name = "peanut-butter-clusters"
+    model = feature_extraction.BagOfWords() | cluster.KMeans(
+        n_clusters=100, halflife=0.4, sigma=3, seed=0
+    )
+    model_name = client.add_model(model, "cluster", name=model_name)
+
+
+You could also do the same from file, meaning a pickled model you've created elsewhere.
+
+.. code-block:: python
+
+    import pickle
+    model_name = "peanut-butter-clusters"
+    with open('%s.pkl' % model_name, 'rb') as fd:
+        model = pickle.load(fd)
+    model_name = client.add_model(model, "cluster", name=model_name)
+
+
+Or if your application has automatically created an "empty" model with your desired name (the default when enabled), you can delete it first and do the same.
+
+.. code-block:: python
+
+    client.delete_model(model_name)    
+    import pickle
+    with open('%s.pkl' % model_name, 'rb') as fd:
+        model pickle.load(fd)
+    model_name = client.add_model(model, "cluster", name=model_name)
+
+
+Delete a Model
+^^^^^^^^^^^^^^
+
+You can delete a model by name.
+
+.. code-block:: python
+
+    client.delete_model("tart-bicycle") 
+    True
+
+
+
+Get Model
+^^^^^^^^^
+
+Of course to retrieve the model directly, you can do:
+
+.. code-block:: python
+
+    model = client.get_model("spack-errors")
+
+
+Keep in mind you are holding onto the model in memory and will need to again save it.
+
+.. code-block:: python
+
+    client.save_model(model, "spack-errors")
+
+Note that if you are doing standard predict or learn endpoints, you can simply
+provide the model name and you don't need to worry about retrieving or saving
+(the function handles it for you!)
+
+
+Stats and Metrics for a Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The one drawback of uploading a model is that you won't have stats or metrics populated.
+You simply cannot, given that the learning happened elsewhere, and is normally done on the
+server to get these metrics. However, once you've done more learning you can ask for stats or
+metrics:
+
+.. code-block:: python
+
+    client.stats("spack-errors")
+    client.metrics("spack-errors")
+
+
+Interactive Learn
+^^^^^^^^^^^^^^^^^
+
+You'll generally need to provide the model name and features, although if you provide
+an identifier these things can be looked up.
+
+.. code-block:: python
+
+    client.learn(
+        model_name,
+        ground_truth=ground_truth,
+        prediction=prediction,
+        features=features,
+        identifier=identifier,
+    )
+
+Interactive Label
+^^^^^^^^^^^^^^^^^
+
+To do a labeling (post learn) you'll need to provide the label, the identifier,
+and the model name.
+
+
+.. code-block:: python
+
+    client.label(label, identifier, model_name)
+
+
+Interactive Predict
+^^^^^^^^^^^^^^^^^^^
+
+A prediction usually needs the model name and features, and optionally an identifier.
+
+
+.. code-block:: python
+
+    client.predict(features, model_name, identifier)
+
+
+The remainder of functions on the client are used internally and you should not need to call them
+directly. This library is under development and we will have more endpoints and functionality
 coming soon!

@@ -100,4 +100,7 @@ class StatsView(APIView):
             return Response(status=400)
 
         client = RiverClient()
-        return Response(status=200, data=client.stats(model_name))
+        found, stats = client.stats(model_name)
+        if not found:
+            return Response(status=404, data={"message": stats})
+        return Response(status=200, data=stats)
