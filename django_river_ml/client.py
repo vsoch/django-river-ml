@@ -480,12 +480,12 @@ class RiverClient:
 
     # Prediction
 
-    def predict(self, features, model_name, identifier, model=None):
+    def predict(self, features, model_name, identifier):
         """
         Run a prediction
         """
         return self.cli.predict(
-            features=features, model_name=model_name, identifier=identifier, model=model
+            features=features, model_name=model_name, identifier=identifier
         )
 
     def make_prediction(self, features, model_name):
