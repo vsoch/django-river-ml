@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; Django River ML 0.0.15 documentation</title>
+  <title>User Guide &mdash; Django River ML 0.0.16 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.15
+                0.0.16
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,11 +50,23 @@
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#settings">Settings</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#custom-models">Custom Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api-views-enabled">API Views Enabled</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sample-application">Sample Application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-from-inside-your-application">Interaction from Inside your Application</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-models">Get Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-model">Create a Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#delete-a-model">Delete a Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-model">Get Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stats-and-metrics-for-a-model">Stats and Metrics for a Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interactive-learn">Interactive Learn</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interactive-label">Interactive Label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interactive-predict">Interactive Predict</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -273,10 +285,13 @@ and do not use the default of the plugin:</p>
 <td>Globally disable rate limiting (ideal for development or for a heavily used learning server)</td>
 <td>False</td>
 </tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">[]</span></code></td>
+<td>Provide a list of view names (strings) to enable. If not set (empty list or None) all are enabled.</td>
+<td><code class="docutils literal notranslate"><span class="pre">['predict',</span> <span class="pre">'service_info',</span> <span class="pre">'metrics',</span> <span class="pre">'models',</span> <span class="pre">'model_download',</span> <span class="pre">'stats']</span></code></td>
+</tr>
 </tbody>
 </table>
-<p>For more advanced settings like customizing the endpoints with authentication, see
-the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
 <div class="section" id="custom-models">
 <h4>Custom Models<a class="headerlink" href="#custom-models" title="Permalink to this headline"></a></h4>
 <p>Django River ML has support for custom models, where a custom model is one you’ve defined in your application
@@ -290,6 +305,41 @@ suggested.</p>
 if we think about how to go about it. the <code class="docutils literal notranslate"><span class="pre">CustomModel</span></code> flavor is designed to be mostly
 forgiving to allow you to choose any prediction function you might have, and we can extend this
 if needed.</p>
+</div>
+<div class="section" id="api-views-enabled">
+<h4>API Views Enabled<a class="headerlink" href="#api-views-enabled" title="Permalink to this headline"></a></h4>
+<p>If you want to disable some views, you can set of a list of views to enable using
+<code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code>. As an example, let’s say we are going to have learning
+done internally, and we just want to expose metadata and prediction endpoints.
+We could do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DJANGO_RIVER_ML</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">...</span>
+    <span class="c1"># Only allow these API views</span>
+    <span class="s2">&quot;API_VIEWS_ENABLED&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="s1">&#39;service_info&#39;</span><span class="p">,</span> <span class="s1">&#39;metrics&#39;</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;model_download&#39;</span><span class="p">,</span> <span class="s1">&#39;stats&#39;</span><span class="p">]</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The views to choose from include:</p>
+<blockquote>
+<div><ul class="simple">
+<li>auth_token</li>
+<li>service_info</li>
+<li>learn</li>
+<li>predict</li>
+<li>label</li>
+<li>metrics</li>
+<li>stream_metrics</li>
+<li>stream_events</li>
+<li>stats</li>
+<li>model_download</li>
+<li>model</li>
+<li>models</li>
+</ul>
+</div></blockquote>
+<p>Note that “model” includes most interactions to create or get a model.</p>
+<p>For more advanced settings like customizing the endpoints with authentication, see
+the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
 </div>
 </div>
 <div class="section" id="authentication">
@@ -351,8 +401,133 @@ you can use to test. Once you have your environment setup, you can do:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python runtests.py</span>
 </pre></div>
 </div>
-<p>This library is under development and we will have more endpoints and functionality
+</div>
+<div class="section" id="interaction-from-inside-your-application">
+<h3>Interaction from Inside your Application<a class="headerlink" href="#interaction-from-inside-your-application" title="Permalink to this headline"></a></h3>
+<p>While a user is going to be interacting with your API endpoints, you might want to
+interact with models from within your Django application. This is possible
+by interacting with the <code class="docutils literal notranslate"><span class="pre">DjangoClient</span></code> directly, which wraps the database
+and is exposed to the API via a light additional wrapper. The following examples can walk
+you through the different kinds of interactions. For all interactions, you’ll
+wait to create a client first:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_river_ml.client</span> <span class="kn">import</span> <span class="n">DjangoClient</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">DjangoClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This also means you can choose to not add the Django River URLs to your application
+and have more control over your ML interactions internally. You can also take an approach
+between those two extremes, and just expose a limited set using the <code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code>
+setting. When empty, all views are enabled. Otherwise, you can set a custom set of names to
+enable (and those not in the list will not be enabled).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We are planning to allow retrieving a model from version control, e.g., given that
+you are starting a Kubernetes run of Spack Monitor (which will need to use redis to store
+model information) and the model is not found.</p>
+</div>
+<div class="section" id="get-models">
+<h4>Get Models<a class="headerlink" href="#get-models" title="Permalink to this headline"></a></h4>
+<p>To get models, simply ask for them! This will return a list of names to interact
+with further.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;milky-despacito&#39;</span><span class="p">,</span> <span class="s1">&#39;tart-bicycle&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-model">
+<h4>Create a Model<a class="headerlink" href="#create-a-model" title="Permalink to this headline"></a></h4>
+<p>If you want your server to create some initial model (as opposed to allowing users
+to upload them) you can easily do that:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">river</span> <span class="kn">import</span> <span class="n">feature_extraction</span><span class="p">,</span> <span class="n">cluster</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;peanut-butter-clusters&quot;</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">feature_extraction</span><span class="o">.</span><span class="n">BagOfWords</span><span class="p">()</span> <span class="o">|</span> <span class="n">cluster</span><span class="o">.</span><span class="n">KMeans</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">halflife</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You could also do the same from file, meaning a pickled model you’ve created elsewhere.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;peanut-butter-clusters&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.pkl&#39;</span> <span class="o">%</span> <span class="n">model_name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or if your application has automatically created an “empty” model with your desired name (the default when enabled), you can delete it first and do the same.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.pkl&#39;</span> <span class="o">%</span> <span class="n">model_name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+    <span class="n">model</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-model">
+<h4>Delete a Model<a class="headerlink" href="#delete-a-model" title="Permalink to this headline"></a></h4>
+<p>You can delete a model by name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="s2">&quot;tart-bicycle&quot;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-model">
+<h4>Get Model<a class="headerlink" href="#get-model" title="Permalink to this headline"></a></h4>
+<p>Of course to retrieve the model directly, you can do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Keep in mind you are holding onto the model in memory and will need to again save it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that if you are doing standard predict or learn endpoints, you can simply
+provide the model name and you don’t need to worry about retrieving or saving
+(the function handles it for you!)</p>
+</div>
+<div class="section" id="stats-and-metrics-for-a-model">
+<h4>Stats and Metrics for a Model<a class="headerlink" href="#stats-and-metrics-for-a-model" title="Permalink to this headline"></a></h4>
+<p>The one drawback of uploading a model is that you won’t have stats or metrics populated.
+You simply cannot, given that the learning happened elsewhere, and is normally done on the
+server to get these metrics. However, once you’ve done more learning you can ask for stats or
+metrics:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interactive-learn">
+<h4>Interactive Learn<a class="headerlink" href="#interactive-learn" title="Permalink to this headline"></a></h4>
+<p>You’ll generally need to provide the model name and features, although if you provide
+an identifier these things can be looked up.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span>
+    <span class="n">model_name</span><span class="p">,</span>
+    <span class="n">ground_truth</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="n">prediction</span><span class="p">,</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
+    <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interactive-label">
+<h4>Interactive Label<a class="headerlink" href="#interactive-label" title="Permalink to this headline"></a></h4>
+<p>To do a labeling (post learn) you’ll need to provide the label, the identifier,
+and the model name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interactive-predict">
+<h4>Interactive Predict<a class="headerlink" href="#interactive-predict" title="Permalink to this headline"></a></h4>
+<p>A prediction usually needs the model name and features, and optionally an identifier.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The remainder of functions on the client are used internally and you should not need to call them
+directly. This library is under development and we will have more endpoints and functionality
 coming soon!</p>
+</div>
 </div>
 </div>
 </div>

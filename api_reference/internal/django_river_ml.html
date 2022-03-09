@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django-river-ml package &mdash; Django River ML 0.0.15 documentation</title>
+  <title>django-river-ml package &mdash; Django River ML 0.0.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.15
+                0.0.16
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -210,6 +210,116 @@ the challenge if not.</p>
 <div class="section" id="module-django_river_ml.client">
 <span id="django-river-ml-client-module"></span><h2>django_river_ml.client module<a class="headerlink" href="#module-django_river_ml.client" title="Permalink to this headline"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.client.</span></code><code class="sig-name descname"><span class="pre">DjangoClient</span></code><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Django client provides the main interaction between the storage and
+an internal user. It directly wraps the database, and is used by
+RiverClient to return responses to the API. If you need to interact
+with your models from inside of a Django application, use this class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.add_model">
+<code class="sig-name descname"><span class="pre">add_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">flavor</span></span></em>, <em><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.add_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.add_model" title="Permalink to this definition"></a></dt>
+<dd><p>Add a model by name (e.g., via API post)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.announce_event">
+<code class="sig-name descname"><span class="pre">announce_event</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.announce_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.announce_event" title="Permalink to this definition"></a></dt>
+<dd><p>Announce the event</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.announce_metrics">
+<code class="sig-name descname"><span class="pre">announce_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">metrics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.announce_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.announce_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Announce the current metric values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.delete_id">
+<code class="sig-name descname"><span class="pre">delete_id</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.delete_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.delete_id" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a known identifier (cached prediction) from the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.delete_model">
+<code class="sig-name descname"><span class="pre">delete_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.delete_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.delete_model" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a model by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.finish_learn">
+<code class="sig-name descname"><span class="pre">finish_learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.finish_learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.finish_learn" title="Permalink to this definition"></a></dt>
+<dd><p>Finish a learning event. This can either be a prediction ‘predict’
+event that was done on the server, or a ‘label’ event that retrieved
+a previous prediction and then updated metrics or the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.get_model">
+<code class="sig-name descname"><span class="pre">get_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.get_model" title="Permalink to this definition"></a></dt>
+<dd><p>Get a model by name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.label">
+<code class="sig-name descname"><span class="pre">label</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">label</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.label" title="Permalink to this definition"></a></dt>
+<dd><p>Given a previous prediction (we can get with an identifier) add a label.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.learn">
+<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.learn" title="Permalink to this definition"></a></dt>
+<dd><p>A learning event takes a learning schema</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.make_prediction">
+<code class="sig-name descname"><span class="pre">make_prediction</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.make_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.make_prediction" title="Permalink to this definition"></a></dt>
+<dd><p>Shared function to make a prediction.</p>
+<p>Returns True if successful with a prediction, otherwise
+False and an exception to return to the user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.metrics">
+<code class="sig-name descname"><span class="pre">metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Get metrics from the database for a specific model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.models">
+<code class="sig-name descname"><span class="pre">models</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.models" title="Permalink to this definition"></a></dt>
+<dd><p>Get models known to a database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Run a prediction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.save_model">
+<code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>Save a model by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.stats">
+<code class="sig-name descname"><span class="pre">stats</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.stats" title="Permalink to this definition"></a></dt>
+<dd><p>Get stats for a model name. If they don’t exist, we return None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.update_metrics">
+<code class="sig-name descname"><span class="pre">update_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.update_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.update_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Given a prediction, update metrics to reflect it.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.client.</span></code><code class="sig-name descname"><span class="pre">RiverClient</span></code><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -223,18 +333,6 @@ kind of server without needing to deal with the server-specific requests.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.announce_event">
-<code class="sig-name descname"><span class="pre">announce_event</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.announce_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.announce_event" title="Permalink to this definition"></a></dt>
-<dd><p>Announce the event</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.announce_metrics">
-<code class="sig-name descname"><span class="pre">announce_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">metrics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.announce_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.announce_metrics" title="Permalink to this definition"></a></dt>
-<dd><p>Announce the current metric values</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.delete_id">
 <code class="sig-name descname"><span class="pre">delete_id</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.delete_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.delete_id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -243,14 +341,6 @@ kind of server without needing to deal with the server-specific requests.</p>
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.delete_model">
 <code class="sig-name descname"><span class="pre">delete_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.delete_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.delete_model" title="Permalink to this definition"></a></dt>
 <dd><p>Delete a model by name.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.finish_learn">
-<code class="sig-name descname"><span class="pre">finish_learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.finish_learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.finish_learn" title="Permalink to this definition"></a></dt>
-<dd><p>Finish a learning event. This can either be a prediction ‘predict’
-event that was done on the server, or a ‘label’ event that retrieved
-a previous prediction and then updated metrics or the model.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -293,14 +383,15 @@ False and an exception to return to the user.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.predict">
-<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span></em>, <em><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.predict" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.predict" title="Permalink to this definition"></a></dt>
 <dd><p>Run a prediction</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stats">
 <code class="sig-name descname"><span class="pre">stats</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.stats" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A wrapper to return stats from the database</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stream_events">
@@ -312,12 +403,6 @@ False and an exception to return to the user.</p>
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.stream_metrics">
 <code class="sig-name descname"><span class="pre">stream_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.stream_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.stream_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Stream events from the metrics announcer.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_river_ml.client.RiverClient.update_metrics">
-<code class="sig-name descname"><span class="pre">update_metrics</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.update_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.update_metrics" title="Permalink to this definition"></a></dt>
-<dd><p>Given a prediction, update metrics to reflect it.</p>
 </dd></dl>
 
 </dd></dl>
