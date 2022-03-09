@@ -67,6 +67,9 @@ DEFAULTS = {
     # Shelve and jwt keys (will be generated if not found)
     "SHELVE_SECRET_KEY": None,
     "JWT_SECRET_KEY": None,
+    # Enable a custom set of views (by name)
+    # If empty, all views are enabled
+    "API_VIEWS_ENABLED": [],
 }
 
 # The user can define a section for django_river_ml in settings

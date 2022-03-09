@@ -38,6 +38,8 @@ class ModelDownloadView(APIView):
             return Response(status=400, data={"message": "A model name is required"})
         client = RiverClient()
         model = client.get_model(name)
+        if not model:
+            return Response(status=404)
         return HttpResponse(dill.dumps(model), content_type="application/octet-stream")
 
 
@@ -66,6 +68,11 @@ class ModelView(APIView):
             return Response(status=400, data={"message": "A model name is required"})
         client = RiverClient()
         model = client.get_model(name)
+
+        # We can't find that model!
+        if not model:
+            return Response(status=404)
+
         dumped = models.model_to_dict(model)
         return Response(status=200, data=dumped)
 

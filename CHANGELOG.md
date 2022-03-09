@@ -14,6 +14,9 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
+ - refactor of client to provide same functions internally (0.0.16)
+  - allow user to specify a custom set of urls to expose
+  - documentation for DjangoClient (internal client)
  - support for disable of ratelimit (0.0.15)
  - auth token needs to be in same namespace! (0.0.14)
  - support for custom and cluster models (0.0.13)

@@ -4,7 +4,8 @@ from django_river_ml import settings
 
 app_name = "django_river_ml"
 
-urlpatterns = [
+urlpatterns = []
+contenders = [
     path(
         "%s/auth/token/" % settings.URL_PREFIX,
         views.GetAuthToken.as_view(),
@@ -76,3 +77,16 @@ urlpatterns = [
         name="models",
     ),
 ]
+
+# If this variable isn't set, we set all of them
+if not settings.API_VIEWS_ENABLED:
+    urlpatterns = contenders
+
+# Otherwise, the user can choose to expose only a subset of urls
+else:
+    for url in contenders:
+        if (
+            url.name in settings.API_VIEWS_ENABLED
+            or url.pattern.name in settings.API_VIEWS_ENABLED
+        ):
+            urlpatterns.append(url)
