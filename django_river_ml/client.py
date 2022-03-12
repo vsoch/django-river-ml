@@ -273,9 +273,9 @@ class DjangoClient:
         """
         Run a prediction
         """
-
         # Make the prediction
         success, prediction = self.make_prediction(features, model_name)
+
         if not success:
             return success, prediction
 
