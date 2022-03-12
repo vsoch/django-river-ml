@@ -130,11 +130,9 @@ class APIBaseTests(APITestCase):
             assert value["model"] == model_name
             assert value["prediction"] in [0, 1]
 
-        # cluster models don't have stats (yet)
+        # cluster models don't have metrics or stats (yet)
         metrics = self.client.metrics(model_name)
-        for metric in ["BIC", "Silhouette"]:
-            assert metric in metrics
-            assert metrics[metric] != 0
+        assert not metrics
 
         # Get stats for the model
         stats = self.client.stats(model_name)
