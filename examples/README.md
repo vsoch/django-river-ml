@@ -20,5 +20,6 @@ $ python manage.py runserver
  - [binary](binary)
  - [multiclass](multiclass)
  - [cluster](cluster)
+ - [iris](iris): the iris dataset (example from scikit-learn)
  - [custom](custom): currently is an example for a custom model (kmeans) 
 

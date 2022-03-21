@@ -29,10 +29,3 @@ tool to generate a contributors graphic below.
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-
-## TODO
-
-- should we have a server generic client to plug in here instead?
-- add some basic set of frontend views? some kind of sockets?
-- work on same thing with FastAPI?

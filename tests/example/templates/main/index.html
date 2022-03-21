@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/toolbar/prism-toolbar.min.css" integrity="sha512-DSAA0ziYwggOJ3QyWFZhIaU8bSwQLyfnyIrmShRLBdJMtiYKT7Ju35ujBCZ6ApK3HURt34p2xNo+KX9ebQNEPQ==" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.label {
+  fill: #fff;
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+text {
+  fill : #777;
+}
+
+.domain, line {
+  stroke: #777;
+}
+
+.focusLine {
+  shape-rendering: crispEdges;
+  stroke: #777;
+  stroke-width: 1.1;
+  stroke-linecap: butt;
+}
+      #content {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 50px;
+      }
+
+      #logolink:hover {
+        text-decoration: none;
+      }
+
+      #logolink {
+        font-weight: 600;
+        font-size: 20px;
+        color: navyblue !important;
+      }
+      #logo {
+        height: 200px;
+        vertical-align: center;
+      }
+
+      pre#check-msg {
+        overflow: auto;
+        max-height: 80vh;
+      }
+
+      #repos tr td:nth-child(1) a {
+        opacity: 0.0;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      #repos tr:hover td:nth-child(1) a {
+        opacity: 1.0;
+      }
+
+      #config-readme h1 {
+        font-size: 1.5rem;
+      }
+
+      .clickyaml {
+        cursor: pointer;
+      }
+
+      #config-readme h2 {
+        font-size: 1.4rem;
+      }
+
+      #config-readme h3 {
+        font-size: 1.3rem;
+      }
+
+      #config-readme h4 {
+        font-size: 1.2rem;
+      }
+
+      #config-readme h5 {
+        font-size: 1.1rem;
+      }
+    </style>
+    <title>Django River ML Cluster Demo</title>
+  </head>
+
+  <body>
+
+  <div class="container-fluid" style="padding:50px">
+  <div class="row">
+     <div class="col-md-9">
+        <h2>Django River ML Example</h2>
+
+<select id="model-select" name="state" autocomplete="off">
+  {% for model in have_centroids %}<option value="{{ model }}" {% if loop.first %}selected{% endif %}>{{ model }}</option>{% endfor %}
+</select>
+
+     </div>
+   </div>
+     <div class="row">  
+     <div class="col-md-12">     
+
+
+<div class="container-wide">
+<div class="row">
+    <div class="col-md-8">
+        <small>Visualize Cluster Centroids for your model</small>
+    </div>
+    <div class="col-md-4">
+<div style="float:right; text-align:right"><p id="topic-info"></p></div>
+    </div>
+</div>
+<div class="row">
+   <div class="col-md-10">
+      <div id="plot"></div>
+   </div>
+   <div class="col-md-2">
+      <div id="repo-info" style="min-height:200px"></div>
+      <div id="colors"></div>
+   </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<script>
+
+/**
+ * A D3 Scatter Plot chart with interactive nodes, 
+ * crosshair and custom axis grid.
+ * https://codepen.io/stopyransky/pen/KWomoK
+ */
+
+var totalWidth = window.innerWidth - 100;
+var totalHeight = window.innerHeight - 200;
+
+$(document).ready(function() {
+    $('#model-select').select2();
+    $('#model-select').on('select2:select', function (e) {
+      var data = e.params.data;
+      var model = data['text'];
+
+      fetch('data/model/clusters/' + model + "/")
+       .then(response => {
+         if (!response.ok) {
+           throw new Error('Network response was not OK');
+         }
+        return response.json();
+       })
+       .then(data => {
+            $("#plot").html("")
+            generate_graph(data['centers'])
+       })
+      .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+      });
+   });
+});
+
+var margin = {
+  top: 20,
+  left: 25,
+  bottom: 30,
+  right: 30
+}
+
+var width = totalWidth - margin.left - margin.right - 300;
+var height = totalHeight - margin.top - margin.bottom;
+
+var formatDecimal = d3.format(',.0f');
+
+function generateColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// On mouseover, add a color border around selected
+function filtercolor(div) {
+   radiuss = $(div).attr('data-radius')
+   $(".software-node").attr('display', 'none')
+   $(".radiuss-" + radiuss).attr('display', 'normal')
+}
+
+function showall() {
+   $(".software-node").attr('display', 'normal')
+}
+
+function generate_graph(data) {
+
+    console.log(data)
+    theData = []
+    for (var i = 0; i < data.length; i++) {
+        theData.push({"radius": 6, "cx": data[i].x, "cy": data[i].y, "name": "Cluster " + data[i].name})
+    }
+    console.log(theData.length);
+
+    // SIZE SCALE
+    var sizeDomain = d3.extent(theData, function(d) {return d.radius});
+    var sizeRange = [4, 20];
+    var sizeScale = d3.scaleLinear().domain(sizeDomain).range(sizeRange);
+
+    // X SCALE
+    var xMax = d3.max(theData, function(d) {return d.cx});
+    var xMin = d3.min(theData, function(d) {return d.cx});
+    var xDomain = [xMin, xMax]
+    var xRange = [0, width];
+    var xPadding = d3.mean(theData, function(d) {return d.cx});
+    var xScale = d3.scaleLinear().domain(xDomain).range(xRange).nice(1);
+
+    // Y SCALE 
+    var yMax = d3.max(theData, function(d) {return d.cy});
+    var yMin = d3.min(theData, function(d) {return d.cy});
+    var yDomain = [yMin, yMax]
+
+    var yRange = [height, 0];
+    var yScale = d3.scaleLinear().domain(yDomain).range(yRange).nice(1);
+
+    // COLOR SCALE based on language
+    var colorDomain = d3.set(theData, function(d) {return d.radius});
+    colorDomain = colorDomain.values()
+    colorDomain.sort()
+
+    // Generate random colors
+    colors = []
+    legend = ""
+    console.log(colorDomain)
+    for (var i = 0; i < colorDomain.length; i++) {
+        newColor = generateColor()
+        legend += "<span onmouseout='showall()' onmouseover='filtercolor(this)' data-radius='" + colorDomain[i] +"' class='badge' style='color:white;width:200px;cursor:pointer;background-color:" + newColor + "'>N=" + colorDomain[i] + "</span><br>"
+        colors.push(newColor)
+    }    
+    var colorize = d3.scaleLog()
+      .domain(colorDomain)
+      .range(colors);
+
+    // Add colors
+    $('#colors').html(legend)
+    
+    var xAxis = d3.axisBottom(xScale)
+      //.ticks(10)
+      .tickSize(6)
+      .tickSizeInner(-height)
+      //.tickSizeOuter(7);
+
+    var yAxis = d3.axisLeft(yScale).ticks(5)
+      .tickSizeInner(-width)
+      //.tickSizeOuter(7);
+
+    // SVG GROUP HIERARCHY 
+    var svg = d3.select('#plot').append('svg')
+      .attr("id", "scatterplot")
+      .attr("width", width)
+      .attr("height", totalHeight)
+      .style( "background-color", "hsl(0, 0%, 100%)" )
+      .style( "border", "dashed 1px gray" );
+
+    var mainGroup = svg.append("g")
+      .attr("id", "mainGroup")
+      .attr("transform", "translate( " + margin.left + ", " + margin.top + ")");
+
+    var xAxisGroup = mainGroup.append("g")
+      .attr("id", "xaxis")
+      .attr("class", "axis")
+      .attr("transform", "translate( 0," + height + ")")
+      .call(function customXAxis(g) {
+        g.call(xAxis);
+        g.selectAll(".tick:not(:first-of-type) line")
+          .attr("stroke", "#777")
+          .attr("stroke-dasharray", "3,2");
+        g.selectAll(".tick text")
+          .attr("y", 9);
+      });
+
+    var yAxisGroup = mainGroup.append("g")
+      .attr("id", "yaxis")
+      .attr("class", "axis")
+      .call(function customYAxis(g) {
+        g.call(yAxis);
+        //g.select(".domain").remove();
+        g.selectAll(".tick:not(:first-of-type) line")
+          .attr("stroke", "#777")
+          .attr("stroke-dasharray", "3,2");
+        g.selectAll(".tick text")
+          .attr("x", -9);
+      });
+
+    var eventGroup = mainGroup.append("g")
+      .attr('id', 'event-overlay');
+
+    var crosshair = eventGroup.append("g")
+      .attr("id", "crosshair");
+
+    var eventRect = eventGroup.append('rect');
+
+    var canvasGroup = eventGroup.append("g")
+      .attr("id", "circleGroup");
+
+    // CHART ASSEMBLY
+    var crosshairSettings = {
+      xLabelTextOffset: height + 12,
+      yLabelTextOffset: -9,
+      labelWidth: 38,
+      labelHeight: 14,
+      labelColor: "#aaa",
+      labelStrokeColor: "none",
+      labelStrokeWidth: "0.5px"
+    }
+
+    crosshair.append("line")
+      .attrs({
+        "id": "focusLineX",
+        "class": "focusLine",
+      });
+    crosshair.append("line")
+      .attrs({
+        "id": "focusLineY",
+        "class": "focusLine",
+      })
+
+    crosshair.append("rect") // x label bg
+      .attrs({
+        "id": "focusLineXLabelBackground",
+        "class": "focusLineLabelBackground",
+        "fill": crosshairSettings.labelColor,
+        "stroke": crosshairSettings.labelStrokeColor,
+        "stroke-width": crosshairSettings.labelStrokeWidth,
+        "width": crosshairSettings.labelWidth, // should be a size of corresponding txt!
+        "height": crosshairSettings.labelHeight,
+      });
+
+    crosshair.append("text")
+      .attrs({
+        "id": "focusLineXLabel",
+        "class": "label",
+        "text-anchor": "middle",
+        "alignment-baseline": "central"
+      });
+
+    var ylabel = crosshair.append("g").attr("id", "yLabelGroup");
+    ylabel.append("rect") // y label bg
+      .attrs({
+        "id": "focusLineYLabelBackground",
+        "class": "focusLineLabelBackground",
+        "fill": crosshairSettings.labelColor,
+        "stroke": crosshairSettings.labelStrokeColor,
+        "stroke-width": crosshairSettings.labelStrokeWidth,
+        "width": crosshairSettings.labelWidth,
+        "height": crosshairSettings.labelHeight,
+      });
+
+    ylabel.append("text")
+      .attrs({
+        "id": "focusLineYLabel",
+        "class": "label",
+        "text-anchor": "end",
+        "alignment-baseline": "central"
+      });
+
+    canvasGroup.selectAll("circle")
+      .data(theData)
+      .enter()
+      .append('circle')
+      .attr("cx", function(d) {return xScale(d.cx)})
+      .attr("cy", function(d) {return yScale(d.cy)})
+      .attr("r", function(d) {return sizeScale(sizeDomain[0])})
+      .attr("class", function(d) {
+          return "radius-" + d.radius + " software-node"})
+      .style("fill", function(d) {return colorize(d.radius)})
+      .style("opacity", 0.5)
+      .on("mouseover", function(d, i) {
+        d3.select(this)
+          .attrs({ // this == circle
+            "stroke": "#000000",
+            "stroke-width": "1.5px",
+            "cursor": "pointer",
+          })
+          .styles({
+            "fill": "darkorange",
+          });
+          html = "<span id='removeme'><strong>x: " + d.cx + " y:" + d.cy + "</span><br>"
+          html += "</span><br>"
+          $("#repo-info").html(html);          
+          crosshair.style('display', null); // enable crosshair visibility 
+          setCrosshair(xScale(d.cx), yScale(d.cy));
+      })
+      .on("mouseout", function(d, i) {
+
+        d3.select(this).attrs({
+            "stroke": "none"
+          })
+          .style("fill", function(d) {
+            return colorize(d.radius);
+          });
+          $("#removeme").remove();  
+      })
+    .transition()
+      .attr("r", function(d) {
+        return sizeScale(d.radius);
+      });
+
+eventRect.attrs({
+    'width': width,
+    'height': height
+  })
+  .styles({
+    'opacity': 0.0,
+    'display': null // not eligible for events
+  })
+  .on('mouseover', function() {
+    // crosshair.attr("cursor", "crosshair");
+    crosshair.style('display', null);
+
+  })
+  .on('mouseout', function() {
+    crosshair.style('display', 'none');
+
+  })
+  .on('mousemove', function handleMouseMove() {
+
+    var mouse = d3.mouse(this); // this == eventrect
+
+    var x = mouse[0];
+    var y = mouse[1];
+
+    setCrosshair(x, y);
+
+  });
+
+function setCrosshair(x, y) {
+
+  d3.select('#focusLineX')
+    .attr('x1', x)
+    .attr('y1', 0)
+    .attr('x2', x)
+    .attr('y2', height + 6);
+
+  d3.select('#focusLineY')
+    .attr('x1', -6)
+    .attr('y1', y)
+    .attr('x2', width)
+    .attr('y2', y);
+
+  d3.select("#focusLineXLabel")
+    .attr("x", x)
+    .attr("y", height + 12)
+    .text(formatDecimal(xScale.invert(x)));
+  d3.select("#focusLineXLabelBackground")
+    .attr("transform", "translate( " + (x - crosshairSettings.labelWidth * 0.5) + " , " + (height + 5) + " )")
+    .text(formatDecimal(xScale.invert(x)));
+
+  d3.select("#focusLineYLabel")
+    .attr("transform", "translate( -9, " + y + ")")
+    .text(formatDecimal(yScale.invert(y)));
+  d3.select("#focusLineYLabelBackground")
+    .attr("transform", "translate( " + -crosshairSettings.labelWidth + ", " + (y - 8) + ")")
+   }
+}
+
+</script>
+    </div>
+   </div>
+ </div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js" integrity="sha512-YBk7HhgDZvBxmtOfUdvX0z8IH2d10Hp3aEygaMNhtF8fSOvBZ16D/1bXZTJV6ndk/L/DlXxYStP8jrF77v2MIg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/toolbar/prism-toolbar.min.js" integrity="sha512-cu2C9EssrOrVXT4thyL4gz/qWyh3Lq9XbICUXYyh3zJRCSKk1J08tBKPXnsSpdpZXOliaK/OJBygw/l0twAmwA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" integrity="sha512-bWzyGaP/f19RLeYGN6ZhDgvkS7GM0Fq23lOI1/PB3lV6I775RIDzXLxCGR4iiDGzeMsQ3lncuXUQMFP7qO9lIQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-yaml.min.js" integrity="sha512-QRKKJS95wG2dOCdc7Cm0Zbu+L04xY8fTwhHG3UnqZPMiFrAN8uXrqVTx//eqvTaoYwNJ7oFN3Vej5gnJ+GAxkw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-bash.min.js" integrity="sha512-JvRd44DHaJAv/o3wxi/dxhz2TO/jwwX8V5/LTr3gj6QMQ6qNNGXk/psoingLDuc5yZmccOq7XhpVaelIZE4tsQ==" crossorigin="anonymous"></script>
+
+  </body>
+</html>

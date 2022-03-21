@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django_river_ml",
     "rest_framework",
     "rest_framework.authtoken",
+    "tests.example",
 ]
 
 MIDDLEWARE = [
