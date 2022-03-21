@@ -1,7 +1,8 @@
-from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
+import tests.example.views as views
 
 urlpatterns = [
-    url(r"^admin/", admin.site.urls),
-    url(r"", include("django_river_ml.urls", namespace="django_river_ml")),
+    path("", views.index),
+    path("data/model/clusters/<str:name>/", views.get_centroids, name="model_clusters"),
 ]

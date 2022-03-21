@@ -14,6 +14,7 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
+ - adding sklearn example and simple view to example app (0.0.18)
  - river.metrics.cluster [was removed](https://github.com/online-ml/river/commit/68aa41c32543a77f5aa53895c0c894e63f9ca712) (0.0.17)
  - refactor of client to provide same functions internally (0.0.16)
   - allow user to specify a custom set of urls to expose
