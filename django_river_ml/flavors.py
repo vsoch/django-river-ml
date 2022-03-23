@@ -10,6 +10,7 @@ from river import metrics
 
 def all_models():
     return [
+        NeighborFlavor,
         RegressionFlavor,
         BinaryFlavor,
         MultiClassFlavor,
@@ -64,6 +65,25 @@ class RegressionFlavor(Flavor):
 
     def default_metrics(self):
         return [metrics.MAE(), metrics.RMSE(), metrics.SMAPE()]
+
+    @property
+    def pred_funcs(self):
+        return ["predict_one"]
+
+
+class NeighborFlavor(Flavor):
+    @property
+    def name(self):
+        return "neighbor"
+
+    def check_model(self, model):
+        for method in ("learn_one", "predict_one"):
+            if not hasattr(model, method):
+                return False, f"The model does not implement {method}."
+        return True, None
+
+    def default_metrics(self):
+        return []
 
     @property
     def pred_funcs(self):
