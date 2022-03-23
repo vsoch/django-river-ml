@@ -7,6 +7,7 @@ import django_river_ml.flavors as flavors
 import django_river_ml.settings as settings
 
 import json
+import pickle
 import copy
 import uuid
 
@@ -92,6 +93,22 @@ class DjangoClient:
         if not ok:
             return False, error
         return True, storage.add_model(model, name=name, flavor=flavor)
+
+    def save_pickle(self, model_name, filename):
+        """
+        Save a model by name to a pickle file
+        """
+        model = self.get_model(model_name)
+        with open(filename, "wb") as fd:
+            pickle.dump(model, fd)
+
+    def load_model(self, filename):
+        """
+        Load a model (e.g., from pickle)
+        """
+        with open(filename, "rb") as fd:
+            model = pickle.load(fd)
+        return model
 
     def save_model(self, model, model_name):
         """
