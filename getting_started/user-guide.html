@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; Django River ML 0.0.18 documentation</title>
+  <title>User Guide &mdash; Django River ML 0.0.19 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.18
+                0.0.19
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -483,7 +483,16 @@ to upload them) you can easily do that:</p>
 </div>
 <p>Note that if you are doing standard predict or learn endpoints, you can simply
 provide the model name and you don’t need to worry about retrieving or saving
-(the function handles it for you!)</p>
+(the function handles it for you!). If, however, you want to save a model to file
+(pickle to be specific) you can do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">save_picke</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">,</span> <span class="s2">&quot;spack-errors.pkl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also load a model (this only loads a pickle and does not save anything
+to a database):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;spack-errors.pkl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="stats-and-metrics-for-a-model">
 <h4>Stats and Metrics for a Model<a class="headerlink" href="#stats-and-metrics-for-a-model" title="Permalink to this headline"></a></h4>

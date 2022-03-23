@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.client &mdash; Django River ML 0.0.18 documentation</title>
+  <title>django_river_ml.client &mdash; Django River ML 0.0.19 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.18
+                0.0.19
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -85,6 +85,7 @@
 <span class="kn">import</span> <span class="nn">django_river_ml.settings</span> <span class="k">as</span> <span class="nn">settings</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 
@@ -170,6 +171,22 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">error</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">storage</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">flavor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DjangoClient.save_pickle"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_pickle">[docs]</a>    <span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save a model by name to a pickle file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DjangoClient.load_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a model (e.g., from pickle)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span></div>
 
 <div class="viewcode-block" id="DjangoClient.save_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

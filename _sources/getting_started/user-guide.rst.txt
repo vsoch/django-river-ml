@@ -424,7 +424,20 @@ Keep in mind you are holding onto the model in memory and will need to again sav
 
 Note that if you are doing standard predict or learn endpoints, you can simply
 provide the model name and you don't need to worry about retrieving or saving
-(the function handles it for you!)
+(the function handles it for you!). If, however, you want to save a model to file
+(pickle to be specific) you can do:
+
+.. code-block:: python
+
+    client.save_picke("spack-errors", "spack-errors.pkl")
+
+You can also load a model (this only loads a pickle and does not save anything
+to a database):
+
+.. code-block:: python
+
+    model = client.load_model("spack-errors.pkl")
+
 
 
 Stats and Metrics for a Model
