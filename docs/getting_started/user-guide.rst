@@ -303,6 +303,13 @@ In another terminal, you can then run a sample script:
     $ python examples/cluster/run.py
     $ python examples/custom/run.py
 
+Note that creme models are supported, but with minimum functionalty (no metrics)
+and you must install ``creme`` on your own.
+
+.. code-block:: console
+
+    $ python examples/creme/run.py
+
 
 Testing
 -------

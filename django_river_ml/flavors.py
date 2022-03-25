@@ -16,6 +16,7 @@ def all_models():
         MultiClassFlavor,
         ClusterFlavor,
         CustomFlavor,
+        CremeFlavor,
     ]
 
 
@@ -50,6 +51,13 @@ class Flavor(abc.ABC):
     @abc.abstractproperty
     def pred_funcs(self) -> str:
         """Listing of prediction functions to try (in that order)"""
+
+    @property
+    def learn_func(self):
+        """
+        Learn function consistent for all models in river, creme is fit_one
+        """
+        return "learn_one"
 
 
 class RegressionFlavor(Flavor):
@@ -176,6 +184,29 @@ class ClusterFlavor(Flavor):
 
     def default_metrics(self):
         return []
+
+    @property
+    def pred_funcs(self):
+        return ["predict_one"]
+
+
+class CremeFlavor(Flavor):
+    @property
+    def name(self):
+        return "creme"
+
+    def check_model(self, model):
+        for method in ("fit_one", "predict_one"):
+            if not hasattr(model, method):
+                return False, f"The model does not implement {method}."
+        return True, None
+
+    def default_metrics(self):
+        return []
+
+    @property
+    def learn_func(self):
+        return "fit_one"
 
     @property
     def pred_funcs(self):
