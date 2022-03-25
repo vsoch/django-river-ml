@@ -257,17 +257,23 @@ class DjangoClient:
         # Update the model (we've already retrieved it in make_prediction
         # by this point so we know it exists!
         model = self.db[f"models/{model_name}"]
+        flavor = self.db[f"flavor/{model_name}"]
 
         try:
-            # unsupervised
-            if not ground_truth:
-                model = model.learn_one(x=copy.deepcopy(features))
+
+            learn_func = getattr(model, flavor.learn_func)
+            
+            # unsupervised (old creme models require the y no matter what)
+            if not ground_truth and flavor.learn_func != "fit_one":
+                model = learn_func(x=copy.deepcopy(features))
+
             else:
-                model.learn_one(x=copy.deepcopy(features), y=ground_truth)
+                model = learn_func(x=copy.deepcopy(features), y=ground_truth)
         except Exception as e:
             return False, repr(e)
 
-        self.save_model(model, model_name)
+        if model:
+            self.save_model(model, model_name)
         self.announce_event(
             event,
             {
