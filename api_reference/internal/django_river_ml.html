@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django-river-ml package &mdash; Django River ML 0.0.19 documentation</title>
+  <title>django-river-ml package &mdash; Django River ML 0.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.19
+                0.0.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -249,7 +249,7 @@ with your models from inside of a Django application, use this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.finish_learn">
-<code class="sig-name descname"><span class="pre">finish_learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.finish_learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.finish_learn" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">finish_learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">event</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span></em>, <em><span class="n"><span class="pre">features</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span></em>, <em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.finish_learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.finish_learn" title="Permalink to this definition"></a></dt>
 <dd><p>Finish a learning event. This can either be a prediction ‘predict’
 event that was done on the server, or a ‘label’ event that retrieved
 a previous prediction and then updated metrics or the model.</p>
@@ -269,7 +269,7 @@ a previous prediction and then updated metrics or the model.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.DjangoClient.learn">
-<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.learn" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#DjangoClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.DjangoClient.learn" title="Permalink to this definition"></a></dt>
 <dd><p>A learning event takes a learning schema</p>
 </dd></dl>
 
@@ -369,7 +369,7 @@ kind of server without needing to deal with the server-specific requests.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="django_river_ml.client.RiverClient.learn">
-<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.learn" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">learn</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model_name</span></span></em>, <em><span class="n"><span class="pre">ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/client.html#RiverClient.learn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.client.RiverClient.learn" title="Permalink to this definition"></a></dt>
 <dd><p>A learning event takes a learning schema</p>
 </dd></dl>
 
@@ -512,6 +512,41 @@ False and an exception to return to the user.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">CremeFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CremeFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor.check_model">
+<code class="sig-name descname"><span class="pre">check_model</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CremeFlavor.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether or not a model works for a flavor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor.default_metrics">
+<code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CremeFlavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor.default_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor.learn_func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">learn_func</span></code><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor.learn_func" title="Permalink to this definition"></a></dt>
+<dd><p>Learn function consistent for all models in river, creme is fit_one</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.CremeFlavor.pred_funcs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">pred_funcs</span></code><a class="headerlink" href="#django_river_ml.flavors.CremeFlavor.pred_funcs" title="Permalink to this definition"></a></dt>
+<dd><p>Listing of prediction functions to try (in that order)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="django_river_ml.flavors.CustomFlavor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django_river_ml.flavors.</span></code><code class="sig-name descname"><span class="pre">CustomFlavor</span></code><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#CustomFlavor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.CustomFlavor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#django_river_ml.flavors.Flavor" title="django_river_ml.flavors.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">django_river_ml.flavors.Flavor</span></code></a></p>
@@ -555,6 +590,12 @@ False and an exception to return to the user.</p>
 <dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.default_metrics">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">default_metrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">river.metrics.base.Metric</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/django_river_ml/flavors.html#Flavor.default_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_river_ml.flavors.Flavor.default_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Default metrics to record globally as well as for each model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="django_river_ml.flavors.Flavor.learn_func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">learn_func</span></code><a class="headerlink" href="#django_river_ml.flavors.Flavor.learn_func" title="Permalink to this definition"></a></dt>
+<dd><p>Learn function consistent for all models in river, creme is fit_one</p>
 </dd></dl>
 
 <dl class="py property">

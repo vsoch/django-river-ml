@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.flavors &mdash; Django River ML 0.0.19 documentation</title>
+  <title>django_river_ml.flavors &mdash; Django River ML 0.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.19
+                0.0.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -94,6 +94,7 @@
         <span class="n">MultiClassFlavor</span><span class="p">,</span>
         <span class="n">ClusterFlavor</span><span class="p">,</span>
         <span class="n">CustomFlavor</span><span class="p">,</span>
+        <span class="n">CremeFlavor</span><span class="p">,</span>
     <span class="p">]</span></div>
 
 
@@ -127,7 +128,14 @@
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractproperty</span>
     <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Listing of prediction functions to try (in that order)&quot;&quot;&quot;</span></div>
+        <span class="sd">&quot;&quot;&quot;Listing of prediction functions to try (in that order)&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">learn_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Learn function consistent for all models in river, creme is fit_one</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;learn_one&quot;</span></div>
 
 
 <div class="viewcode-block" id="RegressionFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.RegressionFlavor">[docs]</a><span class="k">class</span> <span class="nc">RegressionFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
@@ -254,6 +262,29 @@
 
 <div class="viewcode-block" id="ClusterFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.ClusterFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;predict_one&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CremeFlavor"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CremeFlavor">[docs]</a><span class="k">class</span> <span class="nc">CremeFlavor</span><span class="p">(</span><span class="n">Flavor</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;creme&quot;</span>
+
+<div class="viewcode-block" id="CremeFlavor.check_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CremeFlavor.check_model">[docs]</a>    <span class="k">def</span> <span class="nf">check_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;fit_one&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_one&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The model does not implement </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="CremeFlavor.default_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.flavors.CremeFlavor.default_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">default_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">learn_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;fit_one&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pred_funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

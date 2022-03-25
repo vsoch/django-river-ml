@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.client &mdash; Django River ML 0.0.19 documentation</title>
+  <title>django_river_ml.client &mdash; Django River ML 0.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> Django River ML
           </a>
               <div class="version">
-                0.0.19
+                0.0.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -248,6 +248,7 @@
         <span class="n">prediction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A learning event takes a learning schema</span>
@@ -284,6 +285,7 @@
             <span class="n">ground_truth</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span>
             <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
             <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DjangoClient.label"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
@@ -323,7 +325,14 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DjangoClient.finish_learn"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.finish_learn">[docs]</a>    <span class="k">def</span> <span class="nf">finish_learn</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">event</span><span class="p">,</span>
+        <span class="n">prediction</span><span class="p">,</span>
+        <span class="n">features</span><span class="p">,</span>
+        <span class="n">ground_truth</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">,</span>
+        <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finish a learning event. This can either be a prediction &#39;predict&#39;</span>
@@ -335,17 +344,24 @@
         <span class="c1"># Update the model (we&#39;ve already retrieved it in make_prediction</span>
         <span class="c1"># by this point so we know it exists!</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">flavor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># unsupervised</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">ground_truth</span><span class="p">:</span>
-                <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">learn_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+
+            <span class="n">learn_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span><span class="p">)</span>
+
+            <span class="c1"># unsupervised (old creme models require the y no matter what)</span>
+            <span class="c1"># kwargs are extra arguments for learn</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ground_truth</span> <span class="ow">and</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span> <span class="o">!=</span> <span class="s2">&quot;fit_one&quot;</span><span class="p">:</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="n">learn_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">model</span><span class="o">.</span><span class="n">learn_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">)</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="n">learn_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce_event</span><span class="p">(</span>
             <span class="n">event</span><span class="p">,</span>
             <span class="p">{</span>
@@ -555,6 +571,7 @@
         <span class="n">prediction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A learning event takes a learning schema</span>
@@ -565,6 +582,7 @@
             <span class="n">prediction</span><span class="o">=</span><span class="n">prediction</span><span class="p">,</span>
             <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
             <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="RiverClient.label"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
