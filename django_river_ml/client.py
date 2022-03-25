@@ -170,6 +170,7 @@ class DjangoClient:
         prediction=None,
         features=None,
         identifier=None,
+        **kwargs,
     ):
         """
         A learning event takes a learning schema
@@ -206,6 +207,7 @@ class DjangoClient:
             ground_truth=ground_truth,
             model_name=model_name,
             identifier=identifier,
+            **kwargs,
         )
 
     def label(self, label, identifier, model_name):
@@ -245,7 +247,14 @@ class DjangoClient:
         )
 
     def finish_learn(
-        self, event, prediction, features, ground_truth, model_name, identifier=None
+        self,
+        event,
+        prediction,
+        features,
+        ground_truth,
+        model_name,
+        identifier=None,
+        **kwargs,
     ):
         """
         Finish a learning event. This can either be a prediction 'predict'
@@ -262,13 +271,14 @@ class DjangoClient:
         try:
 
             learn_func = getattr(model, flavor.learn_func)
-            
+
             # unsupervised (old creme models require the y no matter what)
+            # kwargs are extra arguments for learn
             if not ground_truth and flavor.learn_func != "fit_one":
-                model = learn_func(x=copy.deepcopy(features))
+                model = learn_func(x=copy.deepcopy(features), **kwargs)
 
             else:
-                model = learn_func(x=copy.deepcopy(features), y=ground_truth)
+                model = learn_func(x=copy.deepcopy(features), y=ground_truth, **kwargs)
         except Exception as e:
             return False, repr(e)
 
@@ -483,6 +493,7 @@ class RiverClient:
         prediction=None,
         features=None,
         identifier=None,
+        **kwargs,
     ):
         """
         A learning event takes a learning schema
@@ -493,6 +504,7 @@ class RiverClient:
             prediction=prediction,
             features=features,
             identifier=identifier,
+            **kwargs,
         )
 
     def label(self, label, identifier, model_name):

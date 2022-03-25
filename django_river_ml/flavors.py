@@ -59,6 +59,7 @@ class Flavor(abc.ABC):
         """
         return "learn_one"
 
+
 class RegressionFlavor(Flavor):
     @property
     def name(self):
@@ -187,7 +188,7 @@ class ClusterFlavor(Flavor):
     @property
     def pred_funcs(self):
         return ["predict_one"]
-        
+
 
 class CremeFlavor(Flavor):
     @property
