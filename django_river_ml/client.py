@@ -270,9 +270,16 @@ class DjangoClient:
 
         try:
             if flavor.learn_func == "learn_one":
-                model.learn_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                if ground_truth is not None:
+                    model.learn_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                else:
+                    model.learn_one(x=copy.deepcopy(features), **kwargs)
+
             elif flavor.learn_func == "fit_one":
-                model.fit_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                if ground_truth is not None:
+                    model.fit_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                else:
+                    model.fit_one(x=copy.deepcopy(features), **kwargs)
             else:
                 msg = f"Model flavor learning function type {flavor.learn_func} not recognized"
                 return False, msg
