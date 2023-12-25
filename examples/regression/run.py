@@ -1,12 +1,8 @@
-from river import datasets
-from river import linear_model
-from river import preprocessing
-
+from river import datasets, linear_model, preprocessing
 from riverapi.main import Client
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 

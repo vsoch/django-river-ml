@@ -1,15 +1,15 @@
+import copy
+import json
+import pickle
+import uuid
+
 from river.metrics.base import ClassificationMetric
 
-import django_river_ml.storage as storage
-import django_river_ml.utils as utils
 import django_river_ml.announce as announce
 import django_river_ml.flavors as flavors
 import django_river_ml.settings as settings
-
-import json
-import pickle
-import copy
-import uuid
+import django_river_ml.storage as storage
+import django_river_ml.utils as utils
 
 
 class DjangoClient:
@@ -269,21 +269,24 @@ class DjangoClient:
         flavor = self.db[f"flavor/{model_name}"]
 
         try:
+            if flavor.learn_func == "learn_one":
+                if ground_truth is not None:
+                    model.learn_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                else:
+                    model.learn_one(x=copy.deepcopy(features), **kwargs)
 
-            learn_func = getattr(model, flavor.learn_func)
-
-            # unsupervised (old creme models require the y no matter what)
-            # kwargs are extra arguments for learn
-            if not ground_truth and flavor.learn_func != "fit_one":
-                model = learn_func(x=copy.deepcopy(features), **kwargs)
-
+            elif flavor.learn_func == "fit_one":
+                if ground_truth is not None:
+                    model.fit_one(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                else:
+                    model.fit_one(x=copy.deepcopy(features), **kwargs)
             else:
-                model = learn_func(x=copy.deepcopy(features), y=ground_truth, **kwargs)
+                msg = f"Model flavor learning function type {flavor.learn_func} not recognized"
+                return False, msg
         except Exception as e:
             return False, repr(e)
 
-        if model:
-            self.save_model(model, model_name)
+        self.save_model(model, model_name)
         self.announce_event(
             event,
             {
@@ -386,7 +389,6 @@ class DjangoClient:
             return metrics
 
         for metric in metrics:
-
             # If the metrics requires labels but the prediction is a dict, then we need to retrieve the
             # predicted label with the highest probability
             if (
@@ -403,7 +405,7 @@ class DjangoClient:
                 # give them a string) so we should skip.
                 try:
                     metric.update(y_true=ground_truth, y_pred=prediction)
-                except:
+                except Exception:
                     pass
 
         self.db[f"metrics/{model_name}"] = metrics

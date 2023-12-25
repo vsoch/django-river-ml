@@ -1,10 +1,8 @@
-from riverapi.main import Client
-
 from river import cluster, stream
+from riverapi.main import Client
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 

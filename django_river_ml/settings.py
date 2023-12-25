@@ -1,9 +1,10 @@
-from django.core.management.utils import get_random_secret_key
-from django.conf import settings
 import logging
-import uuid
 import os
 import sys
+import uuid
+
+from django.conf import settings
+from django.core.management.utils import get_random_secret_key
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +87,6 @@ if timer_middleware not in MIDDLEWARE:
 
 # Over-ride defaults with user settings!
 for key, default in DEFAULTS.items():
-
     # If we find it in the environment, use this first
     value = os.environ.get(key)
 
@@ -114,6 +114,7 @@ if STORAGE_BACKEND not in backends:
 # The database state will be held via settings
 # db = None
 
+
 # Generate secret key for shelve if used
 def generate_secret_keys(filename):
     """
@@ -132,10 +133,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Generate secret key for API (jwt) and shelve if do not exist, and not defined in environment
 if not SHELVE_SECRET_KEY or not JWT_SERVER_SECRET:
     try:
-        from .secret_key import SHELVE_SECRET_KEY, JWT_SERVER_SECRET
+        from .secret_key import JWT_SERVER_SECRET, SHELVE_SECRET_KEY
     except ImportError:
         generate_secret_keys(os.path.join(BASE_DIR, "secret_key.py"))
-        from .secret_key import SHELVE_SECRET_KEY, JWT_SERVER_SECRET
+        from .secret_key import JWT_SERVER_SECRET, SHELVE_SECRET_KEY
 
 # Create a filesystem cache for jwt tokens
 cache = CACHE_DIR or os.path.join(APP_DIR, "cache")

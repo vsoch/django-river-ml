@@ -13,8 +13,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
+
 from recommonmark.parser import CommonMarkParser
 
 source_parsers = {".md": CommonMarkParser}
@@ -60,7 +61,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Django River ML"
-copyright = "2022, Vanessa Sochat"
+copyright = "2022-2024, Vanessa Sochat"
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 django.setup()

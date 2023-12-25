@@ -1,13 +1,10 @@
 from river import datasets, evaluate, linear_model, multiclass, preprocessing
-
 from riverapi.main import Client
-
 
 # https://riverml.xyz/latest/api/multiclass/OneVsOneClassifier/
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 

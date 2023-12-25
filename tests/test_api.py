@@ -1,44 +1,40 @@
-from django.contrib.auth.models import User
-from django_river_ml import settings
-from django_river_ml.signals import create_user_token
-from rest_framework.test import APITestCase
-from river import (
-    datasets,
-    linear_model,
-    preprocessing,
-    naive_bayes,
-    stream,
-    multiclass,
-    cluster,
-)
-
-from riverapi.main import Client
-from time import sleep
-
-import subprocess
-import shutil
-import tempfile
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
+from time import sleep
 
+from django.contrib.auth.models import User
+from rest_framework.test import APITestCase
+from river import (
+    cluster,
+    datasets,
+    linear_model,
+    multiclass,
+    naive_bayes,
+    preprocessing,
+    stream,
+)
+from riverapi.main import Client
+
+from django_river_ml import settings
+from django_river_ml.signals import create_user_token
 
 here = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, here)
 sys.path.insert(0, os.path.dirname(here))
-
-import os
-import sys
 
 # This adds the root of the repository so tests is importable
 # This is the same path seen by our server (important)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Our custom model and supporting function
-from tests.custom import iter_counts, VariableVocabKMeans
+from tests.custom import VariableVocabKMeans, iter_counts  # noqa
 
 # Boolean from environment that determines authentication required variable
-auth_regex = re.compile('(\w+)[:=] ?"?([^"]+)"?')
+auth_regex = re.compile('(\w+)[:=] ?"?([^"]+)"?')  # noqa
 
 # Important: user needs to be created globally to be seen
 user, _ = User.objects.get_or_create(username="dinosaur")

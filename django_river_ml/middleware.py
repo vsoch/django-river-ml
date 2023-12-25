@@ -1,11 +1,11 @@
+import json
 import time
+from copy import deepcopy
+
 from django.urls import resolve
 
-from django_river_ml import settings as settings
 import django_river_ml.storage as storage
-
-from copy import deepcopy
-import json
+from django_river_ml import settings as settings
 
 # The following are pre and post events that should be run alongside views
 # to update either metrics or stats
@@ -19,7 +19,6 @@ def timer_middleware(get_response):
     # One-time configuration and initialization.
 
     def middleware(request):
-
         # Derive the view name from the request PATH_INFO
         func, _, _ = resolve(request.META["PATH_INFO"])
         view_name = "%s.%s" % (func.__module__, func.__name__)
@@ -34,7 +33,7 @@ def timer_middleware(get_response):
             copied = deepcopy(request.body)
             payload = json.loads(copied.decode("utf-8"))
             model_name = payload.get("model")
-        except:
+        except Exception:
             pass
 
         response = get_response(request)

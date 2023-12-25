@@ -194,7 +194,6 @@ class VariableVocabKMeans(base.Clusterer):
             center.update(updates)
 
     def predict_one(self, x: List[List[str]]):
-
         # Ensure we provide a lookup between features (vocab indices)
         # This should only include words we have seen before
         xx = {

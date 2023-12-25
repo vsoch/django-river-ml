@@ -45,7 +45,7 @@ class Flavor(abc.ABC):
         """Checks whether or not a model works for a flavor."""
 
     @abc.abstractmethod
-    def default_metrics(self) -> typing.List[metrics.Metric]:
+    def default_metrics(self) -> typing.List[metrics.base.Metric]:
         """Default metrics to record globally as well as for each model."""
 
     @abc.abstractproperty

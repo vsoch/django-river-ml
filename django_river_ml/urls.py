@@ -1,6 +1,6 @@
 from django.urls import path
-from django_river_ml import views
-from django_river_ml import settings
+
+from django_river_ml import settings, views
 
 app_name = "django_river_ml"
 

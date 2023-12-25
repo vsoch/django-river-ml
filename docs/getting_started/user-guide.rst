@@ -5,8 +5,8 @@ User Guide
 ==========
 
 Django River ML allows you to easily deploy `river <https://riverml.xyz>`_ online machine learning
-for a `Django <https://www.djangoproject.com/>`_ project. It is based off of `chantilly <https://github.com/online-ml/chantilly>`_ 
-with hopes of having similar design. We include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a 
+for a `Django <https://www.djangoproject.com/>`_ project. It is based off of `chantilly <https://github.com/online-ml/chantilly>`_
+with hopes of having similar design. We include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a
 test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_.
 We are excited about what you might build with this, and please
 `give us a ping <https://github.com/vsoch/django-river-ml/issues>`_. if you have a question, find a bug, or want to request a feature!
@@ -199,7 +199,7 @@ if needed.
 API Views Enabled
 ^^^^^^^^^^^^^^^^^
 
-If you want to disable some views, you can set of a list of views to enable using 
+If you want to disable some views, you can set of a list of views to enable using
 ``API_VIEWS_ENABLED``. As an example, let's say we are going to have learning
 done internally, and we just want to expose metadata and prediction endpoints.
 We could do:
@@ -247,9 +247,9 @@ by Django Restful, if not already generated. For purposes of example, we can qui
 
     python manage.py createsuperuser
     Username (leave blank to use 'dinosaur'):
-    Email address: 
-    Password: 
-    Password (again): 
+    Email address:
+    Password:
+    Password (again):
     Superuser created successfully.
 
 And at this point, you can also ask for the token.
@@ -269,8 +269,8 @@ You can then export this token in the environment to be found by the `river api 
 
 
 Otherwise you will need to manually go through a standard OAuth2 workflow of using basic
-auth to look for a 401 response with a ``Www-Authenticate`` header, parsing that to find the "realm" 
-(the authentication server) and then making a request to that endpoint with the base64 encoded user and token 
+auth to look for a 401 response with a ``Www-Authenticate`` header, parsing that to find the "realm"
+(the authentication server) and then making a request to that endpoint with the base64 encoded user and token
 in the Authenticate header. It's much easier to use the client to do it for you, which will cache your token
 (until it expires and you need to request a new one automatically).
 
@@ -290,11 +290,11 @@ you can use to test. Once you have your environment setup, you can do:
     $ python manage.py makemigrations
     $ python manage.py migrate
     $ python manage.py runserver
-    
+
 
 In another terminal, you can then run a sample script:
 
-    
+
 .. code-block:: console
 
     $ python examples/regression/run.py
@@ -327,7 +327,7 @@ Interaction from Inside your Application
 
 While a user is going to be interacting with your API endpoints, you might want to
 interact with models from within your Django application. This is possible
-by interacting with the ``DjangoClient`` directly, which wraps the database 
+by interacting with the ``DjangoClient`` directly, which wraps the database
 and is exposed to the API via a light additional wrapper. The following examples can walk
 you through the different kinds of interactions. For all interactions, you'll
 wait to create a client first:
@@ -336,7 +336,7 @@ wait to create a client first:
 
     from django_river_ml.client import DjangoClient
     client = DjangoClient()
-    
+
 This also means you can choose to not add the Django River URLs to your application
 and have more control over your ML interactions internally. You can also take an approach
 between those two extremes, and just expose a limited set using the ``API_VIEWS_ENABLED``
@@ -345,7 +345,7 @@ enable (and those not in the list will not be enabled).
 
 .. note::
 
-   We are planning to allow retrieving a model from version control, e.g., given that 
+   We are planning to allow retrieving a model from version control, e.g., given that
    you are starting a Kubernetes run of Spack Monitor (which will need to use redis to store
    model information) and the model is not found.
 
@@ -394,7 +394,7 @@ Or if your application has automatically created an "empty" model with your desi
 
 .. code-block:: python
 
-    client.delete_model(model_name)    
+    client.delete_model(model_name)
     import pickle
     with open('%s.pkl' % model_name, 'rb') as fd:
         model pickle.load(fd)
@@ -408,7 +408,7 @@ You can delete a model by name.
 
 .. code-block:: python
 
-    client.delete_model("tart-bicycle") 
+    client.delete_model("tart-bicycle")
     True
 
 

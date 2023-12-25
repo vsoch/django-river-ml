@@ -1,6 +1,6 @@
 djangorestframework
 django-ratelimit==3.0.0
 pyjwt==1.7.1
-river
+river>=0.21.0
 redis
 dill

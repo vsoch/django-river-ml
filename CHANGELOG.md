@@ -1,8 +1,8 @@
 # Changelog
 
-This is a manually generated log to track changes to the repository for each release. 
-Each section should include general headers such as **Implemented enhancements** 
-and **Merged pull requests**. All closed issued and bug fixes should be 
+This is a manually generated log to track changes to the repository for each release.
+Each section should include general headers such as **Implemented enhancements**
+and **Merged pull requests**. All closed issued and bug fixes should be
 represented by the pull requests that fixed them.
 Critical items to know are:
 
@@ -14,6 +14,7 @@ Critical items to know are:
  - changed behaviour
 
 ## [main](https://github.com/vsoch/django-river-ml/tree/main)
+ - update metrics type to be imported from metrics.base (0.0.21)
  - limited support to store a creme model (0.0.2)
  - adding ability for Django Client to save to pickle (0.0.19)
  - adding sklearn example and simple view to example app (0.0.18)

@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django_river_ml.client import DjangoClient
-from django.http import JsonResponse
 import pandas
-from scipy.spatial.distance import pdist, squareform
 import sklearn.manifold as manifold
+from django.http import JsonResponse
+from django.shortcuts import render
+from scipy.spatial.distance import pdist, squareform
+
+from django_river_ml.client import DjangoClient
 
 
 def get_centers(model):
@@ -49,7 +50,6 @@ def get_centroids(request, name):
 
 
 def index(request):
-
     # Get a django client
     client = DjangoClient()
 
