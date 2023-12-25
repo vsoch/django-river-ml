@@ -60,7 +60,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Django River ML"
-copyright = "2022, Vanessa Sochat"
+copyright = "2022-2024, Vanessa Sochat"
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 django.setup()
