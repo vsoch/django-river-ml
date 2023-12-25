@@ -1,17 +1,16 @@
-from riverapi.main import Client
-
 import os
 import sys
+
+from riverapi.main import Client
 
 # This adds the root of the repository so tests is importable
 # This is the same path seen by our server (important)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from tests.custom import iter_counts, VariableVocabKMeans
+from tests.custom import VariableVocabKMeans, iter_counts
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 

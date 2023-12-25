@@ -1,10 +1,9 @@
-from river import stream, cluster, preprocessing, feature_extraction
-from sklearn import datasets
+from river import cluster, feature_extraction, preprocessing, stream
 from riverapi.main import Client
+from sklearn import datasets
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 
@@ -35,6 +34,7 @@ def main():
 
     # Delete the model to cleanup
     cli.delete_model(model_name)
+
 
 if __name__ == "__main__":
     main()

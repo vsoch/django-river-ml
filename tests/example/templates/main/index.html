@@ -116,8 +116,8 @@ text {
 
      </div>
    </div>
-     <div class="row">  
-     <div class="col-md-12">     
+     <div class="row">
+     <div class="col-md-12">
 
 
 <div class="container-wide">
@@ -149,7 +149,7 @@ text {
 <script>
 
 /**
- * A D3 Scatter Plot chart with interactive nodes, 
+ * A D3 Scatter Plot chart with interactive nodes,
  * crosshair and custom axis grid.
  * https://codepen.io/stopyransky/pen/KWomoK
  */
@@ -234,7 +234,7 @@ function generate_graph(data) {
     var xPadding = d3.mean(theData, function(d) {return d.cx});
     var xScale = d3.scaleLinear().domain(xDomain).range(xRange).nice(1);
 
-    // Y SCALE 
+    // Y SCALE
     var yMax = d3.max(theData, function(d) {return d.cy});
     var yMin = d3.min(theData, function(d) {return d.cy});
     var yDomain = [yMin, yMax]
@@ -255,14 +255,14 @@ function generate_graph(data) {
         newColor = generateColor()
         legend += "<span onmouseout='showall()' onmouseover='filtercolor(this)' data-radius='" + colorDomain[i] +"' class='badge' style='color:white;width:200px;cursor:pointer;background-color:" + newColor + "'>N=" + colorDomain[i] + "</span><br>"
         colors.push(newColor)
-    }    
+    }
     var colorize = d3.scaleLog()
       .domain(colorDomain)
       .range(colors);
 
     // Add colors
     $('#colors').html(legend)
-    
+
     var xAxis = d3.axisBottom(xScale)
       //.ticks(10)
       .tickSize(6)
@@ -273,7 +273,7 @@ function generate_graph(data) {
       .tickSizeInner(-width)
       //.tickSizeOuter(7);
 
-    // SVG GROUP HIERARCHY 
+    // SVG GROUP HIERARCHY
     var svg = d3.select('#plot').append('svg')
       .attr("id", "scatterplot")
       .attr("width", width)
@@ -406,8 +406,8 @@ function generate_graph(data) {
           });
           html = "<span id='removeme'><strong>x: " + d.cx + " y:" + d.cy + "</span><br>"
           html += "</span><br>"
-          $("#repo-info").html(html);          
-          crosshair.style('display', null); // enable crosshair visibility 
+          $("#repo-info").html(html);
+          crosshair.style('display', null); // enable crosshair visibility
           setCrosshair(xScale(d.cx), yScale(d.cy));
       })
       .on("mouseout", function(d, i) {
@@ -418,7 +418,7 @@ function generate_graph(data) {
           .style("fill", function(d) {
             return colorize(d.radius);
           });
-          $("#removeme").remove();  
+          $("#removeme").remove();
       })
     .transition()
       .attr("r", function(d) {

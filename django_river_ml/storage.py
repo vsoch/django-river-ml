@@ -1,23 +1,21 @@
-from django_river_ml import settings
 import abc
 import contextlib
+import logging
 import os
 import shelve
 
+import dill
+import redis
 import river.base
 import river.metrics
 import river.stats
 import river.utils
-import dill
-import redis
 
-import logging
+from django_river_ml import settings
+
+from . import exceptions, flavors, namer
 
 logger = logging.getLogger(__name__)
-
-from . import exceptions
-from . import flavors
-from . import namer
 
 
 class StorageBackend(abc.ABC):

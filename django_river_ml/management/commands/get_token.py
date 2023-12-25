@@ -1,8 +1,9 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth import authenticate, get_user_model
 from getpass import getpass
-from django_river_ml.signals import get_user_token
 
+from django.contrib.auth import authenticate, get_user_model
+from django.core.management.base import BaseCommand, CommandError
+
+from django_river_ml.signals import get_user_token
 
 User = get_user_model()
 

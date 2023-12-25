@@ -1,0 +1,13 @@
+[tool.black]
+profile = "black"
+exclude = '^env/'
+
+[tool.isort]
+profile = "black" # needed for black/isort compatibility
+skip = []
+
+[tool.mypy]
+mypy_path = ["django_river_ml"]
+
+[tool.pytest.ini_options]
+markers = ["with_auth: mark for tests requiring authenticated registry access (or not)"]

@@ -1,12 +1,8 @@
-from river import naive_bayes
-from river import preprocessing
-from river import stream
-
+from river import naive_bayes, preprocessing, stream
 from riverapi.main import Client
 
 
 def main():
-
     # This is the default, just to show how to customize
     cli = Client("http://localhost:8000")
 

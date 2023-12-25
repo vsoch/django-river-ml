@@ -1,20 +1,18 @@
-from django.urls import resolve
-from django.contrib.auth.models import User
-
-from django_river_ml import settings
-import django_river_ml.utils as utils
-
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
-
-from django.middleware import cache
-
-from datetime import datetime
-import uuid
 import base64
 import re
 import time
+import uuid
+from datetime import datetime
+
 import jwt
+from django.contrib.auth.models import User
+from django.middleware import cache
+from django.urls import resolve
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
+import django_river_ml.utils as utils
+from django_river_ml import settings
 
 
 def is_authenticated(request):
@@ -134,7 +132,7 @@ def get_user(request):
             token = Token.objects.get(key=token)
             if token.user.username == username:
                 return token.user
-        except:
+        except Exception:
             pass
 
 

@@ -1,14 +1,13 @@
-from rest_framework.views import APIView
+import json
+
+from django.utils.decorators import method_decorator
+from ratelimit.decorators import ratelimit
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from django_river_ml import settings
 from django_river_ml.auth import is_authenticated
-
-from ratelimit.decorators import ratelimit
-from django.utils.decorators import method_decorator
-
 from django_river_ml.client import RiverClient
-import json
 
 
 class PredictView(APIView):
@@ -33,7 +32,7 @@ class PredictView(APIView):
         """
         try:
             payload = json.loads(request.body.decode("utf-8"))
-        except:
+        except Exception:
             return Response(status=400)
 
         # We generate an identifier for the user if not provided

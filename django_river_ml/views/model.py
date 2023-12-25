@@ -1,16 +1,14 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
-from django.http import QueryDict, HttpResponse
-
-from django_river_ml import settings as settings
-from django_river_ml.client import RiverClient
-from django_river_ml import model as models
-from django_river_ml.auth import is_authenticated
-
-from ratelimit.decorators import ratelimit
-from django.utils.decorators import method_decorator
 import dill
+from django.http import HttpResponse, QueryDict
+from django.utils.decorators import method_decorator
+from ratelimit.decorators import ratelimit
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from django_river_ml import model as models
+from django_river_ml import settings as settings
+from django_river_ml.auth import is_authenticated
+from django_river_ml.client import RiverClient
 
 
 class ModelDownloadView(APIView):

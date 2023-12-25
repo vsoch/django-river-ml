@@ -1,14 +1,14 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.http import StreamingHttpResponse
+import json
 
-from ratelimit.decorators import ratelimit
+from django.http import StreamingHttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
-from django_river_ml.client import RiverClient
-import django_river_ml.settings as settings
+from ratelimit.decorators import ratelimit
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-import json
+import django_river_ml.settings as settings
+from django_river_ml.client import RiverClient
 
 
 class MetricsView(APIView):
@@ -33,7 +33,7 @@ class MetricsView(APIView):
         """
         try:
             payload = json.loads(request.body.decode("utf-8"))
-        except:
+        except Exception:
             return Response(status=400)
 
         model_name = payload.get("model")
@@ -92,7 +92,7 @@ class StatsView(APIView):
         """
         try:
             payload = json.loads(request.body.decode("utf-8"))
-        except:
+        except Exception:
             return Response(status=400)
 
         model_name = payload.get("model")

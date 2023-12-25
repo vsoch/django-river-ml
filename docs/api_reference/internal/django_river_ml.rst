@@ -187,4 +187,3 @@ django_river_ml.views.predict module
     :members:
     :undoc-members:
     :show-inheritance:
-

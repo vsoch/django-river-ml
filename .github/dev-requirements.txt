@@ -1,0 +1,6 @@
+pre-commit
+black==23.3.0
+isort
+flake8
+mypy==0.961
+types-requests

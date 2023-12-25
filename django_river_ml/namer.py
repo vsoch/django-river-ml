@@ -2,7 +2,6 @@ from random import choice
 
 
 class Namer:
-
     _descriptors = [
         "chunky",
         "buttery",

@@ -9,7 +9,6 @@ def model_to_dict(model):
     def unwrap(params):
         result = {}
         for k, v in params.items():
-
             # Dict gets unwrapped
             if isinstance(v, dict):
                 result[k] = unwrap(v)

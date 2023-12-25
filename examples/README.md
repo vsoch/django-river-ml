@@ -21,6 +21,5 @@ $ python manage.py runserver
  - [multiclass](multiclass)
  - [cluster](cluster)
  - [iris](iris): the iris dataset (example from scikit-learn)
- - [custom](custom): currently is an example for a custom model (kmeans) 
+ - [custom](custom): currently is an example for a custom model (kmeans)
  - [creme](creme): limited support for models from [creme](https://github.com/MaxHalford/creme)
-

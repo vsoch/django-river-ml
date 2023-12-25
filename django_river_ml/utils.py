@@ -18,7 +18,6 @@ def format_sse(data: str, event=None) -> str:
 
 
 def humanize_ns(ns: int) -> str:
-
     if ns == 0:
         return "0ns"
 

@@ -1,11 +1,11 @@
 import river
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.utils.decorators import method_decorator
 from ratelimit.decorators import ratelimit
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from django_river_ml import settings
 from django_river_ml.version import __version__
-from django.utils.decorators import method_decorator
 
 
 class ServiceInfo(APIView):
