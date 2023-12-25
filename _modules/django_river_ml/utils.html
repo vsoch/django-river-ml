@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.utils &mdash; Django River ML 0.0.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+  <title>django_river_ml.utils &mdash; Django River ML 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-argparse.css?v=24ffd50e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=d362eb4e" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -27,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Django River ML
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Django River ML
           </a>
               <div class="version">
-                0.0.2
+                0.0.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -64,9 +71,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>django_river_ml.utils</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">django_river_ml.utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -76,16 +83,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for django_river_ml.utils</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="get_server"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.get_server">[docs]</a><span></span><span class="k">def</span> <span class="nf">get_server</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_server">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.get_server">[docs]</a>
+<span></span><span class="k">def</span> <span class="nf">get_server</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a request, parse it to determine the server name and using http/https</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">scheme</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">is_secure</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">&quot;https&quot;</span> <span class="ow">or</span> <span class="s2">&quot;http&quot;</span>
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">get_host</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="format_sse"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.format_sse">[docs]</a><span class="k">def</span> <span class="nf">format_sse</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="format_sse">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.format_sse">[docs]</a>
+<span class="k">def</span> <span class="nf">format_sse</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &gt;&gt;&gt; format_sse(data=json.dumps({&#39;abc&#39;: 123}), event=&#39;Jackson 5&#39;)</span>
 <span class="sd">    &#39;event: Jackson 5\\ndata: {&quot;abc&quot;: 123}\\n\\n&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -95,8 +107,10 @@
     <span class="k">return</span> <span class="n">msg</span></div>
 
 
-<div class="viewcode-block" id="humanize_ns"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.humanize_ns">[docs]</a><span class="k">def</span> <span class="nf">humanize_ns</span><span class="p">(</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
+<div class="viewcode-block" id="humanize_ns">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.utils.humanize_ns">[docs]</a>
+<span class="k">def</span> <span class="nf">humanize_ns</span><span class="p">(</span><span class="n">ns</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">ns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;0ns&quot;</span>
 
@@ -116,6 +130,7 @@
         <span class="n">rep</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ns</span><span class="si">}</span><span class="s2">ns&quot;</span>
 
     <span class="k">return</span> <span class="n">rep</span></div>
+
 </pre></div>
 
            </div>
@@ -125,7 +140,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+    <p>&#169; Copyright 2022-2024, Vanessa Sochat.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>django_river_ml.client &mdash; Django River ML 0.0.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+  <title>django_river_ml.client &mdash; Django River ML 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-argparse.css?v=24ffd50e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=d362eb4e" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -27,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Django River ML
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Django River ML
           </a>
               <div class="version">
-                0.0.2
+                0.0.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -64,9 +71,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>django_river_ml.client</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">django_river_ml.client</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -76,22 +83,24 @@
            <div itemprop="articleBody">
              
   <h1>Source code for django_river_ml.client</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">river.metrics.base</span> <span class="kn">import</span> <span class="n">ClassificationMetric</span>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
 
-<span class="kn">import</span> <span class="nn">django_river_ml.storage</span> <span class="k">as</span> <span class="nn">storage</span>
-<span class="kn">import</span> <span class="nn">django_river_ml.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+<span class="kn">from</span> <span class="nn">river.metrics.base</span> <span class="kn">import</span> <span class="n">ClassificationMetric</span>
+
 <span class="kn">import</span> <span class="nn">django_river_ml.announce</span> <span class="k">as</span> <span class="nn">announce</span>
 <span class="kn">import</span> <span class="nn">django_river_ml.flavors</span> <span class="k">as</span> <span class="nn">flavors</span>
 <span class="kn">import</span> <span class="nn">django_river_ml.settings</span> <span class="k">as</span> <span class="nn">settings</span>
-
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.storage</span> <span class="k">as</span> <span class="nn">storage</span>
+<span class="kn">import</span> <span class="nn">django_river_ml.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 
-<div class="viewcode-block" id="DjangoClient"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient">[docs]</a><span class="k">class</span> <span class="nc">DjangoClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DjangoClient">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient">[docs]</a>
+<span class="k">class</span> <span class="nc">DjangoClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Django client provides the main interaction between the storage and</span>
 <span class="sd">    an internal user. It directly wraps the database, and is used by</span>
 <span class="sd">    RiverClient to return responses to the API. If you need to interact</span>
@@ -101,8 +110,10 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">get_db</span><span class="p">()</span>
 
-<div class="viewcode-block" id="DjangoClient.stats"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DjangoClient.stats">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.stats">[docs]</a>
+    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get stats for a model name. If they don&#39;t exist, we return None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -132,8 +143,11 @@
             <span class="p">},</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="DjangoClient.delete_id"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.delete_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.delete_id">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.delete_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a known identifier (cached prediction) from the database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -141,8 +155,11 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="DjangoClient.metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.metrics">[docs]</a>    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.metrics">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get metrics from the database for a specific model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
@@ -162,8 +179,11 @@
             <span class="n">metrics</span><span class="p">[</span><span class="n">metric</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="n">metrics</span></div>
 
-<div class="viewcode-block" id="DjangoClient.add_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.add_model">[docs]</a>    <span class="k">def</span> <span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.add_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.add_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a model by name (e.g., via API post)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Validate the model</span>
@@ -172,37 +192,52 @@
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">error</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">storage</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">flavor</span><span class="o">=</span><span class="n">flavor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.save_pickle"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_pickle">[docs]</a>    <span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.save_pickle">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_pickle">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_pickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save a model by name to a pickle file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.load_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.load_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.load_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a model (e.g., from pickle)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">model</span></div>
 
-<div class="viewcode-block" id="DjangoClient.save_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.save_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.save_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save a model by name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span></div>
 
-<div class="viewcode-block" id="DjangoClient.get_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.get_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.get_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a model by name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="DjangoClient.delete_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.delete_model">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.delete_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.delete_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a model by name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;stats/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
@@ -213,8 +248,11 @@
                 <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">found</span></div>
 
-<div class="viewcode-block" id="DjangoClient.models"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.models">[docs]</a>    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.models">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.models">[docs]</a>
+    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get models known to a database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
@@ -222,8 +260,11 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">model_names</span></div>
 
-<div class="viewcode-block" id="DjangoClient.announce_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.announce_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">announce_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.announce_metrics">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.announce_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">announce_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Announce the current metric values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">listeners</span><span class="p">:</span>
@@ -232,8 +273,11 @@
             <span class="p">)</span>
             <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">announce</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">format_sse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">msg</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="DjangoClient.announce_event"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.announce_event">[docs]</a>    <span class="k">def</span> <span class="nf">announce_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.announce_event">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.announce_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">announce_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Announce the event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">listeners</span><span class="p">:</span>
@@ -241,7 +285,10 @@
                 <span class="n">utils</span><span class="o">.</span><span class="n">format_sse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">)</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.learn"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.learn">[docs]</a>    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
+
+<div class="viewcode-block" id="DjangoClient.learn">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.learn">[docs]</a>
+    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_name</span><span class="p">,</span>
         <span class="n">ground_truth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -250,7 +297,7 @@
         <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A learning event takes a learning schema</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># If an ID is given, then retrieve the stored info.</span>
@@ -288,8 +335,11 @@
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.label"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.label">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.label">[docs]</a>
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a previous prediction (we can get with an identifier) add a label.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># We are required to have the record</span>
@@ -324,7 +374,10 @@
             <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.finish_learn"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.finish_learn">[docs]</a>    <span class="k">def</span> <span class="nf">finish_learn</span><span class="p">(</span>
+
+<div class="viewcode-block" id="DjangoClient.finish_learn">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.finish_learn">[docs]</a>
+    <span class="k">def</span> <span class="nf">finish_learn</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">event</span><span class="p">,</span>
         <span class="n">prediction</span><span class="p">,</span>
@@ -334,7 +387,7 @@
         <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finish a learning event. This can either be a prediction &#39;predict&#39;</span>
 <span class="sd">        event that was done on the server, or a &#39;label&#39; event that retrieved</span>
 <span class="sd">        a previous prediction and then updated metrics or the model.</span>
@@ -347,21 +400,24 @@
         <span class="n">flavor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;flavor/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span> <span class="o">==</span> <span class="s2">&quot;learn_one&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ground_truth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">learn_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">learn_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-            <span class="n">learn_func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span><span class="p">)</span>
-
-            <span class="c1"># unsupervised (old creme models require the y no matter what)</span>
-            <span class="c1"># kwargs are extra arguments for learn</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">ground_truth</span> <span class="ow">and</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span> <span class="o">!=</span> <span class="s2">&quot;fit_one&quot;</span><span class="p">:</span>
-                <span class="n">model</span> <span class="o">=</span> <span class="n">learn_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
+            <span class="k">elif</span> <span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span> <span class="o">==</span> <span class="s2">&quot;fit_one&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ground_truth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">fit_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">fit_one</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">model</span> <span class="o">=</span> <span class="n">learn_func</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Model flavor learning function type </span><span class="si">{</span><span class="n">flavor</span><span class="o">.</span><span class="n">learn_func</span><span class="si">}</span><span class="s2"> not recognized&quot;</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">msg</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">announce_event</span><span class="p">(</span>
             <span class="n">event</span><span class="p">,</span>
             <span class="p">{</span>
@@ -378,10 +434,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Successful </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">event</span></div>
 
+
     <span class="c1"># Prediction</span>
 
-<div class="viewcode-block" id="DjangoClient.predict"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DjangoClient.predict">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run a prediction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Make the prediction</span>
@@ -419,8 +478,11 @@
             <span class="p">}</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span> <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">prediction</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="DjangoClient.make_prediction"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.make_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.make_prediction">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.make_prediction">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shared function to make a prediction.</span>
 
 <span class="sd">        Returns True if successful with a prediction, otherwise</span>
@@ -452,8 +514,11 @@
                 <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">flavor</span><span class="o">.</span><span class="n">pred_funcs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DjangoClient.update_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.update_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DjangoClient.update_metrics">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.DjangoClient.update_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a prediction, update metrics to reflect it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Update the metrics</span>
@@ -464,7 +529,6 @@
             <span class="k">return</span> <span class="n">metrics</span>
 
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
-
             <span class="c1"># If the metrics requires labels but the prediction is a dict, then we need to retrieve the</span>
             <span class="c1"># predicted label with the highest probability</span>
             <span class="k">if</span> <span class="p">(</span>
@@ -481,15 +545,19 @@
                 <span class="c1"># give them a string) so we should skip.</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">prediction</span><span class="p">)</span>
-                <span class="k">except</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">pass</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;metrics/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span>
-        <span class="k">return</span> <span class="n">metrics</span></div></div>
+        <span class="k">return</span> <span class="n">metrics</span></div>
+</div>
 
 
-<div class="viewcode-block" id="RiverClient"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient">[docs]</a><span class="k">class</span> <span class="nc">RiverClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient">[docs]</a>
+<span class="k">class</span> <span class="nc">RiverClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A river client includes shared functions for interacting with storage.</span>
 <span class="sd">    This implementation was chosen so it can easily be plugged into another</span>
 <span class="sd">    kind of server without needing to deal with the server-specific requests.</span>
@@ -498,8 +566,10 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cli</span> <span class="o">=</span> <span class="n">DjangoClient</span><span class="p">()</span>
 
-<div class="viewcode-block" id="RiverClient.stats"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RiverClient.stats">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stats">[docs]</a>
+    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A wrapper to return stats from the database</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
@@ -507,28 +577,40 @@
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;We don&#39;t have stats for model </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">stats</span></div>
 
-<div class="viewcode-block" id="RiverClient.stream_events"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_events">[docs]</a>    <span class="k">def</span> <span class="nf">stream_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.stream_events">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_events">[docs]</a>
+    <span class="k">def</span> <span class="nf">stream_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stream events from the events announcer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">EVENTS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.stream_metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">stream_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.stream_metrics">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.stream_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">stream_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stream events from the metrics announcer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">messages</span> <span class="o">=</span> <span class="n">announce</span><span class="o">.</span><span class="n">METRICS_ANNOUNCER</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_announcer</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.metrics"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.metrics">[docs]</a>    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.metrics">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get metrics from the database for a specific model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.add_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.add_model">[docs]</a>    <span class="k">def</span> <span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.add_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.add_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a model by name (e.g., via API post)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">added</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -536,26 +618,36 @@
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="RiverClient.get_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.get_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.get_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a model by name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.delete_model"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_model">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.delete_model">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a model by name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.models"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.models">[docs]</a>    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.models">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.models">[docs]</a>
+    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get models known to a database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;models&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">models</span><span class="p">()}</span></div>
 
+
     <span class="k">def</span> <span class="nf">_stream_announcer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">announcer</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shared function to stream events from an announcer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -564,7 +656,9 @@
 
     <span class="c1"># Learning and Labeling</span>
 
-<div class="viewcode-block" id="RiverClient.learn"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.learn">[docs]</a>    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
+<div class="viewcode-block" id="RiverClient.learn">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.learn">[docs]</a>
+    <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_name</span><span class="p">,</span>
         <span class="n">ground_truth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -573,7 +667,7 @@
         <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A learning event takes a learning schema</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span>
@@ -585,24 +679,33 @@
             <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.label"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.label">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.label">[docs]</a>
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a previous prediction (we can get with an identifier) add a label.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span></div>
 
+
     <span class="c1"># Prediction</span>
 
-<div class="viewcode-block" id="RiverClient.predict"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RiverClient.predict">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run a prediction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
             <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.make_prediction"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.make_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RiverClient.make_prediction">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.make_prediction">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shared function to make a prediction.</span>
 
 <span class="sd">        Returns True if successful with a prediction, otherwise</span>
@@ -610,8 +713,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">make_prediction</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RiverClient.delete_id"><a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_id">[docs]</a>    <span class="k">def</span> <span class="nf">delete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">delete_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="RiverClient.delete_id">
+<a class="viewcode-back" href="../../api_reference/internal/django_river_ml.html#django_river_ml.client.RiverClient.delete_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cli</span><span class="o">.</span><span class="n">delete_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>
@@ -621,7 +729,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+    <p>&#169; Copyright 2022-2024, Vanessa Sochat.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

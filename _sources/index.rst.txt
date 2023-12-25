@@ -17,9 +17,9 @@ To see the code, head over to the `repository <https://github.com/vsoch/django-r
 Getting started with Django River ML
 ------------------------------------
 
-Django models to deploy `river <https://riverml.xyz>`_ online machine learning. 
+Django models to deploy `river <https://riverml.xyz>`_ online machine learning.
 This is a Django version of `chantilly <https://github.com/online-ml/chantilly>`_ that aims to use the
-same overall design. We also include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a 
+same overall design. We also include `example clients <https://github.com/vsoch/django-river-ml/tree/main/examples>`_ and a
 test application in `tests <https://github.com/vsoch/django-river-ml/tree/main/tests>`_. You can use
 the Python `riverapi <https://github.com/vsoch/riverapi>`_ to interact with the server, which describes and
 implements the client side of the `spec <https://vsoch.github.io/riverapi/getting_started/spec.html>`_ implemented on the server here.
@@ -29,7 +29,7 @@ How is it different?
 
 This is a Django plugin, so it's more intended to be generalizable for your Django application.
 Since we assume you will be using a relational database with some number of models (tables) and
-online-ml works well with dictionaries, we use either `shelve <https://docs.python.org/3/library/shelve.html)>`_ 
+online-ml works well with dictionaries, we use either `shelve <https://docs.python.org/3/library/shelve.html)>`_
 (development) or redis (production) to store models. The plugin here is different from chantilly in the following ways:
 
  - it's intended to be easily customized, so most configurables are exposed in settings customized by your app
@@ -64,7 +64,7 @@ Resources
 
 `riverapi specification <https://vsoch.github.io/riverapi/getting_started/spec.html>`_
    The specification for the server endpoints and client.
-   
+
 
 .. toctree::
    :caption: Getting started

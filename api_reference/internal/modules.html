@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Internal API &mdash; Django River ML 0.0.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+  <title>Internal API &mdash; Django River ML 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-argparse.css?v=24ffd50e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme.css?v=d362eb4e" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -29,14 +33,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Django River ML
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Django River ML
           </a>
               <div class="version">
-                0.0.2
+                0.0.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -69,8 +77,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Internal API</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Internal API</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/api_reference/internal/modules.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -80,40 +88,228 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="internal-api">
-<h1>Internal API<a class="headerlink" href="#internal-api" title="Permalink to this headline"></a></h1>
+  <section id="internal-api">
+<h1>Internal API<a class="headerlink" href="#internal-api" title="Link to this heading"></a></h1>
 <p>These pages document the entire internal API</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="django_river_ml.html">django-river-ml package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.announce">django_river_ml.announce module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.apps">django_river_ml.apps module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.auth">django_river_ml.auth module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.client">django_river_ml.client module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.exceptions">django_river_ml.exceptions module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.flavors">django_river_ml.flavors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.middleware">django_river_ml.middleware module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.model">django_river_ml.model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.namer">django_river_ml.namer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.settings">django_river_ml.settings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.signals">django_river_ml.signals module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.storage">django_river_ml.storage module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.urls">django_river_ml.urls module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.utils">django_river_ml.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.announce">django_river_ml.announce module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.announce.MessageAnnouncer"><code class="docutils literal notranslate"><span class="pre">MessageAnnouncer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.announce.MessageAnnouncer.announce"><code class="docutils literal notranslate"><span class="pre">MessageAnnouncer.announce()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.announce.MessageAnnouncer.listen"><code class="docutils literal notranslate"><span class="pre">MessageAnnouncer.listen()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.apps">django_river_ml.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.apps.DjangoRiverMLConfig"><code class="docutils literal notranslate"><span class="pre">DjangoRiverMLConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.apps.DjangoRiverMLConfig.name"><code class="docutils literal notranslate"><span class="pre">DjangoRiverMLConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.apps.DjangoRiverMLConfig.ready"><code class="docutils literal notranslate"><span class="pre">DjangoRiverMLConfig.ready()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.apps.DjangoRiverMLConfig.verbose_name"><code class="docutils literal notranslate"><span class="pre">DjangoRiverMLConfig.verbose_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.auth">django_river_ml.auth module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.generate_jwt"><code class="docutils literal notranslate"><span class="pre">generate_jwt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.get_challenge"><code class="docutils literal notranslate"><span class="pre">get_challenge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.get_token"><code class="docutils literal notranslate"><span class="pre">get_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.get_user"><code class="docutils literal notranslate"><span class="pre">get_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.is_authenticated"><code class="docutils literal notranslate"><span class="pre">is_authenticated()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.auth.validate_jwt"><code class="docutils literal notranslate"><span class="pre">validate_jwt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.client">django_river_ml.client module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient"><code class="docutils literal notranslate"><span class="pre">DjangoClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.add_model"><code class="docutils literal notranslate"><span class="pre">DjangoClient.add_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.announce_event"><code class="docutils literal notranslate"><span class="pre">DjangoClient.announce_event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.announce_metrics"><code class="docutils literal notranslate"><span class="pre">DjangoClient.announce_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.delete_id"><code class="docutils literal notranslate"><span class="pre">DjangoClient.delete_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.delete_model"><code class="docutils literal notranslate"><span class="pre">DjangoClient.delete_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.finish_learn"><code class="docutils literal notranslate"><span class="pre">DjangoClient.finish_learn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.get_model"><code class="docutils literal notranslate"><span class="pre">DjangoClient.get_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.label"><code class="docutils literal notranslate"><span class="pre">DjangoClient.label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.learn"><code class="docutils literal notranslate"><span class="pre">DjangoClient.learn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.load_model"><code class="docutils literal notranslate"><span class="pre">DjangoClient.load_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.make_prediction"><code class="docutils literal notranslate"><span class="pre">DjangoClient.make_prediction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.metrics"><code class="docutils literal notranslate"><span class="pre">DjangoClient.metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.models"><code class="docutils literal notranslate"><span class="pre">DjangoClient.models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.predict"><code class="docutils literal notranslate"><span class="pre">DjangoClient.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.save_model"><code class="docutils literal notranslate"><span class="pre">DjangoClient.save_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.save_pickle"><code class="docutils literal notranslate"><span class="pre">DjangoClient.save_pickle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.stats"><code class="docutils literal notranslate"><span class="pre">DjangoClient.stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.DjangoClient.update_metrics"><code class="docutils literal notranslate"><span class="pre">DjangoClient.update_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient"><code class="docutils literal notranslate"><span class="pre">RiverClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.add_model"><code class="docutils literal notranslate"><span class="pre">RiverClient.add_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.delete_id"><code class="docutils literal notranslate"><span class="pre">RiverClient.delete_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.delete_model"><code class="docutils literal notranslate"><span class="pre">RiverClient.delete_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.get_model"><code class="docutils literal notranslate"><span class="pre">RiverClient.get_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.label"><code class="docutils literal notranslate"><span class="pre">RiverClient.label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.learn"><code class="docutils literal notranslate"><span class="pre">RiverClient.learn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.make_prediction"><code class="docutils literal notranslate"><span class="pre">RiverClient.make_prediction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.metrics"><code class="docutils literal notranslate"><span class="pre">RiverClient.metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.models"><code class="docutils literal notranslate"><span class="pre">RiverClient.models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.predict"><code class="docutils literal notranslate"><span class="pre">RiverClient.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.stats"><code class="docutils literal notranslate"><span class="pre">RiverClient.stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.stream_events"><code class="docutils literal notranslate"><span class="pre">RiverClient.stream_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.client.RiverClient.stream_metrics"><code class="docutils literal notranslate"><span class="pre">RiverClient.stream_metrics()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.exceptions">django_river_ml.exceptions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.exceptions.FlavorNotSet"><code class="docutils literal notranslate"><span class="pre">FlavorNotSet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.exceptions.InvalidUsage"><code class="docutils literal notranslate"><span class="pre">InvalidUsage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.exceptions.InvalidUsage.status_code"><code class="docutils literal notranslate"><span class="pre">InvalidUsage.status_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.exceptions.InvalidUsage.to_dict"><code class="docutils literal notranslate"><span class="pre">InvalidUsage.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.exceptions.UnknownFlavor"><code class="docutils literal notranslate"><span class="pre">UnknownFlavor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.flavors">django_river_ml.flavors module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.BinaryFlavor"><code class="docutils literal notranslate"><span class="pre">BinaryFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.BinaryFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">BinaryFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.BinaryFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">BinaryFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.BinaryFlavor.name"><code class="docutils literal notranslate"><span class="pre">BinaryFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.BinaryFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">BinaryFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.ClusterFlavor"><code class="docutils literal notranslate"><span class="pre">ClusterFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.ClusterFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">ClusterFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.ClusterFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">ClusterFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.ClusterFlavor.name"><code class="docutils literal notranslate"><span class="pre">ClusterFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.ClusterFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">ClusterFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor"><code class="docutils literal notranslate"><span class="pre">CremeFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">CremeFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">CremeFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor.learn_func"><code class="docutils literal notranslate"><span class="pre">CremeFlavor.learn_func</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor.name"><code class="docutils literal notranslate"><span class="pre">CremeFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CremeFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">CremeFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CustomFlavor"><code class="docutils literal notranslate"><span class="pre">CustomFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CustomFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">CustomFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CustomFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">CustomFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CustomFlavor.name"><code class="docutils literal notranslate"><span class="pre">CustomFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.CustomFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">CustomFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor"><code class="docutils literal notranslate"><span class="pre">Flavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor.check_model"><code class="docutils literal notranslate"><span class="pre">Flavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">Flavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor.learn_func"><code class="docutils literal notranslate"><span class="pre">Flavor.learn_func</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor.name"><code class="docutils literal notranslate"><span class="pre">Flavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.Flavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">Flavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.MultiClassFlavor"><code class="docutils literal notranslate"><span class="pre">MultiClassFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">MultiClassFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">MultiClassFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.name"><code class="docutils literal notranslate"><span class="pre">MultiClassFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.MultiClassFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">MultiClassFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.NeighborFlavor"><code class="docutils literal notranslate"><span class="pre">NeighborFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.NeighborFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">NeighborFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.NeighborFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">NeighborFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.NeighborFlavor.name"><code class="docutils literal notranslate"><span class="pre">NeighborFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.NeighborFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">NeighborFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.RegressionFlavor"><code class="docutils literal notranslate"><span class="pre">RegressionFlavor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.RegressionFlavor.check_model"><code class="docutils literal notranslate"><span class="pre">RegressionFlavor.check_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.RegressionFlavor.default_metrics"><code class="docutils literal notranslate"><span class="pre">RegressionFlavor.default_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.RegressionFlavor.name"><code class="docutils literal notranslate"><span class="pre">RegressionFlavor.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.RegressionFlavor.pred_funcs"><code class="docutils literal notranslate"><span class="pre">RegressionFlavor.pred_funcs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.all_models"><code class="docutils literal notranslate"><span class="pre">all_models()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.allowed_flavors"><code class="docutils literal notranslate"><span class="pre">allowed_flavors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.flavors.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.middleware">django_river_ml.middleware module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.middleware.timer_middleware"><code class="docutils literal notranslate"><span class="pre">timer_middleware()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.model">django_river_ml.model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.model.model_to_dict"><code class="docutils literal notranslate"><span class="pre">model_to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.namer">django_river_ml.namer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.namer.Namer"><code class="docutils literal notranslate"><span class="pre">Namer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.namer.Namer.generate"><code class="docutils literal notranslate"><span class="pre">Namer.generate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.settings">django_river_ml.settings module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.settings.generate_secret_keys"><code class="docutils literal notranslate"><span class="pre">generate_secret_keys()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.signals">django_river_ml.signals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.signals.create_auth_token"><code class="docutils literal notranslate"><span class="pre">create_auth_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.signals.create_user_token"><code class="docutils literal notranslate"><span class="pre">create_user_token()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.signals.get_user_token"><code class="docutils literal notranslate"><span class="pre">get_user_token()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.storage">django_river_ml.storage module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.RedisBackend"><code class="docutils literal notranslate"><span class="pre">RedisBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.RedisBackend.close"><code class="docutils literal notranslate"><span class="pre">RedisBackend.close()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.ShelveBackend"><code class="docutils literal notranslate"><span class="pre">ShelveBackend</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.StorageBackend"><code class="docutils literal notranslate"><span class="pre">StorageBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.StorageBackend.close"><code class="docutils literal notranslate"><span class="pre">StorageBackend.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.StorageBackend.get"><code class="docutils literal notranslate"><span class="pre">StorageBackend.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.add_model"><code class="docutils literal notranslate"><span class="pre">add_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.close_db"><code class="docutils literal notranslate"><span class="pre">close_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.delete_model"><code class="docutils literal notranslate"><span class="pre">delete_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.drop_db"><code class="docutils literal notranslate"><span class="pre">drop_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.init_metrics"><code class="docutils literal notranslate"><span class="pre">init_metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.init_stats"><code class="docutils literal notranslate"><span class="pre">init_stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.storage.set_flavor"><code class="docutils literal notranslate"><span class="pre">set_flavor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-urls-module">django_river_ml.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.utils">django_river_ml.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.utils.format_sse"><code class="docutils literal notranslate"><span class="pre">format_sse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.utils.get_server"><code class="docutils literal notranslate"><span class="pre">get_server()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.utils.humanize_ns"><code class="docutils literal notranslate"><span class="pre">humanize_ns()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.version">django_river_ml.version module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views">django_river_ml.views module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.auth">django_river_ml.views.auth module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.base">django_river_ml.views.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.learn">django_river_ml.views.learn module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.metrics">django_river_ml.views.metrics module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.model">django_river_ml.views.model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.predict">django_river_ml.views.predict module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-module">django_river_ml.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#module-django_river_ml.views.auth">django_river_ml.views.auth module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="django_river_ml.html#django_river_ml.views.auth.GetAuthToken"><code class="docutils literal notranslate"><span class="pre">GetAuthToken</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.views.auth.GetAuthToken.allowed_methods"><code class="docutils literal notranslate"><span class="pre">GetAuthToken.allowed_methods</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.views.auth.GetAuthToken.authentication_classes"><code class="docutils literal notranslate"><span class="pre">GetAuthToken.authentication_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.views.auth.GetAuthToken.get"><code class="docutils literal notranslate"><span class="pre">GetAuthToken.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="django_river_ml.html#django_river_ml.views.auth.GetAuthToken.permission_classes"><code class="docutils literal notranslate"><span class="pre">GetAuthToken.permission_classes</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-base-module">django_river_ml.views.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-learn-module">django_river_ml.views.learn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-metrics-module">django_river_ml.views.metrics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-model-module">django_river_ml.views.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="django_river_ml.html#django-river-ml-views-predict-module">django_river_ml.views.predict module</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
+</section>
 
 
            </div>
@@ -126,7 +322,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+    <p>&#169; Copyright 2022-2024, Vanessa Sochat.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

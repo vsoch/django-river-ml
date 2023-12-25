@@ -22,7 +22,7 @@ or development from the code:
 .. code-block:: console
 
     $ git clone https://github.com/vsoch/django-river-ml
-    $ cd django-river-ml   
+    $ cd django-river-ml
     $ pip install -e .
 
 

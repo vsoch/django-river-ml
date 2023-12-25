@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; Django River ML 0.0.2 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+  <title>User Guide &mdash; Django River ML 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-argparse.css?v=24ffd50e" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme.css?v=d362eb4e" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=a11416ff"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,14 +33,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Django River ML
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Django River ML
           </a>
               <div class="version">
-                0.0.2
+                0.0.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -91,9 +99,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Getting Started</a> &raquo;</li>
-      <li>User Guide</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">User Guide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/getting_started/user-guide.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,8 +111,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="user-guide">
-<span id="getting-started-user-guide"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+  <section id="user-guide">
+<span id="getting-started-user-guide"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
 <p>Django River ML allows you to easily deploy <a class="reference external" href="https://riverml.xyz">river</a> online machine learning
 for a <a class="reference external" href="https://www.djangoproject.com/">Django</a> project. It is based off of <a class="reference external" href="https://github.com/online-ml/chantilly">chantilly</a>
 with hopes of having similar design. We include <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/examples">example clients</a> and a
@@ -112,12 +120,12 @@ test application in <a class="reference external" href="https://github.com/vsoch
 We are excited about what you might build with this, and please
 <a class="reference external" href="https://github.com/vsoch/django-river-ml/issues">give us a ping</a>. if you have a question, find a bug, or want to request a feature!
 This is an open source project and we are eager for your contribution. 🎉️</p>
-<div class="section" id="quick-start">
-<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline"></a></h2>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
 <p>Once you have <code class="docutils literal notranslate"><span class="pre">django-river-ml</span></code> installed (<a class="reference internal" href="installation.html#getting-started-installation"><span class="std std-ref">Installation</span></a>) you
 can do basic setup.</p>
-<div class="section" id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline"></a></h3>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Link to this heading"></a></h3>
 <p>Add it to your <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code> along with <code class="docutils literal notranslate"><span class="pre">rest_framework</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
     <span class="o">...</span>
@@ -160,140 +168,140 @@ API views (to show up in docs) and server views (to not show up):</p>
 <p>And this will render the Django River ML API alongside your other API prefixes. For example,
 here is Django River ML deployed under “ml”:</p>
 <img alt="An example of Django River ML with ``URL_PREFIX`` &quot;ml&quot; showing up in the API docs" src="../_images/schema-view.png" />
-</div>
-<div class="section" id="settings">
-<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline"></a></h3>
+</section>
+<section id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Link to this heading"></a></h3>
 <p>It is highly recommended that you minimally set these settings in your app settings.py
 and do not use the default of the plugin:</p>
-<table border="1" class="docutils" id="id1">
-<caption><span class="caption-text">Title</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Title</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code></td>
-<td>$root</td>
-<td>Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)</td>
-<td><code class="docutils literal notranslate"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code></td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code></p></td>
+<td><p>$root</p></td>
+<td><p>Base directory for storing secrets and cache. Defaults to the root of the module installation (recommended to change)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">os.path.dirname(os.path.abspath(__file__))</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">SHELVE_SECRET_KEY</span></code></td>
-<td>None</td>
-<td>Secret key for shelve (if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> set to “shelve” (will be generated if not found)</td>
-<td>fgayudsiushfdsfdf</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SHELVE_SECRET_KEY</span></code></p></td>
+<td><p>None</p></td>
+<td><p>Secret key for shelve (if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> set to “shelve” (will be generated if not found)</p></td>
+<td><p>fgayudsiushfdsfdf</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">JWT_SECRET_KEY</span></code></td>
-<td>None</td>
-<td>Secret key for json web tokens (if authentication enabled, and will be generated if not found)</td>
-<td>fgayudsiushfdsfdf</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">JWT_SECRET_KEY</span></code></p></td>
+<td><p>None</p></td>
+<td><p>Secret key for json web tokens (if authentication enabled, and will be generated if not found)</p></td>
+<td><p>fgayudsiushfdsfdf</p></td>
 </tr>
 </tbody>
 </table>
 <p>The following additonal settings are available to set in your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code>:</p>
-<table border="1" class="docutils" id="id2">
-<caption><span class="caption-text">Title</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Title</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
-<th class="head">Example</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">URL_PREFIX</span></code></td>
-<td>api</td>
-<td>The api prefix to use for the endpoint</td>
-<td>river</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">URL_PREFIX</span></code></p></td>
+<td><p>api</p></td>
+<td><p>The api prefix to use for the endpoint</p></td>
+<td><p>river</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code></td>
-<td>shelve</td>
-<td>The storage backend to use, either shelve or redis (requires redis setup)</td>
-<td>redis</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code></p></td>
+<td><p>shelve</p></td>
+<td><p>The storage backend to use, either shelve or redis (requires redis setup)</p></td>
+<td><p>redis</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">REDIS_DB</span></code></td>
-<td>river-redis</td>
-<td>The redis database name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
-<td>another-name</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">REDIS_DB</span></code></p></td>
+<td><p>river-redis</p></td>
+<td><p>The redis database name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</p></td>
+<td><p>another-name</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">REDIS_HOST</span></code></td>
-<td>localhost</td>
-<td>The redis host name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
-<td>redis-container</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">REDIS_HOST</span></code></p></td>
+<td><p>localhost</p></td>
+<td><p>The redis host name, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</p></td>
+<td><p>redis-container</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">REDIS_PORT</span></code></td>
-<td>6379</td>
-<td>The redis port, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</td>
-<td>1111</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">REDIS_PORT</span></code></p></td>
+<td><p>6379</p></td>
+<td><p>The redis port, only used if <code class="docutils literal notranslate"><span class="pre">STORAGE_BACKEND</span></code> is set to redis</p></td>
+<td><p>1111</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">CACHE_DIR</span></code></td>
-<td>None (and then is set to <code class="docutils literal notranslate"><span class="pre">os.path.join(APP_DIR,</span> <span class="pre">&quot;cache&quot;)</span></code>)</td>
-<td>The cache directory for tokens, recommended to set a custom <code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code> and it will be a sub-directory <code class="docutils literal notranslate"><span class="pre">cache</span></code> there</td>
-<td>/opt/cache</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CACHE_DIR</span></code></p></td>
+<td><p>None (and then is set to <code class="docutils literal notranslate"><span class="pre">os.path.join(APP_DIR,</span> <span class="pre">&quot;cache&quot;)</span></code>)</p></td>
+<td><p>The cache directory for tokens, recommended to set a custom <code class="docutils literal notranslate"><span class="pre">APP_DIR</span></code> and it will be a sub-directory <code class="docutils literal notranslate"><span class="pre">cache</span></code> there</p></td>
+<td><p>/opt/cache</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">GENERATE_IDENTIFIERS</span></code></td>
-<td>True</td>
-<td>Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.</td>
-<td>True</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GENERATE_IDENTIFIERS</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Always generate identifiers for predictions. If False, you can still provide an identifier to the predict endpoint to use.</p></td>
+<td><p>True</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></td>
-<td>True</td>
-<td>For views that require authentication, disable them.</td>
-<td>True</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code></p></td>
+<td><p>True</p></td>
+<td><p>For views that require authentication, disable them.</p></td>
+<td><p>True</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">DOMAIN_URL</span></code></td>
-<td><a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></td>
-<td>Domain used in templates, and api prefix</td>
-<td><a class="reference external" href="https://ml-server">https://ml-server</a></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DOMAIN_URL</span></code></p></td>
+<td><p><a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></p></td>
+<td><p>Domain used in templates, and api prefix</p></td>
+<td><p><a class="reference external" href="https://ml-server">https://ml-server</a></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">SESSION_EXPIRES_SECONDS</span></code></td>
-<td>600</td>
-<td>The number of seconds a session (upload request) is valid (10 minutes)</td>
-<td>6000</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SESSION_EXPIRES_SECONDS</span></code></p></td>
+<td><p>600</p></td>
+<td><p>The number of seconds a session (upload request) is valid (10 minutes)</p></td>
+<td><p>6000</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">TOKEN_EXPIRES_SECONDS</span></code></td>
-<td>600</td>
-<td>The number of seconds a token is valid (10 minutes)</td>
-<td>6000</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TOKEN_EXPIRES_SECONDS</span></code></p></td>
+<td><p>600</p></td>
+<td><p>The number of seconds a token is valid (10 minutes)</p></td>
+<td><p>6000</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT</span></code></td>
-<td>10000/1day</td>
-<td>View rate limit using django-ratelimit based on ipaddress</td>
-<td>100/1day</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT</span></code></p></td>
+<td><p>10000/1day</p></td>
+<td><p>View rate limit using django-ratelimit based on ipaddress</p></td>
+<td><p>100/1day</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_BLOCK</span></code></td>
-<td>True</td>
-<td>Given that someone goes over, are they blocked for a period?</td>
-<td>False</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_BLOCK</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Given that someone goes over, are they blocked for a period?</p></td>
+<td><p>False</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_DISABLE</span></code></td>
-<td>True</td>
-<td>Globally disable rate limiting (ideal for development or for a heavily used learning server)</td>
-<td>False</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VIEW_RATE_LIMIT_DISABLE</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Globally disable rate limiting (ideal for development or for a heavily used learning server)</p></td>
+<td><p>False</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">[]</span></code></td>
-<td>Provide a list of view names (strings) to enable. If not set (empty list or None) all are enabled.</td>
-<td><code class="docutils literal notranslate"><span class="pre">['predict',</span> <span class="pre">'service_info',</span> <span class="pre">'metrics',</span> <span class="pre">'models',</span> <span class="pre">'model_download',</span> <span class="pre">'stats']</span></code></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+<td><p>Provide a list of view names (strings) to enable. If not set (empty list or None) all are enabled.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">['predict',</span> <span class="pre">'service_info',</span> <span class="pre">'metrics',</span> <span class="pre">'models',</span> <span class="pre">'model_download',</span> <span class="pre">'stats']</span></code></p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="custom-models">
-<h4>Custom Models<a class="headerlink" href="#custom-models" title="Permalink to this headline"></a></h4>
+<section id="custom-models">
+<h4>Custom Models<a class="headerlink" href="#custom-models" title="Link to this heading"></a></h4>
 <p>Django River ML has support for custom models, where a custom model is one you’ve defined in your application
 to use with river. In order for this to work, you will need to define your model somewhere
 in your app so it is importable across Django apps (e.g., and when Django River ML tries to unpickle
@@ -305,9 +313,9 @@ suggested.</p>
 if we think about how to go about it. the <code class="docutils literal notranslate"><span class="pre">CustomModel</span></code> flavor is designed to be mostly
 forgiving to allow you to choose any prediction function you might have, and we can extend this
 if needed.</p>
-</div>
-<div class="section" id="api-views-enabled">
-<h4>API Views Enabled<a class="headerlink" href="#api-views-enabled" title="Permalink to this headline"></a></h4>
+</section>
+<section id="api-views-enabled">
+<h4>API Views Enabled<a class="headerlink" href="#api-views-enabled" title="Link to this heading"></a></h4>
 <p>If you want to disable some views, you can set of a list of views to enable using
 <code class="docutils literal notranslate"><span class="pre">API_VIEWS_ENABLED</span></code>. As an example, let’s say we are going to have learning
 done internally, and we just want to expose metadata and prediction endpoints.
@@ -323,27 +331,27 @@ We could do:</p>
 <p>The views to choose from include:</p>
 <blockquote>
 <div><ul class="simple">
-<li>auth_token</li>
-<li>service_info</li>
-<li>learn</li>
-<li>predict</li>
-<li>label</li>
-<li>metrics</li>
-<li>stream_metrics</li>
-<li>stream_events</li>
-<li>stats</li>
-<li>model_download</li>
-<li>model</li>
-<li>models</li>
+<li><p>auth_token</p></li>
+<li><p>service_info</p></li>
+<li><p>learn</p></li>
+<li><p>predict</p></li>
+<li><p>label</p></li>
+<li><p>metrics</p></li>
+<li><p>stream_metrics</p></li>
+<li><p>stream_events</p></li>
+<li><p>stats</p></li>
+<li><p>model_download</p></li>
+<li><p>model</p></li>
+<li><p>models</p></li>
 </ul>
 </div></blockquote>
 <p>Note that “model” includes most interactions to create or get a model.</p>
 <p>For more advanced settings like customizing the endpoints with authentication, see
 the <a class="reference external" href="https://github.com/vsoch/django-river-ml/blob/main/django_river_ml/settings.py">settings.py</a> in the application.</p>
-</div>
-</div>
-<div class="section" id="authentication">
-<h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline"></a></h3>
+</section>
+</section>
+<section id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h3>
 <p>If you have <code class="docutils literal notranslate"><span class="pre">DISABLE_AUTHENTICATION</span></code> set to true, or you customize the settings <code class="docutils literal notranslate"><span class="pre">AUTHENTICATED_VIEWS</span></code> to change
 the defaults, then you shouldn’t need to do any kind of authentication. This might be ideal for a development or
 closed environment that is only accessible to you or your team. However, for most cases you are strongly encouraged to
@@ -376,39 +384,39 @@ in the Authenticate header. It’s much easier to use the client to do it for yo
 <p>Of course if you have a Django interface with OAuth for login, you can make a settings
 or profile page to easily retrieve the same token. Open an issue if you need guidance to do this.
 We might consider adding a front-end view to provide by default if it’s desired.</p>
-</div>
-<div class="section" id="sample-application">
-<h3>Sample Application<a class="headerlink" href="#sample-application" title="Permalink to this headline"></a></h3>
+</section>
+<section id="sample-application">
+<h3>Sample Application<a class="headerlink" href="#sample-application" title="Link to this heading"></a></h3>
 <p>An <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/tests">example app</a> is provided that
 you can use to test. Once you have your environment setup, you can do:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py makemigrations
-<span class="gp">$ </span>python manage.py migrate
-<span class="gp">$ </span>python manage.py runserver
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>manage.py<span class="w"> </span>makemigrations
+<span class="gp">$ </span>python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+<span class="gp">$ </span>python<span class="w"> </span>manage.py<span class="w"> </span>runserver
 </pre></div>
 </div>
 <p>In another terminal, you can then run a sample script:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python examples/regression/run.py
-<span class="gp">$ </span>python examples/binary/run.py
-<span class="gp">$ </span>python examples/multiclass/run.py
-<span class="gp">$ </span>python examples/cluster/run.py
-<span class="gp">$ </span>python examples/custom/run.py
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>examples/regression/run.py
+<span class="gp">$ </span>python<span class="w"> </span>examples/binary/run.py
+<span class="gp">$ </span>python<span class="w"> </span>examples/multiclass/run.py
+<span class="gp">$ </span>python<span class="w"> </span>examples/cluster/run.py
+<span class="gp">$ </span>python<span class="w"> </span>examples/custom/run.py
 </pre></div>
 </div>
 <p>Note that creme models are supported, but with minimum functionalty (no metrics)
 and you must install <code class="docutils literal notranslate"><span class="pre">creme</span></code> on your own.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python examples/creme/run.py
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>examples/creme/run.py
 </pre></div>
 </div>
-</div>
-<div class="section" id="testing">
-<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h3>
 <p>Running tests with the example server is also fairly easy!</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python runtests.py</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="interaction-from-inside-your-application">
-<h3>Interaction from Inside your Application<a class="headerlink" href="#interaction-from-inside-your-application" title="Permalink to this headline"></a></h3>
+</section>
+<section id="interaction-from-inside-your-application">
+<h3>Interaction from Inside your Application<a class="headerlink" href="#interaction-from-inside-your-application" title="Link to this heading"></a></h3>
 <p>While a user is going to be interacting with your API endpoints, you might want to
 interact with models from within your Django application. This is possible
 by interacting with the <code class="docutils literal notranslate"><span class="pre">DjangoClient</span></code> directly, which wraps the database
@@ -425,22 +433,22 @@ between those two extremes, and just expose a limited set using the <code class=
 setting. When empty, all views are enabled. Otherwise, you can set a custom set of names to
 enable (and those not in the list will not be enabled).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">We are planning to allow retrieving a model from version control, e.g., given that
+<p class="admonition-title">Note</p>
+<p>We are planning to allow retrieving a model from version control, e.g., given that
 you are starting a Kubernetes run of Spack Monitor (which will need to use redis to store
 model information) and the model is not found.</p>
 </div>
-<div class="section" id="get-models">
-<h4>Get Models<a class="headerlink" href="#get-models" title="Permalink to this headline"></a></h4>
+<section id="get-models">
+<h4>Get Models<a class="headerlink" href="#get-models" title="Link to this heading"></a></h4>
 <p>To get models, simply ask for them! This will return a list of names to interact
 with further.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="p">()</span>
 <span class="p">[</span><span class="s1">&#39;milky-despacito&#39;</span><span class="p">,</span> <span class="s1">&#39;tart-bicycle&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="create-a-model">
-<h4>Create a Model<a class="headerlink" href="#create-a-model" title="Permalink to this headline"></a></h4>
+</section>
+<section id="create-a-model">
+<h4>Create a Model<a class="headerlink" href="#create-a-model" title="Link to this heading"></a></h4>
 <p>If you want your server to create some initial model (as opposed to allowing users
 to upload them) you can easily do that:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">river</span> <span class="kn">import</span> <span class="n">feature_extraction</span><span class="p">,</span> <span class="n">cluster</span>
@@ -467,17 +475,17 @@ to upload them) you can easily do that:</p>
 <span class="n">model_name</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="delete-a-model">
-<h4>Delete a Model<a class="headerlink" href="#delete-a-model" title="Permalink to this headline"></a></h4>
+</section>
+<section id="delete-a-model">
+<h4>Delete a Model<a class="headerlink" href="#delete-a-model" title="Link to this heading"></a></h4>
 <p>You can delete a model by name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="s2">&quot;tart-bicycle&quot;</span><span class="p">)</span>
 <span class="kc">True</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="get-model">
-<h4>Get Model<a class="headerlink" href="#get-model" title="Permalink to this headline"></a></h4>
+</section>
+<section id="get-model">
+<h4>Get Model<a class="headerlink" href="#get-model" title="Link to this heading"></a></h4>
 <p>Of course to retrieve the model directly, you can do:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
 </pre></div>
@@ -498,9 +506,9 @@ to a database):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;spack-errors.pkl&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="stats-and-metrics-for-a-model">
-<h4>Stats and Metrics for a Model<a class="headerlink" href="#stats-and-metrics-for-a-model" title="Permalink to this headline"></a></h4>
+</section>
+<section id="stats-and-metrics-for-a-model">
+<h4>Stats and Metrics for a Model<a class="headerlink" href="#stats-and-metrics-for-a-model" title="Link to this heading"></a></h4>
 <p>The one drawback of uploading a model is that you won’t have stats or metrics populated.
 You simply cannot, given that the learning happened elsewhere, and is normally done on the
 server to get these metrics. However, once you’ve done more learning you can ask for stats or
@@ -509,9 +517,9 @@ metrics:</p>
 <span class="n">client</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span><span class="s2">&quot;spack-errors&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="interactive-learn">
-<h4>Interactive Learn<a class="headerlink" href="#interactive-learn" title="Permalink to this headline"></a></h4>
+</section>
+<section id="interactive-learn">
+<h4>Interactive Learn<a class="headerlink" href="#interactive-learn" title="Link to this heading"></a></h4>
 <p>You’ll generally need to provide the model name and features, although if you provide
 an identifier these things can be looked up.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span>
@@ -523,17 +531,17 @@ an identifier these things can be looked up.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="interactive-label">
-<h4>Interactive Label<a class="headerlink" href="#interactive-label" title="Permalink to this headline"></a></h4>
+</section>
+<section id="interactive-label">
+<h4>Interactive Label<a class="headerlink" href="#interactive-label" title="Link to this heading"></a></h4>
 <p>To do a labeling (post learn) you’ll need to provide the label, the identifier,
 and the model name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="interactive-predict">
-<h4>Interactive Predict<a class="headerlink" href="#interactive-predict" title="Permalink to this headline"></a></h4>
+</section>
+<section id="interactive-predict">
+<h4>Interactive Predict<a class="headerlink" href="#interactive-predict" title="Link to this heading"></a></h4>
 <p>A prediction usually needs the model name and features, and optionally an identifier.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">identifier</span><span class="p">)</span>
 </pre></div>
@@ -541,10 +549,10 @@ and the model name.</p>
 <p>The remainder of functions on the client are used internally and you should not need to call them
 directly. This library is under development and we will have more endpoints and functionality
 coming soon!</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
@@ -557,7 +565,7 @@ coming soon!</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+    <p>&#169; Copyright 2022-2024, Vanessa Sochat.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

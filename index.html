@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Django River ML &mdash; Django River ML 0.0.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/sphinx-argparse.css" type="text/css" />
-      <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <title>Django River ML &mdash; Django River ML 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-argparse.css?v=24ffd50e" />
+      <link rel="stylesheet" type="text/css" href="_static/theme.css?v=d362eb4e" />
+
+  
     <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=a11416ff"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,14 +32,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Django River ML
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Django River ML
           </a>
               <div class="version">
-                0.0.2
+                0.0.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -65,8 +73,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Django River ML</li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Django River ML</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,57 +84,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="django-river-ml">
-<span id="manual-main"></span><h1>Django River ML<a class="headerlink" href="#django-river-ml" title="Permalink to this headline"></a></h1>
+  <section id="django-river-ml">
+<span id="manual-main"></span><h1>Django River ML<a class="headerlink" href="#django-river-ml" title="Link to this heading"></a></h1>
 <a class="reference external image-reference" href="https://github.com/vsoch/django-river-ml/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/vsoch/django-river-ml?style=social" /></a>
 <p>To see the code, head over to the <a class="reference external" href="https://github.com/vsoch/django-river-ml/">repository</a>.</p>
-<div class="section" id="getting-started-with-django-river-ml">
-<span id="main-getting-started"></span><h2>Getting started with Django River ML<a class="headerlink" href="#getting-started-with-django-river-ml" title="Permalink to this headline"></a></h2>
+<section id="getting-started-with-django-river-ml">
+<span id="main-getting-started"></span><h2>Getting started with Django River ML<a class="headerlink" href="#getting-started-with-django-river-ml" title="Link to this heading"></a></h2>
 <p>Django models to deploy <a class="reference external" href="https://riverml.xyz">river</a> online machine learning.
 This is a Django version of <a class="reference external" href="https://github.com/online-ml/chantilly">chantilly</a> that aims to use the
 same overall design. We also include <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/examples">example clients</a> and a
 test application in <a class="reference external" href="https://github.com/vsoch/django-river-ml/tree/main/tests">tests</a>. You can use
 the Python <a class="reference external" href="https://github.com/vsoch/riverapi">riverapi</a> to interact with the server, which describes and
 implements the client side of the <a class="reference external" href="https://vsoch.github.io/riverapi/getting_started/spec.html">spec</a> implemented on the server here.</p>
-<div class="section" id="how-is-it-different">
-<h3>How is it different?<a class="headerlink" href="#how-is-it-different" title="Permalink to this headline"></a></h3>
+<section id="how-is-it-different">
+<h3>How is it different?<a class="headerlink" href="#how-is-it-different" title="Link to this heading"></a></h3>
 <p>This is a Django plugin, so it’s more intended to be generalizable for your Django application.
 Since we assume you will be using a relational database with some number of models (tables) and
 online-ml works well with dictionaries, we use either <a class="reference external" href="https://docs.python.org/3/library/shelve.html)">shelve</a>
 (development) or redis (production) to store models. The plugin here is different from chantilly in the following ways:</p>
 <blockquote>
 <div><ul class="simple">
-<li>it’s intended to be easily customized, so most configurables are exposed in settings customized by your app</li>
-<li>we have added more kinds of model types (under development)</li>
-<li>we require each new model to be added with a flavor, and data (metrics, stats, etc.) is stored relevant to that. The original chanilly puts everything under “metrics” or “stats” and then wipes the database if a new flavor is added.</li>
-<li>a few additional API endpoints were added (also under development)</li>
-<li>to remove the logic from the particular API implementation, we have a [client class](django_river_ml/client.py) that returns a boolean (success) and data result for each function.</li>
+<li><p>it’s intended to be easily customized, so most configurables are exposed in settings customized by your app</p></li>
+<li><p>we have added more kinds of model types (under development)</p></li>
+<li><p>we require each new model to be added with a flavor, and data (metrics, stats, etc.) is stored relevant to that. The original chanilly puts everything under “metrics” or “stats” and then wipes the database if a new flavor is added.</p></li>
+<li><p>a few additional API endpoints were added (also under development)</p></li>
+<li><p>to remove the logic from the particular API implementation, we have a [client class](django_river_ml/client.py) that returns a boolean (success) and data result for each function.</p></li>
 </ul>
 </div></blockquote>
 <p><strong>under development</strong> not ready to use yet! But should be with a few more evenings and the weekend :)</p>
-</div>
-</div>
-<div class="section" id="support">
-<span id="main-support"></span><h2>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="support">
+<span id="main-support"></span><h2>Support<a class="headerlink" href="#support" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li>For <strong>bugs and feature requests</strong>, please use the <a class="reference external" href="https://github.com/vsoch/django-river-ml/issues">issue tracker</a>.</li>
-<li>For <strong>contributions</strong>, visit us on <a class="reference external" href="https://github.com/vsoch/django-river-ml">Github</a>.</li>
+<li><p>For <strong>bugs and feature requests</strong>, please use the <a class="reference external" href="https://github.com/vsoch/django-river-ml/issues">issue tracker</a>.</p></li>
+<li><p>For <strong>contributions</strong>, visit us on <a class="reference external" href="https://github.com/vsoch/django-river-ml">Github</a>.</p></li>
 </ul>
-</div>
-<div class="section" id="resources">
-<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline"></a></h2>
-<dl class="docutils">
-<dt><a class="reference external" href="https://github.com/vsoch/django-river-ml">GitHub Repository</a></dt><dd>The code on GitHub.</dd>
-<dt><a class="reference external" href="https://riverml.xyz/latest/">river Documentation</a></dt><dd>The official river Documentation.</dd>
-<dt><a class="reference external" href="https://github.com/vsoch/riverapi/">riverapi Python client</a></dt><dd>A python client intended to interact with a server like this one.</dd>
-<dt><a class="reference external" href="https://vsoch.github.io/riverapi/getting_started/spec.html">riverapi specification</a></dt><dd>The specification for the server endpoints and client.</dd>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="https://github.com/vsoch/django-river-ml">GitHub Repository</a></dt><dd><p>The code on GitHub.</p>
+</dd>
+<dt><a class="reference external" href="https://riverml.xyz/latest/">river Documentation</a></dt><dd><p>The official river Documentation.</p>
+</dd>
+<dt><a class="reference external" href="https://github.com/vsoch/riverapi/">riverapi Python client</a></dt><dd><p>A python client intended to interact with a server like this one.</p>
+</dd>
+<dt><a class="reference external" href="https://vsoch.github.io/riverapi/getting_started/spec.html">riverapi specification</a></dt><dd><p>The specification for the server endpoints and client.</p>
+</dd>
 </dl>
 <div class="toctree-wrapper compound" id="getting-started">
 </div>
 <div class="toctree-wrapper compound" id="api-reference">
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -138,7 +150,7 @@ online-ml works well with dictionaries, we use either <a class="reference extern
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Vanessa Sochat.</p>
+    <p>&#169; Copyright 2022-2024, Vanessa Sochat.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
